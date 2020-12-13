@@ -1,0 +1,75 @@
+[{
+
+    "id":"dasda",
+    "tipo": "relatorio",
+    "titulo": "",
+    "subtitulo": "",
+    "dataCriacao": "13/12/2010",
+    "dataRegisto": "13/12/2010",
+    "produtor": "Margarida@gmail.pt",
+    "visibilidade": "publico",
+    "likes": 4,
+    "hashtags": [],
+    "posts": [],
+    "metadata": {
+
+        "instituicao":"uminho",
+        "curso":"Miei",
+        "autor":["Margarida"],
+        "numeroPag": 50
+
+
+    }
+},
+
+
+
+{
+    "id":"xacvvcv",
+    "tipo": "artigo",
+    "titulo": "titulo",
+    "subtitulo": "",
+    "dataCriacao": "13/12/2010",
+    "dataRegisto": "13/12/2010",
+    "produtor": "jcr@jcr.pt",
+    "visibilidade": "publico",
+    "likes": 5 ,
+    "hashtags": ["daw2020"],
+    "posts": [],
+    "metadata": {
+        
+
+        "autor":["jcr"],
+        "jornal":"dasda",
+        "volume" : 3,
+        "numero" : 5,
+        "numeroPag": 50,
+        "palavraChave": []
+
+    }
+},
+
+{
+    "id":"lplplp",
+    "tipo": "livro",
+    "titulo": "titulo",
+    "subtitulo": "",
+    "dataCriacao": "13/12/2010",
+    "dataRegisto": "13/12/2010",
+    "produtor": "jcr@jcr.pt",
+    "visibilidade": "privado",
+    "likes": 5 ,
+    "hashtags": ["daw2020"],
+    "posts": [],
+    "metadata": {
+        
+        "edicao": 3,
+        "editor": "José Carlos",
+        "editora":"Porto editora",
+        "autor": ["José Carlos"],
+        "numeroPag": 250,
+        "capitulos":8,
+        "cidade": "Lisboa"
+
+    }
+}]
