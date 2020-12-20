@@ -3,9 +3,8 @@ var express = require('express');
 
 var path = require('path');
 var logger = require('morgan');
-//var multer = require('multer')
-var bodyParser = require('body-parser')
 
+var bodyParser = require('body-parser')
 
 
 

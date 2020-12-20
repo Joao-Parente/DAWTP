@@ -4,7 +4,8 @@ var router = express.Router();
 var User = require('../controllers/utilizadores')
 
 var Recurso = require('../controllers/recursos')
-
+var multer = require('multer')
+var upload = multer({dest:'uploads/'})
 
 /* GET users listing. */
 router.get('/', function(req, res) {
@@ -21,7 +22,7 @@ router.get('/novo', function (req, res) {
 });
 
 
-router.post('/novo', function(req, res) {
+router.post('/novo', upload.single('myFile'),function(req, res) {
 
   console.log( "POST   "+JSON.stringify(req.body))
 
