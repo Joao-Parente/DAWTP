@@ -1,9 +1,15 @@
 var createError = require('http-errors');
 var express = require('express');
+
 var path = require('path');
 var logger = require('morgan');
+//var multer = require('multer')
+var bodyParser = require('body-parser')
 
 
+
+
+/* Base de dados*/
 
 //Import the mongoose module
 var mongoose = require('mongoose');
@@ -21,30 +27,49 @@ db.once('open', function () {
     console.log("Conexão ao MongoDB realizada com sucesso...")
 });
 
-
-
-
-
-
-
-
-
-
+var usersRouter = require('./routes/utilizadores');
 var indexRouter = require('./routes/index');
+var recursosRouter = require('./routes/recursos');
+var tiposRouter = require('./routes/tipos');
 
 
+
+
+
+/* Iniciar express*/
 var app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
+
+
+
 app.use(logger('dev'));
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+
+/* Coloca o body no req.body*/
+
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+
+
+/*Recursos Estáticos*/
 app.use(express.static(path.join(__dirname, 'public')));
 
+
+/* Rotas*/
 app.use('/', indexRouter);
+app.use('/utilizadores', usersRouter);
+app.use('/recursos', recursosRouter);
+app.use('/tipos', tiposRouter);
+
+
+
+
+
+/*Erros*/
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -61,5 +86,13 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
+
+
+
+
+
+
+
 
 module.exports = app;

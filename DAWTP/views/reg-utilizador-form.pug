@@ -1,0 +1,46 @@
+    extends layout
+
+block content
+    .w3-container.w3-margin.w3-border
+        .w3-container.w3-blue
+            h3 Registo de utilizador:
+        form.w3-container(action='/utilizadores/registo' method='POST')
+
+            label Username: 
+            input.w3-input(type="text"  name="username")
+
+            
+
+
+            label Nome
+            input.w3-input(type="text"  name="nome")
+
+            label Email
+            input.w3-input(type="text"  name="email")
+
+            label Nível (0-Consumidor | 1-Produtor | 2- Admin)
+            select(name="nivel")
+                option(value=0) Consumidor
+                option(value=1) Produtor
+                option(value=2) Admin
+
+            br
+
+            label Estudante
+            input(type="checkbox" name="filiacao.estudante" value="true")
+
+            br 
+
+            label Docente
+            input(type="checkbox" name="filiacao.docente" value="true")
+
+            br
+
+            label Curso
+            input.w3-input(type="text"  name="filiacao.curso")
+
+            label Departamento
+            input.w3-input(type="text"  name="filiacao.departamento")
+
+
+            input.w3-btn.w3-blue(type="submit" value="Enviar")

@@ -1,0 +1,45 @@
+extends layout
+
+block content
+            .w3-container.w3-teal
+                h2 Upload Recurso
+            
+
+            form.w3-container(action="/recursos/novo" method="POST" enctype="multipart/form-data")
+                .w3-row.w3-margin-bottom
+                    .w3-col.s3
+                        label.w3-text-teal Titulo   
+
+                    .w3-col.s9.w3-border
+                        input.w3-input.w3-border.w3-light-grey(type="text" name="titulo")
+
+                    .w3-col.s3
+                        label.w3-text-teal subtitulo   
+
+                    .w3-col.s9.w3-border
+                        input.w3-input.w3-border.w3-light-grey(type="text" name="subtitulo")
+
+                    .w3-col.s3
+                        label.w3-text-teal dataCriacao   
+
+                    .w3-col.s9.w3-border
+                        input.w3-input.w3-border.w3-light-grey(type="date" name="dataCriacao" )
+
+
+
+                    .w3-col.s3
+                        label.w3-text-teal Privado
+                    .w3-col.s9.w3-border
+                        input.w3-input.w3-border.w3-light-grey(type="checkbox" name="visibilidade" value="privado")
+
+                input.w3-btn.w3-blue-grey(type="submit" value="Submit")
+
+                .w3-row.w3-margin-bottom
+                    .w3-col-s3
+                        label.w3-text-teal Select file
+                                  
+                    .w3-col.s9.w3-border
+                        input.w3-input.w3-border.w3-light-grey(type="file" name="myFile")    
+
+
+                

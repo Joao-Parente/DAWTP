@@ -1,0 +1,32 @@
+extends layout
+
+block content
+
+
+  .w3-container.w3-margin
+    h1 Utilizador
+    p Perfil de #{user.nome}... 
+    dl
+      dt Nome
+      dd= user.nome
+      dt Username
+      dd= user.username
+      dt Email
+      dd= user.email
+      dt Filiacao    
+      if(user.filiacao.estudante==true) 
+                  dd= "Estudante /"+ user.filiacao.curso+" / "+user.filiacao.departamento
+      else
+                  dd= "Docente / "+ user.filiacao.curso + " / "+ user.filiacao.departamento
+      dt Nivel
+      dd= user.nivel
+      dt DataRegisto
+      dd= user.dataRegisto
+      dt DataUltimoAcesso
+      dd= user.dataUltimoAcesso     
+
+      address.w3-container.w3-margin Gerado por dawApp :: 2020-Nov
+        p
+          a(href="/") Index
+        p
+          a(href="/utilizadores") Utilizadores

@@ -1,6 +1,7 @@
 //utilizador controller
 
 var Utilizador = require('../models/utilizadores')
+var tempo = require('../public/javascripts/mymood')
 
 
 //Return student list
@@ -18,6 +19,12 @@ module.exports.lookUp = id => {
 }
 
 module.exports.insert = utili =>{
+
+   var d=tempo.myDateTime()
+
+    utili.dataRegisto=d
+    utili.dataUltimoAcesso=d
     var newUtilizador = new Utilizador(utili)
+
     return newUtilizador.save()
 }

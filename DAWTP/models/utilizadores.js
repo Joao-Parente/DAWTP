@@ -20,4 +20,4 @@ var utilizadoresSchema = new mongoose.Schema({
     nivel:Number
 });
 
-module.exports= mongoose.model('utilizador', utilizadoresSchema)
+module.exports= mongoose.model('utilizador', utilizadoresSchema,'utilizadores')

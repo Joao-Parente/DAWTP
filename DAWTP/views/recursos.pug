@@ -3,18 +3,35 @@ extends layout
 block content
     .w3-card-4
       header.w3-container.w3-teal
-        h3.w3-left Relatorio Lista (DAW2020)
+        h3.w3-left Lista de Recursos (DAW2020)
       if list.length > 0
         .w3-container 
           table.w3-table-all
             tr 
               th Titulo
+              th Tipo
+              th Subtitulo
+              th DataCriação
+              th DataRegisto 
+              th Publicador
+              th Likes 
+              th Hashtags
 
             each s in list
               tr
-                td=s.likes
+                td
+                   a(href="/recursos/"+s.id) #{s.titulo} 
+                td=s.tipo
+                td=s.subtitulo
+                td=s.dataCriacao
+                td=s.dataRegisto
+                td=s.produtor
+                td.likes=s.likes
+                td.hashtags=s.hashtags  
+
+
       else
         .w3-container
-          p Não há relatórios..
+          p Não há recursos..
       footer.w3-container.w3-teal
-        address Gerado por dawApp :: 2020-Nov, jcr
+         a(href="/") Index 

@@ -1,0 +1,50 @@
+extends layout
+
+block content
+    .w3-card-4
+      header.w3-container.w3-teal
+        h3.w3-left Utilizadores Lista (DAW2020)
+      if list.length > 0
+        .w3-container 
+          table.w3-table-all
+            tr 
+              th Nome
+              th Username
+              th Email
+              th Filiacao
+              th Nivel
+              th DataRegisto
+              th DataUltimoAcesso
+              
+
+            each s in list
+              
+                tr
+                
+                  td=s.nome                                 
+                  td
+                    a(href="/utilizadores/"+s.username) #{s.username}
+                  td=s.email
+
+                  if(s.filiacao.estudante==true && s.filiacao.docente==true ) 
+                   td= "Estudante & Docente /"+ s.filiacao.curso+" / "+s.filiacao.departamento
+
+                  else if(s.filiacao.estudante==true) 
+                   td= "Estudante /"+ s.filiacao.curso+" / "+s.filiacao.departamento
+                  else if(s.filiacao.docente==true)
+                   td= "Docente /   "+ s.filiacao.curso+" / "+ s.filiacao.departamento
+                  else
+                   td= "Externo / "+ s.filiacao.curso+" / "+ s.filiacao.departamento
+
+                  td= s.nivel
+                  td=s.dataRegisto
+                  td=s.dataUltimoAcesso
+
+      else
+        .w3-container
+          p Não há utilizadores..
+      footer.w3-container.w3-teal
+        
+          a(href="/") Index 
+        
+         

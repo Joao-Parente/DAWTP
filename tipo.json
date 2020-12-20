@@ -1,0 +1,33 @@
+[{
+        "nome": "pdf",
+        "parametros": [{
+            "nome_param": "numero_pags",
+            "tipo_param": "Number"
+        }]
+
+    }, {
+        "nome": "js",
+        "parametros": [{
+                "nome_param": "numero_linhas",
+                "tipo_param": "Number"
+            },
+            {
+                "nome_param": "bibliotecas_adicionais",
+                "tipo_param": "String"
+            }
+        ]
+    },
+    {
+        "nome": "txt",
+        "parametros": [{
+                "nome_param": "numero_linhas",
+                "tipo_param": "Number"
+            },
+            {
+                "nome_param": "sobre",
+                "tipo_param": "String"
+            }
+        ]
+    }
+
+]

@@ -1,0 +1,34 @@
+extends layout
+
+block content
+    .w3-card-4
+      header.w3-container.w3-teal
+        h3.w3-left Tipo  (DAW2020)
+      if list.length > 0
+        .w3-container 
+          table.w3-table-all
+            tr 
+              th Nome
+              th Parametros
+
+
+            each s in list
+              tr
+                td=s.nome
+                td  
+                  table.w3-table-all
+                    tr
+                      th Nome Parametro
+                      th Tipo Parametro
+                    
+                    each t in s.parametros
+                     tr
+                       td=t.nome_param
+                       td=t.tipo_param
+
+
+      else
+        .w3-container
+          p Não há Tipos de ficheiros..
+      footer.w3-container.w3-teal
+         a(href="/") Index 
