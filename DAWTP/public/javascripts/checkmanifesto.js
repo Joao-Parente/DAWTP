@@ -2,34 +2,51 @@
 var fs = require('fs')
 
 
-processaManifesto =  () => {
 
+module.exports.processaManifesto = (path) => {
+
+    var manifesto = path + '/manifesto.json'
+
+
+    if (fs.existsSync(manifesto)) {
+
+       
+        //console.log("Manifesssto            " + manifesto)
+        var file = require(manifesto)
+        if (processaPasta(path + '/data/', file)) return true
+    }
     
-    var file = require('./manifesto.json')
-    console.log(processaPasta('data/',file))
+
+    return false
 }
 
 
 processaPasta = (current_path, pasta) => {
 
+    var flag = true;
 
-    for (ficheiro in pasta.ficheiros)
+
+    pasta.ficheiros.forEach((ficheiro) => {
         if (processaFicheiro(current_path, ficheiro) == false) {
-            console.log("Não existe o ficheiro:" +current_path+ficheiro.nome)
-            return false
+            //console.log("Não existe o ficheiro: " + current_path + ficheiro.nome)
+            flag = false
         }
+        //console.log("Existe o ficheiro: " + current_path + ficheiro.nome)
+    })
 
-    for (p in pasta.pasta_rec) {
-        if (fs.existsSync(current_path + p.nome)==false){
-            console.log(pasta.pasta_rec[0].nome)
-            console.log(p)
-            console.log("A pasta não existe: "+ current_path+ p.nome)
-            return false
-        } 
-        if( processaPasta(current_path+p.nome+'/',p.pasta)==false) return false
+    if (flag) {
+        pasta.pasta_rec.forEach((p) => {
+            if (fs.existsSync(current_path + p.nome) == false) {
+
+                //console.log("A pasta não existe: " + current_path + p.nome)
+
+                flag = false
+            }
+            else if (processaPasta(current_path + p.nome + '/', p.pasta) == false) flag = false
+        })
     }
 
-    return true;
+    return flag;
 }
 
 
@@ -39,7 +56,16 @@ processaFicheiro = (current_path, ficheiro) => {
 
     try {
 
-        if (fs.existsSync(current_path + ficheiro.nome)) return true
+        if (fs.existsSync(current_path + ficheiro.nome)) {
+
+           // console.log("ficheiro tipo:" + ficheiro.tipo)
+
+            //checkar se o tipo ta bom
+            //checkar a meta do tipo
+
+
+            return true
+        }
         else return false
 
     } catch (err) {
@@ -49,5 +75,3 @@ processaFicheiro = (current_path, ficheiro) => {
 
     return false;
 }
-
-var p=processaManifesto();
