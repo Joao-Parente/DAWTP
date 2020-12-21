@@ -5,6 +5,7 @@ var User = require('../controllers/utilizadores')
 var Recurso = require('../controllers/recursos')
 var Zip = require('../public/javascripts/unzip')
 var checkman = require('../public/javascripts/checkmanifesto')
+var rm = require('../public/javascripts/rmrecursivo')
 
 
 
@@ -29,6 +30,10 @@ router.get('/novo', function (req, res) {
   res.render('novo-recurso-form')
 });
 
+router.get('/estrutura-manifesto', function (req, res) {
+  console.log("adsanidsnudsnau"+__dirname)
+  res.render('EstruturaManifesto')
+});
 
 router.post('/novo', upload.single('myFile'), function (req, res) {
 
@@ -48,19 +53,21 @@ router.post('/novo', upload.single('myFile'), function (req, res) {
         .then(dados => res.redirect('/'))
         .catch(erro => res.render('error', { error: erro }))
 
-
+      return true
 
     }
-    else fs.rmdir(__dirname + '/../' + req.file.path + 'dir', { recursive: false }, (err) => {
-      if (err) {
-        throw err;
-      }
-    })
+    else {
+      res.render('RecursoManifestoInválido')
+    }
+    
 
 
   }
-  else console.log("formato invalido")
+  else res.render('RecursoFormatoInválido')
 
+
+  rm.deleteFolderRec(__dirname + '/../' + req.file.path + 'dir')
+  res.redirect('/')
 });
 
 

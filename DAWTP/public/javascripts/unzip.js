@@ -9,14 +9,13 @@ module.exports.unzip = (file) => {
 
     console.log("File: " + extract_fileto)
 
-    fs.mkdir(extract_fileto, function() {
-        fs.statSync(extract_fileto).isDirectory();
-    });
+    fs.mkdirSync(extract_fileto)
     
       
     var zip = new AdmZip(file);
-    zip.extractAllTo(extract_fileto, false);
-
+    zip.extractAllTo(extract_fileto, false)
+        
+        
     fs.unlinkSync(file)
     
 
