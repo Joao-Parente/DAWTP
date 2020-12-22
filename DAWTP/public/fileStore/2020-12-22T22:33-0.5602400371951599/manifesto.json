@@ -6,7 +6,8 @@
             "nome": "manuel.pdf",
             "tipo": "pdf",
             "meta": [{
-                "numero_pags": 3
+                "nome": "numero_pags",
+                "valor": "3"
             }]
         }
     ],
@@ -21,7 +22,8 @@
                     "nome": "teste.pdf",
                     "tipo": "pdf",
                     "meta": [{
-                        "numero_pags": 3
+                        "nome": "numero_pags",
+                        "valor": "3"
                     }]
                 }],
                 "pasta_rec": []

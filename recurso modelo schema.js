@@ -14,6 +14,36 @@ var comentarios  = new mongoose.Schema({
 
 
 
+
+var meta_informacao = new mongoose.Schema({
+    
+   nome:String,
+   valor:String
+
+});
+var ficheiro = new mongoose.Schema({
+    
+    nome:String,
+    tipo:String,
+    meta:[meta_informacao]
+
+});
+
+
+var pasta = new mongoose.Schema({
+    
+    nome:String,
+});
+
+var manifest = new mongoose.Schema({
+    
+    ficheiros:[ficheiro],
+    pasta_rec:[pasta]
+});
+
+pasta.add({ pasta: manifest });
+
+
 var recursosSchema = new mongoose.Schema({
     id:String,
     tipo: String,
@@ -26,7 +56,7 @@ var recursosSchema = new mongoose.Schema({
     likes:Number,
     path:String,
 
-    manifesto:String,
+    manifesto:manifest,
     hashtags:[String],
     posts:[postsmeta,[comentarios]],
 

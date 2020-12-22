@@ -16,7 +16,24 @@ module.exports.unzip = (file) => {
     zip.extractAllTo(extract_fileto, false)
         
         
-    fs.unlinkSync(file)
+   fs.unlinkSync(file)
     
+}
+
+module.exports.zip = (path,nome) =>{
+
+
+    var zip = new AdmZip();
+
+    fs.readdirSync(path).forEach((file) => {
+        if(fs.lstatSync(path+file).isDirectory()) {
+         zip.addLocalFolder(path+file)
+        } else {
+         zip.addLocalFile(path+file)
+        }
+       })
+        zip.writeZip(path+nome)
+    
+
 
 }

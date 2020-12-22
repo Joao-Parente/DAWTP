@@ -1,0 +1,81 @@
+extends layout
+
+block content
+    .w3-card-4
+      header.w3-container.w3-teal
+        h3.w3-left Recurso #{recurso.titulo} (DAW2020)
+      if manifesto.ficheiros.length > 0
+        .w3-container 
+          table.w3-table-all
+            tr 
+              th Titulo
+              th Tipo
+              th Subtitulo
+              th DataCriação
+              th DataRegisto 
+              th Publicador
+              th Likes 
+              th Hashtags
+
+            tr
+              td=recurso.titulo
+              td=recurso.tipo
+              td=recurso.subtitulo
+              td=recurso.dataCriacao
+              td=recurso.dataRegisto
+              td=recurso.produtor
+              td=recurso.likes
+              td=recurso.hashtags
+
+        footer.w3-container.w3-teal
+           p Pastas
+
+        .w3-container 
+          table.w3-table-all
+            tr 
+              th Nome
+
+            each p in manifesto.pasta_rec
+              tr
+                td
+                   a(href="/recursos/"+recurso.id+"/"+p.nome) #{p.nome} 
+
+        footer.w3-container.w3-teal
+           p Ficheiros
+
+        .w3-container 
+          table.w3-table-all
+            tr 
+              th Titulo
+              th Tipo
+              th Meta
+
+              
+            each s in manifesto.ficheiros
+              tr
+                td
+                   a(href="/recursos/"+recurso.id+"/"+s.nome) #{s.nome} 
+                td=s.tipo
+                td=s.subtitulo
+                td
+
+                td  
+                  table.w3-table-all
+                    tr
+                      th Nome Parametro
+                      th Valor Parametro
+                    
+                    each meta in s.meta
+                     tr
+                       td=meta.nome
+                       td=meta.valor
+
+
+
+
+
+      else
+        .w3-container
+          p Não existe este manifesto..
+      footer.w3-container.w3-teal
+         a(href="/") Index 

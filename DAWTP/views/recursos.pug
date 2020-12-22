@@ -9,19 +9,18 @@ block content
           table.w3-table-all
             tr 
               th Titulo
-              th Tipo
-              th Subtitulo
-              th DataCriação
-              th DataRegisto 
+              th subtitulo
+              th dataCriacao
+              th dataRegisto
               th Publicador
-              th Likes 
-              th Hashtags
+              th likes
+              th hashtags
+
 
             each s in list
               tr
                 td
                    a(href="/recursos/"+s.id) #{s.titulo} 
-                td=s.tipo
                 td=s.subtitulo
                 td=s.dataCriacao
                 td=s.dataRegisto

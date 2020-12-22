@@ -12,7 +12,11 @@ module.exports.processaManifesto = (path) => {
 
        
         //console.log("Manifesssto            " + manifesto)
-        var file = require(manifesto)
+        try{  var file = require(manifesto)}
+        catch{
+            console.log("Manifesto não respeita o formato json")
+            return false
+        }
         if (processaPasta(path + '/data/', file)) return true
     }
     

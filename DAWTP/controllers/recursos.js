@@ -19,11 +19,13 @@ module.exports.lookUp = i => {
 }
 
 module.exports.insert = ar =>{
-
+    
     ar.produtor="depende do login"
     ar.dataRegisto=data.myDateTime()
     ar.likes=0
-    ar.id=ar.dataRegisto+ar.titulo
+
+    ar.id=ar.dataRegisto+'-' +Math.random()
+    ar.path=__dirname + '/../public/fileStore/'+ ar.id
 
     var newRecurso = new Recurso(ar)
     return newRecurso.save()
