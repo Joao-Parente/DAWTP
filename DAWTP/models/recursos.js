@@ -16,7 +16,6 @@ var comentarios  = new mongoose.Schema({
 
 var recursosSchema = new mongoose.Schema({
     id:String,
-    tipo: String,
     titulo:String,
     subtitulo:String,
     dataCriacao:Date,

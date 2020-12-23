@@ -1,0 +1,12 @@
+
+
+---------------------------------------
+
+
+Recursos
+
+
+  --> Pegar num manifesto e mostrar os ficheiros no diretorio inicial
+
+
+    se nao colocar ficheiro upload-crasha

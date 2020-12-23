@@ -23,7 +23,7 @@ module.exports.travessiaManifesto = (path, manifesto) => {
                     if (value != "") tail_path += value + '/'
                 });
                 tail_path = tail_path.slice(0, -1);
-                return this.travessiaManifesto(tail_path, manifesto.pasta_rec[i])
+                return this.travessiaManifesto(tail_path, manifesto.pasta_rec[i].pasta)
 
             }
         }

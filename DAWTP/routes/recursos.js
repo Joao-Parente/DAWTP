@@ -59,7 +59,7 @@ router.get('/:id', function (req, res) {
       }
 
       else {
-        console.log("Nao existe o recurso")
+        res.render('RecursoInexistente')
       }
 
 
@@ -70,7 +70,7 @@ router.get('/:id', function (req, res) {
 
 
 
-router.get('/:id/download', function (req, res) {
+router.get('/download/:id', function (req, res) {
    // ir a base de dados ver onde esta a ser gurdado o recurso de id  , zipar enviar e destuir zip
 
     //res.download(__dirname +'/../public/fileStore/'+req.params.id)
@@ -89,7 +89,7 @@ router.get('/:id/download', function (req, res) {
       }
 
       else {
-        console.log("Nao existe o recurso")
+        res.render('RecursoInexistente')
       }
 
 
@@ -130,10 +130,10 @@ router.get('/:id/*', function (req, res) {
           res.render('recurso', { manifesto: man_result, recurso: dados })
         }
 
-        else console.log("O diretorio neste recurso esta errado")
+        else res.render('DiretorioRecursoInvalido')
 
       } else {
-        console.log("Nao existe o recurso")
+        res.render('RecursoInexistente')
       }
     })
 
@@ -153,6 +153,9 @@ router.get('/:id/*', function (req, res) {
 
 router.post('/novo', upload.single('myFile'), function (req, res) {
 
+
+
+  if ( req.file!=null){
   console.log("POST   " + JSON.stringify(req.body))
 
 
@@ -200,6 +203,10 @@ router.post('/novo', upload.single('myFile'), function (req, res) {
     res.render('RecursoFormatoInválido')
     rm.deleteFolderRec(__dirname + '/../' + req.file.path + 'dir')
   }
+
+}
+else res.render('UploadSemSucesso')
+
 });
 
 
