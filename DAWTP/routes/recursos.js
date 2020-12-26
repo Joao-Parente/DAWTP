@@ -29,9 +29,6 @@ router.get('/', function (req, res) {
 
 
 
-
-
-
 router.get('/novo', function (req, res) {
   res.render('novo-recurso-form')
 });
@@ -41,30 +38,49 @@ router.get('/estrutura-manifesto', function (req, res) {
 });
 
 
-
-
-
 router.get('/:id', function (req, res) {
 
+  if(req.params.id == 'antigos'){
+    Recurso.listAntigos()
+      .then(data => {
 
-  Recurso.lookUp(req.params.id)
-    .then(dados => {
+        res.render('recursos', { list: data })
+      })
+      .catch(err => res.render('error', { error: err }))
+  }
+  else if(req.params.id == 'ultimos'){
+    Recurso.listUltimos()
+      .then(data => {
 
-      if (dados != null) {
+        res.render('recursos', { list: data })
+      })
+      .catch(err => res.render('error', { error: err }))
+  }
+  else if(req.params.id == 'likes'){
+    Recurso.listLikes()
+      .then(data => {
 
-        var result = JSON.parse(dados.manifesto);
+        res.render('recursos', { list: data })
+      })
+      .catch(err => res.render('error', { error: err }))
+  }
+  else {
+    Recurso.lookUp(req.params.id)
+      .then(dados => {
 
+        if (dados != null) {
 
-        res.render('recurso', { manifesto: result, recurso: dados }) //manifesto.ficheiros: [] ,recursod ados
-      }
+          var result = JSON.parse(dados.manifesto);
 
-      else {
-        res.render('RecursoInexistente')
-      }
+          res.render('recurso', { manifesto: result, recurso: dados }) //manifesto.ficheiros: [] ,recursod ados
+        }
+        else {
+          res.render('RecursoInexistente')
+        }
 
-
-    })
-    .catch(erro => res.render('error', { error: erro }))
+      })
+      .catch(erro => res.render('error', { error: erro }))
+  }
 
 });
 
@@ -173,7 +189,7 @@ router.post('/novo', upload.single('myFile'), function (req, res) {
 
 
 
-      console.log("O MANIEFESTO" + req.body.manifesto)
+      console.log("O MANIFESTO" + req.body.manifesto)
 
       Recurso.insert(req.body)
         .then(dados => {

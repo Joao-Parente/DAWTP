@@ -5,6 +5,12 @@ block content
       header.w3-container.w3-teal
         h3.w3-left Lista de Recursos (DAW2020)
       if list.length > 0
+        .w3-section
+          p Ordenar por:
+          a(href="/recursos" style="margin-right:10px") Mais recentes
+          a(href="/recursos/antigos" style="margin-right:10px") Mais antigos 
+          a(href="/recursos/ultimos" style="margin-right:10px") Últimos registados 
+          a(href="/recursos/likes") Maior classificação
         .w3-container 
           table.w3-table-all
             tr 

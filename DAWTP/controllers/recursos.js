@@ -8,7 +8,28 @@ var data = require('../public/javascripts/mymood')
 module.exports.list = () => {
     return Recurso
             .find()
-            .sort({titulo:1,ano:-1})
+            .sort({dataCriacao:-1,titulo:1,})
+            .exec()
+}
+
+module.exports.listAntigos = () => {
+    return Recurso
+            .find()
+            .sort({dataCriacao:1,titulo:1})
+            .exec()
+}
+
+module.exports.listUltimos = () => {
+    return Recurso
+            .find()
+            .sort({dataRegisto:-1,dataCriacao:-1,titulo:1})
+            .exec()
+}
+
+module.exports.listLikes = () => {
+    return Recurso
+            .find()
+            .sort({likes:-1,dataCriacao:-1,titulo:1})
             .exec()
 }
 
