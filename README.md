@@ -23,4 +23,4 @@ toDo
         * Autenticacao : criar a auntenticacao, isto ainda vai afetar a forma como são mostrados os recursos, para já está a mostrar tudo independentemente da visibilidade
         
         
-       
+       * Check manifesto: tem de verificar se o tipo do ficheiro e dos existentes              
