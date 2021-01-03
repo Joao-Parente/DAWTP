@@ -4,11 +4,11 @@ var patt = require('path');
 
 
 
-buildManifesto = (path) => {
+module.exports.buildManifesto = (path) => {
 
   var str=JSON.stringify(bmanaux(path))
    
-  fs.writeFile(path+'/manifesto.json', str, (err) => {
+  fs.writeFileSync(path+'/manifesto.json', str, (err) => {
     if (err) {
         throw err;
     }})
@@ -47,4 +47,4 @@ bmanaux = (path) => {
 }
 
 
-var x= buildManifesto(__dirname+'/data')
+//var x= buildManifesto(__dirname+'/data')

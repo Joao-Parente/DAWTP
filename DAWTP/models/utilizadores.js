@@ -17,7 +17,9 @@ var utilizadoresSchema = new mongoose.Schema({
     dataUltimoAcesso:Date,
     username:String,
     password:String,
-    nivel:Number
+    nivel:Number,
+   // posts:[String]
+
 });
 
 module.exports= mongoose.model('utilizador', utilizadoresSchema,'utilizadores')

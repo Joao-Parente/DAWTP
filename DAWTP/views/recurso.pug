@@ -1,6 +1,19 @@
-extends layout
+doctype html
+html
+  head
+    title= title
+    link(rel='stylesheet', href='/stylesheets/style.css')
+    link(rel='stylesheet', href='/stylesheets/jquery.modal.min.css')
+
+    script( src='/javascripts/preview.js')
+    script( src='/javascripts/jquery-3.5.1.min.js')
+    script( src='/javascripts/jquery.modal.min.js')
+   
 
 block content
+
+    .w3-stretch(id="display")
+
     .w3-card-4
       header.w3-container.w3-teal
         h3.w3-left Recurso #{recurso.titulo} (DAW2020)
@@ -70,7 +83,9 @@ block content
                        td=meta.nome
                        td=meta.valor
 
-
+                td
+                  p(onclick=`preview("${s.tipo}","${path_g}${s.nome}","${download}/${s.nome}");`) recurso.tipo
+                      
 
 
 

@@ -1,12 +1,24 @@
 
 
----------------------------------------
+---------------------- O QUE FALTA
+
+
+ADD tipos,
 
 
 Recursos
+    escolher o tipo
 
 
-  --> Pegar num manifesto e mostrar os ficheiros no diretorio inicial
+
+Visualizador:
+        Preview dos tipos conhecidos --> preencher nos recursos: router.get('/preview/:id/*', function (req, res) {
+
+        
 
 
-    se nao colocar ficheiro upload-crasha
+Export/Import
+
+
+
+Posts
