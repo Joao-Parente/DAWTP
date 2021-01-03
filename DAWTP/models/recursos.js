@@ -1,6 +1,7 @@
 var mongoose = require('mongoose')
 
 var postsmeta  = new mongoose.Schema({
+    id:String,
     nome:String,
     conteudo:String,
     data:Date,
@@ -8,10 +9,10 @@ var postsmeta  = new mongoose.Schema({
 });
 
 
-var comentarios  = new mongoose.Schema({
-    comentarios:postsmeta
+var postaux= new mongoose.Schema({
+    meta:postsmeta,
+    coments:[postsmeta]
 });
-
 
 
 var recursosSchema = new mongoose.Schema({
@@ -27,7 +28,7 @@ var recursosSchema = new mongoose.Schema({
 
     manifesto:String,
     hashtags:[String],
-    posts:[postsmeta,[comentarios]],
+    posts:[postaux],
 
 
 });

@@ -30,7 +30,7 @@ var usersRouter = require('./routes/utilizadores');
 var indexRouter = require('./routes/index');
 var recursosRouter = require('./routes/recursos');
 var tiposRouter = require('./routes/tipos');
-
+var publicacoesRouter = require('./routes/publicacoes');
 
 
 
@@ -62,6 +62,7 @@ app.use('/', indexRouter);
 app.use('/utilizadores', usersRouter);
 app.use('/recursos', recursosRouter);
 app.use('/tipos', tiposRouter);
+app.use('/publicacoes', publicacoesRouter);
 
 
 
