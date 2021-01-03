@@ -4,21 +4,26 @@
 
 
 ADD tipos,
+  
 
 
-Recursos
-    escolher o tipo
+
+Hashtags aos recursos no form
 
 
 
 Visualizador:
         Preview dos tipos conhecidos --> preencher nos recursos: router.get('/preview/:id/*', function (req, res) {
-
+            dar fix  ao size do modal xddd
         
 
+Por a guardar em sitios diferentes os recursos no upload
 
 Export/Import
-
-
+               csv com os campos do recurso , um path po manifesto , e um path pos ficheiros
 
 Posts
+
+      [  "nome"
+        "
+        ]
