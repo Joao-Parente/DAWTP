@@ -5,7 +5,7 @@
 toDo
 
 
-        * Posts: Tẽm se de arranjar algum path para tratar deles, adicionar os posts a base de dados na colecao recursos dentro do devido recurso e colocar uma referencia no utilizador para o seu post.
+        * Posts: Tẽm se de arranjar algum path(ex: /publicacoes/:id") para tratar deles, adicionar os posts a base de dados na colecao recursos dentro do devido recurso e colocar uma referencia no utilizador para o seu post.
         
         
         * Exports/Imports: CSV com os campos do recurso ( incluindo o manifesto), path para os ficheiros
