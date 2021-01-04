@@ -4,6 +4,7 @@ var router = express.Router();
 
 var Recurso = require('../controllers/recursos')
 
+var data_agr = require('../public/javascripts/mymood')
 //decolve o html
 router.get('/:idrecurso/:idpost', function (req, res) {
 
@@ -14,8 +15,7 @@ router.get('/:idrecurso/:idpost', function (req, res) {
 
         if (post.meta.id == req.params.idpost) {
 
-
-          res.render('post',{ idrecurso: req.params.recurso ,idpost: req.params.idpost})
+          res.render('post', { idrecurso: req.params.idrecurso, idpost: req.params.idpost })
         }
       });
 
@@ -37,11 +37,11 @@ router.get('/:idrecurso/:idpost', function (req, res) {
 // para o jquery vir buscar os comentarios
 router.get('/:idrecurso/:idpost/coments', function (req, res) {
 
- 
+
   Recurso.lookUp(req.params.idrecurso)
     .then(dados => {
 
-    
+
       dados.posts.forEach(post => {
 
         if (post.meta.id == req.params.idpost) {
@@ -61,13 +61,38 @@ router.get('/:idrecurso/:idpost/coments', function (req, res) {
 
       })
     })
+    .catch(err => res.render('error', { error: err }))
 
-    });
+});
 
 
 router.post('/:idrecurso/:idpost/coments', function (req, res) {
 
-  console.log(req.body.conteudo);
+  if (req.body.conteudo != "") {
+
+    console.log("hi");
+    Recurso.lookUp(req.params.idrecurso)
+    .then(dados => {
+
+      dados.posts.forEach( post =>{
+
+        if (post.meta.id==req.params.idpost){
+          console.log(post.coments);
+          var newComent=JSON.parse('{ "id":"'+ 'idestu'+'","nome":"'+'nomesest' + '","conteudo":"'+ req.body.conteudo + '","data":"' + data_agr.myDateTime()+'"}' );
+          post.coments.push(newComent);
+          console.log("antes");
+          console.log(post.coments);
+          Recurso.edit(dados).then().catch();
+
+        }
+      })
+    
+      
+      
+
+    })
+    .catch(err => res.render('error', { error: err }))
+  }
 });
 
 module.exports = router;

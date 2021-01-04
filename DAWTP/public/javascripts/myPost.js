@@ -4,17 +4,27 @@ $(function(){
         
         JSON.parse(data).forEach(p => {
             console.log("p")
-            console.log("OLAAAAAAAAAAAAAAAAAAAAAAAAA "+ idr +idp)
+            console.log("OLAAAAAAAAAAAAAAAAAAAAAAAAA "+ idr +idp    )
             $("#comentList").append("<li>" +"("+p.data+")   "+":"+ p.nome +": "+p.conteudo +" </li>"); 
         });
     })
 
     $("#addComent").click(function(){
 
-        $("#comentList").append("<li>" +  $("#comentText").val()  +  "</li>");
+       // $("#comentList").append("<li>" +  $("#comentText").val()  +  "</li>");
 
-        $.post('http://localhost:7770/publicacoes/2/3/coments',$("#myPost").serialize())
-        alert('Record inserted: ' + JSON.stringify($("#myPost").serialize()))
-        $("#comentText").val("");
+        $.post('http://localhost:7770/publicacoes/'+idr+'/'+idp+'/coments',$("#myPost").serialize())
+        //alert('Record inserted: ' + JSON.stringify($("#myPost").serialize()))
+        //$("#comentText").val("");
+
+        $("#comentList").empty();
+        $.get('http://localhost:7770/publicacoes/def/1/coments',function(data){
+        
+            JSON.parse(data).forEach(p => {
+                console.log("p")
+                console.log("OLAAAAAAAAAAAAAAAAAAAAAAAAA "+ idr +idp    )
+                $("#comentList").append("<li>" +"("+p.data+")   "+":"+ p.nome +": "+p.conteudo +" </li>"); 
+            });
+        })
     })
 })
