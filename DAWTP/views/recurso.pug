@@ -65,9 +65,9 @@ block content
 
               
             each s in manifesto.ficheiros
-              tr
-                td
-                   a(href="/recursos/"+recurso.id+"/"+s.nome) #{s.nome} 
+              tr(onclick=`preview("${s.tipo}","${s.nome}","${path_g}${s.nome}","${download}/${s.nome}");`)
+
+                td=s.nome
                 td=s.tipo
                 td=s.subtitulo
                 td
@@ -83,8 +83,7 @@ block content
                        td=meta.nome
                        td=meta.valor
 
-                td
-                  p(onclick=`preview("${s.tipo}","${path_g}${s.nome}","${download}/${s.nome}");`) recurso.tipo
+
                       
 
 

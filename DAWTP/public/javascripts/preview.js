@@ -1,9 +1,10 @@
-function preview(t,p,down){//tipo,path){
+function preview(tipo,nome,pfileStore,down){//tipo,path){
 //console.log("path " + path +" tipo e "+tipo )
-    console.log("PATHHHH"+p);    
-
-    var tipo='js'
-    var nome="ola"
+// pfilestore e o path apartir do public ex: /images/789.js para o src/obj
+    console.log("PATHHHH de downlaod"+down);    
+    console.log("tipooo  e nome"+tipo +" e " +nome)
+   // var tipo='js'
+    //var nome="ola"
     var path= "/images/789.js"
 
     var ficheiro;
