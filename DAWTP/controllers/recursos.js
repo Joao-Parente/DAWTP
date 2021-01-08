@@ -11,6 +11,12 @@ module.exports.list = () => {
             .sort({titulo:1,ano:-1})
             .exec()
 }
+module.exports.listHashtags = (htags) => {
+    return Recurso
+            .find({ hashtags : { $all : htags }})
+            .sort({titulo:1,ano:-1})
+            .exec()
+}
 
 module.exports.lookUp = i => {
     return Recurso

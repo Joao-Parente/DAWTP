@@ -51,7 +51,9 @@ router.get('/:idrecurso/:idpost', function (req, res) {
 
         if (post.meta.id == req.params.idpost) {
 
-          res.render('post', { idrecurso: req.params.idrecurso, idpost: req.params.idpost })
+          
+      
+          res.render('post', { infopost:post.meta,idrecurso: req.params.idrecurso, idpost: req.params.idpost })
         }
       });
 
@@ -91,7 +93,7 @@ router.get('/:idrecurso/:idpost/coments', function (req, res) {
           });
 
           jsonStr = JSON.stringify(obj.comentarios);
-          res.json(jsonStr)
+          res.status(200).json(jsonStr)
 
         }
 

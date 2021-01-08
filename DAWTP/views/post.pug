@@ -15,8 +15,21 @@ html
 block content
 
 
-    .w3-container.w3-blue
+    .w3-container.w3-teal
         h1 Post
+
+        .w3-container
+            dl
+                dt Data do Post
+                dd=infopost.data
+
+                dt  Publicador do Post 
+                dd=infopost.nome
+
+                dt  Conteudo do Post 
+                dd=infopost.conteudo
+
+              
     form.w3-container(id="myPost")
         fieldset.w3-container.w3-margin
             legend new coment
@@ -25,7 +38,7 @@ block content
                     td Text:
                     td 
                         textarea( id="comentText" name="conteudo", cols="80", rows="3")
-            input.w3-btn.w3-blue.w3-round.w3-margin(type="button" value="Add comment" id="addComent")
+            input.w3-btn.w3-teal.w3-round.w3-margin(type="button" value="Add comment" id="addComent")
     .w3-container.w3-border.w3-margin
         ul.w3-ul(id="comentList") 
 
