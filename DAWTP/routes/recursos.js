@@ -57,7 +57,11 @@ router.get('/:id', function (req, res) {
         var result = JSON.parse(dados.manifesto);
 
 
-        res.render('recurso', { manifesto: result, recurso: dados,path_g : dados.path+'/' ,download: "/recursos/download/"+req.params.id}) //manifesto.ficheiros: [] ,recursod ados
+        var path_filestore_aux= dados.path.split('public')[1].split('/');
+        path_filestore_aux[2]=path_filestore_aux[2] + '/data';
+        var path_filestore = path_filestore_aux.join('/')+'/'
+
+        res.render('recurso', { manifesto: result, recurso: dados,path_g :  path_filestore,download: "/recursos/download/"+req.params.id}) //manifesto.ficheiros: [] ,recursod ados
       }
 
       else {
@@ -206,7 +210,15 @@ console.log("obter recurso uma pasta")
         var man_result = travman.travessiaManifesto(tail_path, mani)
         if (man_result != null && man_result!=true) {
 
-          res.render('recurso', { manifesto: man_result, recurso: dados, path_g : dados.path+'/'+tail_path+'/' })
+
+          var path_filestore_aux= dados.path.split('public')[1].split('/');
+          path_filestore_aux[2]=path_filestore_aux[2] + '/data';
+          var path_filestore = path_filestore_aux.join('/')+'/'+path_recurso.slice(1).join('/') + '/'
+
+          console.log(path_filestore)
+
+
+          res.render('recurso', { manifesto: man_result, recurso: dados, path_g : path_filestore,download: "/recursos/download/"+path_recurso.join('/')})
         }
 
         else res.render('DiretorioRecursoInvalido')
@@ -261,6 +273,8 @@ router.post('/novo', upload.single('myFile'), function (req, res) {
             let oldPath = __dirname + '/../' + req.file.path + 'dir'
             let newPath = dados.path
 
+            console.log("reqqqqqqqqq")
+            console.log(req.body)
 
             console.log("Inseri o objeto:" + dados.id + "bd obj" + dados.path)
 

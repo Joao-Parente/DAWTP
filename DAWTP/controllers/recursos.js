@@ -25,7 +25,9 @@ module.exports.insert = ar =>{
     ar.likes=0
 
     ar.id=ar.dataRegisto+'-' +Math.random()
-    ar.path=__dirname + '/../public/fileStore/'+ ar.id
+    ar.hashtags=ar.hashtags.split(',')
+    console.log(ar.hashtags)
+    ar.path=__dirname + '/../public/fileStore/' +ar.id
 
     var newRecurso = new Recurso(ar)
     return newRecurso.save()

@@ -6,6 +6,42 @@ var Recurso = require('../controllers/recursos')
 
 var data_agr = require('../public/javascripts/mymood')
 //decolve o html
+
+var { debug } = require('../public/javascripts/debug')
+
+
+
+
+
+router.get('/:idrecurso/novo', function (req, res) {
+
+  Recurso.lookUp(req.params.idrecurso)
+    .then(dados => {
+
+      var id = data_agr.myDateTime() + 'f' + Math.random();
+      var user = "user_na_sessao"
+      var conteudo = " conteudo"
+
+      var jsonStr = '{"meta":{"id":"' + id + '","nome":"' + user + '",\
+      "conteudo":"' + conteudo + '","data":"' + data_agr.myDateTime() + '"},\
+      "coments":[]}';
+
+      dados.posts.push(JSON.parse(jsonStr));
+      if (debug) console.log("DADOSSS")
+      if (debug) console.log(dados)
+      Recurso.edit(dados).then().catch();
+
+      res.redirect('/publicacoes/' + req.params.idrecurso + '/' + id)
+
+    })
+    .catch(err => res.render('error', { error: err }))
+
+
+});
+
+
+
+
 router.get('/:idrecurso/:idpost', function (req, res) {
 
   Recurso.lookUp(req.params.idrecurso)
@@ -72,27 +108,55 @@ router.post('/:idrecurso/:idpost/coments', function (req, res) {
 
     console.log("hi");
     Recurso.lookUp(req.params.idrecurso)
-    .then(dados => {
+      .then(dados => {
 
-      dados.posts.forEach( post =>{
+        dados.posts.forEach(post => {
 
-        if (post.meta.id==req.params.idpost){
-          console.log(post.coments);
-          var newComent=JSON.parse('{ "id":"'+ 'idestu'+'","nome":"'+'nomesest' + '","conteudo":"'+ req.body.conteudo + '","data":"' + data_agr.myDateTime()+'"}' );
-          post.coments.push(newComent);
-          console.log("antes");
-          console.log(post.coments);
-          Recurso.edit(dados).then().catch();
+          if (post.meta.id == req.params.idpost) {
+            console.log(post.coments);
+            var newComent = JSON.parse('{ "id":"' + 'idestu' + '","nome":"' + 'nomesest' + '","conteudo":"' + req.body.conteudo + '","data":"' + data_agr.myDateTime() + '"}');
+            post.coments.push(newComent);
+            console.log("antes");
+            console.log(post.coments);
+            Recurso.edit(dados).then().catch();
 
-        }
+          }
+        })
+
+
+
+
       })
-    
-      
-      
-
-    })
-    .catch(err => res.render('error', { error: err }))
+      .catch(err => res.render('error', { error: err }))
   }
 });
+
+//Obter posts de um recurso
+router.get('/:idrecurso', function (req, res) {
+
+
+  Recurso.lookUp(req.params.idrecurso)
+    .then(dados => {
+
+      var objlist = []
+
+      dados.posts.forEach(post => {
+
+        var obj_post = post;
+        obj_post.idrecurso=dados.id;
+        obj_post.idpost=post.meta.id;
+        obj_post.titulo_recurso = dados.titulo;
+        obj_post.publicador_recurso = dados.produtor;
+
+
+        objlist.push(obj_post)
+
+      })
+      res.render('posts',{list: objlist})
+    })
+    .catch(err => res.render('error', { error: err }))
+
+});
+
 
 module.exports = router;

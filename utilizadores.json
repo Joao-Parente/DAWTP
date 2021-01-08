@@ -1,32 +1,45 @@
-[{
-    "nome": "josé carlos",
-    "email": "jcr@jcr.pt",
-    "filiacao": {
-        "estudante": true,
-        "docente": false,
-        "curso": "Miei",
-        "departamento": "Informatica"
-    },
-    "dataRegisto":"12/03/2020",
-    "dataUltimoAcesso":"12/03/2020",
-    "username":"jcr",
-    "password":"pas123",
-    "nivel": 2
+[
 
-},
-{
-    "nome": "jaugusto",
-    "email": "jaaa@jaaa.pt",
-    "filiacao": {
-        "estudante": false,
-        "docente": true,
-        "curso": "adsa",
-        "departamento": "zzzzzzzz"
-    },
-    "dataRegisto":"12/03/2020",
-    "dataUltimoAcesso":"12/03/2020",
-    "username":"augusto",
-    "password":"pas123",
-    "nivel": 2
 
-}]
+
+    {
+        "nome": "josé carlos",
+        "email": "jcr@jcr.pt",
+        "filiacao": {
+            "estudante": true,
+            "docente": false,
+            "curso": "Miei",
+            "departamento": "Informatica"
+        },
+        "dataRegisto": "12/03/2020",
+        "dataUltimoAcesso": "12/03/2020",
+        "username": "jcr",
+        "password": "123",
+        "nivel": 2
+
+    }
+
+
+
+
+
+
+
+    ,
+    {
+        "nome": "jaugusto",
+        "email": "jaaa@jaaa.pt",
+        "filiacao": {
+            "estudante": false,
+            "docente": true,
+            "curso": "adsa",
+            "departamento": "zzzzzzzz"
+        },
+        "dataRegisto": "12/03/2020",
+        "dataUltimoAcesso": "12/03/2020",
+        "username": "augusto",
+        "password": "pas123",
+        "nivel": 2
+
+    }
+]

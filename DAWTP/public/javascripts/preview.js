@@ -1,19 +1,19 @@
 function preview(tipo,nome,pfileStore,down){//tipo,path){
 //console.log("path " + path +" tipo e "+tipo )
 // pfilestore e o path apartir do public ex: /images/789.js para o src/obj
-    console.log("PATHHHH de downlaod"+down);    
+    console.log("PATHHHH de downlaod:"+down);    
     console.log("tipooo  e nome"+tipo +" e " +nome)
    // var tipo='js'
     //var nome="ola"
-    var path= "/images/789.js"
+    //var path= "/images/789.js"
 
     var ficheiro;
     switch (tipo){
-        case 'png' :  ficheiro= '<img src="'+ path + '" width="80%" />';break;
+        case 'png' :  ficheiro= '<img src="'+ pfileStore + '" width="80%" />';break;
         
-        case 'pdf' :  ficheiro= '<object data="'+path + '"></object>';break;
+        case 'pdf' :  ficheiro= '<object data="'+pfileStore + '"></object>';break;
         
-        case 'js' :  ficheiro= '<object data="'+path + '"></object>';break;
+        case 'js' :  ficheiro= '<object data="'+pfileStore + '"></object>';break;
 
 
 

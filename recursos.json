@@ -1,9 +1,8 @@
 [{
 
     "id":"dasda",
-    "tipo": "relatorio",
-    "titulo": "",
-    "subtitulo": "",
+    "titulo": "titulo1",
+    "subtitulo": "subtitulo",
     "dataCriacao": "13/12/2010",
     "dataRegisto": "13/12/2010",
     "produtor": "Margarida@gmail.pt",

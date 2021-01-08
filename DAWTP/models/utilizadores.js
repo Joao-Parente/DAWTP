@@ -18,7 +18,7 @@ var utilizadoresSchema = new mongoose.Schema({
     username:String,
     password:String,
     nivel:Number,
-   // posts:[String]
+    posts:[String]
 
 });
 

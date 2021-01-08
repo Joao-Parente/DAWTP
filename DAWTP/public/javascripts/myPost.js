@@ -1,6 +1,6 @@
 $(function(){
 
-    $.get('http://localhost:7770/publicacoes/def/1/coments',function(data){
+    $.get({url:'http://localhost:7770/publicacoes/'+idr+'/'+idp+'/coments',cache: false},function(data){
         
         JSON.parse(data).forEach(p => {
             console.log("p")
@@ -13,13 +13,13 @@ $(function(){
 
        // $("#comentList").append("<li>" +  $("#comentText").val()  +  "</li>");
 
-        $.post('http://localhost:7770/publicacoes/'+idr+'/'+idp+'/coments',$("#myPost").serialize())
+        $.post({url:'http://localhost:7770/publicacoes/'+idr+'/'+idp+'/coments',cache: false},$("#myPost").serialize())
         //alert('Record inserted: ' + JSON.stringify($("#myPost").serialize()))
         //$("#comentText").val("");
 
         $("#comentList").empty();
-        $.get('http://localhost:7770/publicacoes/def/1/coments',function(data){
-        
+        $.get({url:'http://localhost:7770/publicacoes/'+idr+'/'+idp+'/coments',cache: false},function(data){
+            
             JSON.parse(data).forEach(p => {
                 console.log("p")
                 console.log("OLAAAAAAAAAAAAAAAAAAAAAAAAA "+ idr +idp    )
