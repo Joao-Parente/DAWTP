@@ -4,7 +4,8 @@ var router = express.Router();
 var User = require('../controllers/utilizadores')
 
 
-/* GET users listing. */
+
+// Lista utilizadores
 router.get('/', function (req, res) {
   User.list()
     .then(data => {
@@ -14,11 +15,26 @@ router.get('/', function (req, res) {
     .catch(err => res.render('error', { error: err }))
 });
 
+
+//Registar-from
 router.get('/registo', function (req, res) {
   res.render('reg-utilizador-form')
 });
 
+//Registo
+router.post('/registo', function(req, res) {
 
+
+  User.insert(req.body)
+    .then(dados => res.redirect('/'))
+    .catch(erro => res.render('error',{error:erro}))
+  
+});
+
+
+
+
+//Consultar 1 utilizador
 router.get('/:username', function (req, res) {
   User.lookUp(req.params.username)
     .then(data => {
@@ -30,14 +46,6 @@ router.get('/:username', function (req, res) {
 });
 
 
-router.post('/registo', function(req, res) {
-
-
-  User.insert(req.body)
-    .then(dados => res.redirect('/'))
-    .catch(erro => res.render('error',{error:erro}))
-  
-});
 
 
 module.exports = router;

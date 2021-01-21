@@ -3,18 +3,25 @@
 
 var fs = require('fs');
 var {log}= require('./debug')
+var Recursos = require('./../../controllers/recursos')
 
-module.exports.exportCSV = (listRecurso) => {
+exportCSV= (listRecurso) => {
 
-    var linha="";
+    var linha="id ,titulo,subtitulo,dataCriacao,dataRegisto,produtor,visibilidade,likes,path,manifesto,[hastags],[post]\n"
+
     listRecurso.forEach(recurso => {
         linha+=recursoToCSV(recurso)
     });
 
-    log(JSON.stringify(linha))
+   // log(JSON.stringify(linha))
+   fs.writeFileSync('/home/jpedro/Desktop/playground/recursos.csv', linha, (err) => {
+    if (err) {
+        throw err;
+    }})
 
 }
 
+module.exports.exportCSV= exportCSV
 
 recursoToCSV = (recurso) => {
     var linha = recurso.id + "," + recurso.titulo + ","
@@ -66,3 +73,7 @@ comentToCSV = (coment) => {
     return linha;
 }
 
+/*
+Recursos.list().then(dados=> exportCSV(dados))
+.catch(err => log(err))
+*/

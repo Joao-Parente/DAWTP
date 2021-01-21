@@ -5,7 +5,6 @@ var router = express.Router();
 var Recurso = require('../controllers/recursos')
 
 var data_agr = require('../public/javascripts/mymood')
-//decolve o html
 
 var { debug } = require('../public/javascripts/debug')
 

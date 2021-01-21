@@ -6,7 +6,6 @@ var Tipo = require('../controllers/tipos')
 
 
 
-/* GET users listing. */
 router.get('/', function(req, res) {
   Tipo.list()
     .then(data => {

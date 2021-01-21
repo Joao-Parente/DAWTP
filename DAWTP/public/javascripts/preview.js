@@ -7,6 +7,7 @@ function preview(tipo,nome,pfileStore,down){//tipo,path){
     //var nome="ola"
     //var path= "/images/789.js"
 
+    console.log("heloooooooooo"+pfileStore)
     var ficheiro;
     switch (tipo){
         case 'png' :  ficheiro= '<img src="'+ pfileStore + '" width="80%" />';break;

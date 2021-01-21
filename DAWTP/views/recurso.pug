@@ -51,7 +51,7 @@ block content
             each p in manifesto.pasta_rec
               tr
                 td
-                   a(href="/recursos/"+recurso.id+"/"+p.nome) #{p.nome} 
+                   a(href='/recursos/'+download+"/"+p.nome) #{p.nome} 
 
         footer.w3-container.w3-teal
            p Ficheiros
@@ -65,7 +65,7 @@ block content
 
               
             each s in manifesto.ficheiros
-              tr(onclick=`preview("${s.tipo}","${s.nome}","${path_g}${s.nome}","${download}/${s.nome}");`)
+              tr(onclick=`preview("${s.tipo}","${s.nome}","/${path_g}/${s.nome}","/recursos/download/${download}/${s.nome}");`)
 
                 td=s.nome
                 td=s.tipo

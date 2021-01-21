@@ -33,7 +33,7 @@ module.exports.insert = ar =>{
     ar.id=ar.dataRegisto+'-' +Math.random()
     ar.hashtags=ar.hashtags.split(',')
     console.log(ar.hashtags)
-    ar.path=__dirname + '/../public/fileStore/' +ar.id
+    ar.path='fileStore/' +ar.id
 
     var newRecurso = new Recurso(ar)
     return newRecurso.save()

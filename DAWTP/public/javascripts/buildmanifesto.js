@@ -8,7 +8,7 @@ buildManifesto = (path) => {
 
   var str=JSON.stringify(bmanaux(path))
    
-  fs.writeFileSync(path+'/manifesto.json', str, (err) => {
+  fs.writeFileSync(path+'/../manifesto.json', str, (err) => {
     if (err) {
         throw err;
     }})
@@ -37,7 +37,7 @@ bmanaux = (path) => {
 
                 di++;
             } else { // delete file
-                var ext = patt.extname(file);
+                var ext = patt.extname(file).slice(1);
                 obj.ficheiros[fi]={"nome":file,"tipo":ext, "meta":[]}
                 fi++;
             }
@@ -47,4 +47,4 @@ bmanaux = (path) => {
 }
 
 
-//var x= buildManifesto(__dirname+'/data')
+//var x= buildManifesto(__dirname)

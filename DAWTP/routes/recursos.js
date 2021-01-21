@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-
+var fse = require('fs-extra');
 var User = require('../controllers/utilizadores')
 var Recurso = require('../controllers/recursos')
 var Zip = require('../public/javascripts/unzip')
@@ -8,19 +8,17 @@ var checkman = require('../public/javascripts/checkmanifesto')
 var travman = require('../public/javascripts/travessiamanifesto')
 var rm = require('../public/javascripts/rmrecursivo')
 var Tipo = require('../controllers/tipos')
-
-
 var bman = require('../public/javascripts/buildmanifesto')
-
 var multer = require('multer')
 var upload = multer({ dest: 'uploads/' })
 var fs = require('fs');
 const { unzip } = require('zlib');
 const { exportCSV } = require('../public/javascripts/exportCSV');
+const { importCSV } = require('../public/javascripts/importCSV');
+var { log } = require('../public/javascripts/debug');
 
 
-
-/* GET users listing. */
+// Lista Recursos
 router.get('/', function (req, res) {
 
 
@@ -48,11 +46,12 @@ router.get('/', function (req, res) {
 
 
 
-
+//Novo recurso
 router.get('/novo', function (req, res) {
   res.render('novo-recurso-form')
 });
 
+//Esquema estrtura manifesto
 router.get('/estrutura-manifesto', function (req, res) {
   res.render('EstruturaManifesto')
 });
@@ -60,10 +59,10 @@ router.get('/estrutura-manifesto', function (req, res) {
 
 
 
-
+//Consulta 1 recurso
 router.get('/:id', function (req, res) {
 
-  console.log("obtemm inicio recurso")
+  log("obtemm inicio recurso")
 
   Recurso.lookUp(req.params.id)
     .then(dados => {
@@ -71,15 +70,9 @@ router.get('/:id', function (req, res) {
       if (dados != null) {
 
         var result = JSON.parse(dados.manifesto);
+        log("                           DOWNLOAD: " + req.params.id)
+        res.render('recurso', { manifesto: result, recurso: dados, path_g: dados.path + '/data', download: req.params.id }) //manifesto.ficheiros: [] ,recursod ados
 
-
-        exportCSV([dados])
-
-        var path_filestore_aux = dados.path.split('public')[1].split('/');
-        path_filestore_aux[2] = path_filestore_aux[2] + '/data';
-        var path_filestore = path_filestore_aux.join('/') + '/'
-
-        res.render('recurso', { manifesto: result, recurso: dados, path_g: path_filestore, download: "/recursos/download/" + req.params.id }) //manifesto.ficheiros: [] ,recursod ados
       }
 
       else {
@@ -92,9 +85,9 @@ router.get('/:id', function (req, res) {
 
 });
 
-
-
+//Download de parte de um recurso
 router.get('/download/:id/*', function (req, res) {
+
 
   var path_recurso = req.url.split('/').slice(2)
 
@@ -112,38 +105,52 @@ router.get('/download/:id/*', function (req, res) {
         });
         tail_path = tail_path.slice(0, -1);
 
+        //faz a travessia a partir do path da rota e ve se é possivel se nao for retorna null
+        // se for e for um diretorio retorna false
+        // se for e for um ficheiro retorna true
         var man_result = travman.travessiaManifesto(tail_path, mani)
+        //diretorio
         if (man_result != null && man_result != true) {
 
 
-          var path_zip = dados.path + '/data/' + tail_path + '/'
-
+          //tenho de ver isto melhor
+/*
+          // nome do zip
           var nome_zip = dados.titulo + '.zip'
 
-          bman.buildManifesto(dados.path + '/data/' + tail_path + '/')
+          //cria um manifesto
+          bman.buildManifesto(__dirname + '/../tempfile/data')
 
-
-          Zip.zip(path_zip, nome_zip)
-
+          Zip.zip('../tempfile/', nome_zip)
           res.download(__dirname + '/../tempzip/' + nome_zip)
 
-          fs.unlinkSync(dados.path + '/data/' + tail_path + '/manifesto.json');
+          // rm.deleteFolderRec(__dirname + '/../tempfile/')
+          // fs.mkdirSync(__dirname + '/../tempfile/')
+          // fs.mkdirSync(__dirname + '/../tempfile/data') */
+
 
         }
+        //ficheiro
         else if (man_result != null && man_result == true) {
 
-          //download de so um ficheiro
-          var tempfile = __dirname + '/../tempfile/' + path_recurso[path_recurso.length - 1];
+          //path para o tempfile
+          var tempfile = __dirname + '/../tempfile/data/' + path_recurso[path_recurso.length - 1];
 
-          fs.copyFileSync(dados.path + '/data/' + tail_path, tempfile);
-          bman.buildManifesto(__dirname + '/../tempfile/')
+          //copiar o file para o diretorio de tempfile
+          fs.copyFileSync(__dirname + '/../public/' + dados.path + '/data/' + tail_path, tempfile);
+          //criar manifesto
+          bman.buildManifesto(__dirname + '/../tempfile/data')
 
           var nome_zip = path_recurso[path_recurso.length - 1] + '.zip'
-          Zip.zip(__dirname + '/../tempfile/', nome_zip)
+
+
+
+          Zip.zip('../tempfile/', nome_zip)
           res.download(__dirname + '/../tempzip/' + nome_zip)
 
           rm.deleteFolderRec(__dirname + '/../tempfile/')
           fs.mkdirSync(__dirname + '/../tempfile/')
+          fs.mkdirSync(__dirname + '/../tempfile/data')
 
         }
 
@@ -163,13 +170,12 @@ router.get('/download/:id/*', function (req, res) {
 
 
 
-
+// Donwload recurso completo
 router.get('/download/:id', function (req, res) {
   // ir a base de dados ver onde esta a ser gurdado o recurso de id  , zipar enviar e destuir zip
 
-  //res.download(__dirname +'/../public/fileStore/'+req.params.id)
 
-  console.log("donload recurso compelto")
+  log("donload recurso compelto")
 
   Recurso.lookUp(req.params.id)
     .then(dados => {
@@ -183,6 +189,7 @@ router.get('/download/:id', function (req, res) {
 
         Zip.zip(path_zip, nome_zip)
 
+        //zipa tudo para /tempzip e faz download dai (zipar noo sitio tava a por o zip dentro X)  )
         res.download(__dirname + '/../tempzip/' + nome_zip)
 
       }
@@ -203,7 +210,7 @@ router.get('/download/:id', function (req, res) {
 
 
 
-
+// Preview Recurso (sem ser o inicial)
 router.get('/:id/*', function (req, res) {
 
 
@@ -218,25 +225,16 @@ router.get('/:id/*', function (req, res) {
 
         var mani = JSON.parse(dados.manifesto);
 
-        var tail_path = ""
-        path_recurso.slice(1).forEach(function (value) {
-          if (value != "") tail_path += value + '/'
-        });
-        tail_path = tail_path.slice(0, -1);
-        console.log("PATH G " + dados.path + tail_path)
+        var tail_path = path_recurso.slice(1).join('/')
 
         var man_result = travman.travessiaManifesto(tail_path, mani)
         if (man_result != null && man_result != true) {
 
+          //log("/recursos/download/" + path_recurso.join('/'))       
+          log("                           DOWNLOAD: " + path_recurso.join('/'))
+          console.log("Manifesto" + JSON.stringify(mani))
 
-          var path_filestore_aux = dados.path.split('public')[1].split('/');
-          path_filestore_aux[2] = path_filestore_aux[2] + '/data';
-          var path_filestore = path_filestore_aux.join('/') + '/' + path_recurso.slice(1).join('/') + '/'
-
-          console.log(path_filestore)
-
-
-          res.render('recurso', { manifesto: man_result, recurso: dados, path_g: path_filestore, download: "/recursos/download/" + path_recurso.join('/') })
+          res.render('recurso', { manifesto: man_result, recurso: dados, path_g: dados.path + '/data/' + path_recurso.slice(1).join('/') + '/', download: path_recurso.join('/') })
         }
 
         else res.render('DiretorioRecursoInvalido')
@@ -259,7 +257,7 @@ router.get('/:id/*', function (req, res) {
 
 
 
-
+// Upload de um recurso
 router.post('/novo', upload.single('myFile'), function (req, res) {
 
 
@@ -275,27 +273,26 @@ router.post('/novo', upload.single('myFile'), function (req, res) {
       var fl = true;
       Tipo.list().then(dados => {
         fl = checkman.processaManifesto(__dirname + '/../' + req.file.path + 'dir', dados)
-
+        // se o pacote corresponder com o manifesto vamos inserir
         if (fl) {
 
-
+          //ler manifesto 
           var obj_json = __dirname + '/../' + req.file.path + 'dir' + '/manifesto.json'
           req.body.manifesto = JSON.stringify(require(obj_json))
 
 
-
-
-          console.log("O MANIEFESTO" + req.body.manifesto)
+          log("O MANIEFESTO" + req.body.manifesto)
 
           Recurso.insert(req.body)
             .then(dados => {
 
 
               let oldPath = __dirname + '/../' + req.file.path + 'dir'
-              let newPath = dados.path
+              let newPath = __dirname + '/../public/' + dados.path
+              log("new" + newPath)
 
-              console.log("reqqqqqqqqq")
-              console.log(req.body)
+              log("reqqqqqqqqq")
+              log(req.body)
 
               console.log("Inseri o objeto:" + dados.id + "bd obj" + dados.path)
 
@@ -312,7 +309,7 @@ router.post('/novo', upload.single('myFile'), function (req, res) {
 
 
       })
-        .catch(err => res.render('error',{error:err}));
+        .catch(err => res.render('error', { error: err }));
     }
     else {
       res.render('RecursoFormatoInválido')
