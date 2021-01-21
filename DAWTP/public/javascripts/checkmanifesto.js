@@ -84,7 +84,11 @@ processaFicheiro = (current_path, ficheiro) => {
   
                     if (meta1_tipo && meta1_tipo.tipo_param.toUpperCase() == (typeof ficheiro.meta[i].valor).toUpperCase()) { log("all GUDDDDDDDDDDD") }
 
-                    else { log("errrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrorrrrrrrrrrrrrrr"); return false; }
+
+                    else { log ("devia ser:" +meta1_tipo.tipo_param.toUpperCase())
+                    log("era: "+ficheiro.meta[i].valor.toUpperCase())
+                    log("tipo:"+(typeof ficheiro.meta[i].valor).toUpperCase())
+                        log("errrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrorrrrrrrrrrrrrrr"); return false; }
 
                 }
                 return true

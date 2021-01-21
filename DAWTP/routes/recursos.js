@@ -100,11 +100,7 @@ router.get('/download/:id/*', function (req, res) {
 
         var mani = JSON.parse(dados.manifesto);
 
-        var tail_path = ""
-        path_recurso.slice(1).forEach(function (value) {
-          if (value != "") tail_path += value + '/'
-        });
-        tail_path = tail_path.slice(0, -1);
+        var tail_path = path_recurso.slice(1).join('/')
 
         //faz a travessia a partir do path da rota e ve se é possivel se nao for retorna null
         // se for e for um diretorio retorna false
@@ -115,46 +111,62 @@ router.get('/download/:id/*', function (req, res) {
         if (man_result != null && man_result != true) {
 
 
-          //tenho de ver isto melhor
 
-          var tempfile = __dirname + '/../tempfile/data/' + path_recurso[path_recurso.length - 1];
+          var random_tempdir=Math.random()+'_'+Math.random()+'-' +Math.random();
+          fs.mkdirSync(__dirname + '/../tempfile/'+random_tempdir);
+          fs.mkdirSync(__dirname + '/../tempfile/'+random_tempdir+'/data');
+          var tempfile = __dirname + '/../tempfile/'+random_tempdir+'/data/' + path_recurso[path_recurso.length - 1];
           cp.cpRecursivo(__dirname + '/../public/' + dados.path + '/data/' + tail_path,tempfile)
+         
           // nome do zip
           var nome_zip = dados.titulo + '.zip'
 
+          var tempzip  = __dirname + '/../tempzip/'+nome_zip
+
           //cria um manifesto
-          bman.buildManifesto(__dirname + '/../tempfile/data')
+          bman.buildManifesto(__dirname + '/../tempfile/'+random_tempdir+'/data')
 
-          Zip.zip('../tempfile/', nome_zip)
-          res.download(__dirname + '/../tempzip/' + nome_zip)
+          Zip.zip('../tempfile/'+random_tempdir+'/', nome_zip)
+          res.download(tempzip,function(err){
+               rm.deleteFolderRec(__dirname + '/../tempfile/'+random_tempdir)
+               fs.unlinkSync(tempzip);
+               if (err) log(err)
+          });
+          
 
-          console.log("tou otu tou tou tou")
-          rm.deleteFolderRec(__dirname + '/../tempfile/')
-          fs.mkdirSync(__dirname + '/../tempfile/')
-          fs.mkdirSync(__dirname + '/../tempfile/data') 
+       
+
 
         }
         //ficheiro
         else if (man_result != null && man_result == true) {
 
-          //path para o tempfile
-          var tempfile = __dirname + '/../tempfile/data/' + path_recurso[path_recurso.length - 1];
-
-          //copiar o file para o diretorio de tempfile
-          fs.copyFileSync(__dirname + '/../public/' + dados.path + '/data/' + tail_path, tempfile);
-          //criar manifesto
-          bman.buildManifesto(__dirname + '/../tempfile/data')
 
           var nome_zip = path_recurso[path_recurso.length - 1] + '.zip'
 
+          //path para o tempfile
+          var random_tempdir=Math.random()+'_'+Math.random()+'-' +Math.random();
+          fs.mkdirSync(__dirname + '/../tempfile/'+random_tempdir);
+          fs.mkdirSync(__dirname + '/../tempfile/'+random_tempdir+'/data');
+          var tempfile = __dirname + '/../tempfile/'+random_tempdir+'/data/' + path_recurso[path_recurso.length - 1];
+          
+          var tempzip  = __dirname + '/../tempzip/'+nome_zip
 
+          //copiar o file para o diretorio de tempfile
+          fs.copyFileSync(__dirname + '/../public/' + dados.path + '/data/' + tail_path, tempfile);
+          
+          //criar manifesto
+          bman.buildManifesto(__dirname + '/../tempfile/'+random_tempdir+'/data')
 
-          Zip.zip('../tempfile/', nome_zip)
-          res.download(__dirname + '/../tempzip/' + nome_zip)
+         
 
-          rm.deleteFolderRec(__dirname + '/../tempfile/')
-          fs.mkdirSync(__dirname + '/../tempfile/')
-          fs.mkdirSync(__dirname + '/../tempfile/data')
+          Zip.zip('../tempfile/'+random_tempdir, nome_zip)
+          res.download(tempzip,function(err){
+            rm.deleteFolderRec(__dirname + '/../tempfile/'+random_tempdir)
+            fs.unlinkSync(tempzip);
+            if (err) log(err)
+       });
+          
 
         }
 
