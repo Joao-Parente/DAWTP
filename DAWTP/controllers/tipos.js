@@ -8,7 +8,6 @@ var Tipo = require('../models/tipos')
 module.exports.list = () => {
     return Tipo
             .find()
-            .sort({titulo:1,ano:-1})
             .exec()
 }
 

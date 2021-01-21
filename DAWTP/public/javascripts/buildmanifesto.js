@@ -4,7 +4,7 @@ var patt = require('path');
 
 
 
-module.exports.buildManifesto = (path) => {
+buildManifesto = (path) => {
 
   var str=JSON.stringify(bmanaux(path))
    
@@ -14,7 +14,7 @@ module.exports.buildManifesto = (path) => {
     }})
     console.log(path)
 }
-
+module.exports.buildManifesto=buildManifesto
 
 
 bmanaux = (path) => {

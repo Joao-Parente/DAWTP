@@ -7,6 +7,7 @@ var Zip = require('../public/javascripts/unzip')
 var checkman = require('../public/javascripts/checkmanifesto')
 var travman = require('../public/javascripts/travessiamanifesto')
 var rm = require('../public/javascripts/rmrecursivo')
+var Tipo = require('../controllers/tipos')
 
 
 var bman = require('../public/javascripts/buildmanifesto')
@@ -15,6 +16,7 @@ var multer = require('multer')
 var upload = multer({ dest: 'uploads/' })
 var fs = require('fs');
 const { unzip } = require('zlib');
+const { exportCSV } = require('../public/javascripts/exportCSV');
 
 
 
@@ -24,7 +26,7 @@ router.get('/', function (req, res) {
 
   if (req.query.hashtags) {
 
-    
+
     Recurso.listHashtags(req.query.hashtags)
       .then(data => {
 
@@ -70,6 +72,8 @@ router.get('/:id', function (req, res) {
 
         var result = JSON.parse(dados.manifesto);
 
+
+        exportCSV([dados])
 
         var path_filestore_aux = dados.path.split('public')[1].split('/');
         path_filestore_aux[2] = path_filestore_aux[2] + '/data';
@@ -268,43 +272,47 @@ router.post('/novo', upload.single('myFile'), function (req, res) {
 
       Zip.unzip(req.file.path)
 
+      var fl = true;
+      Tipo.list().then(dados => {
+        fl = checkman.processaManifesto(__dirname + '/../' + req.file.path + 'dir', dados)
 
-      if (checkman.processaManifesto(__dirname + '/../' + req.file.path + 'dir')) {
-
-
-        var obj_json = __dirname + '/../' + req.file.path + 'dir' + '/manifesto.json'
-        req.body.manifesto = JSON.stringify(require(obj_json))
-
+        if (fl) {
 
 
-
-        console.log("O MANIEFESTO" + req.body.manifesto)
-
-        Recurso.insert(req.body)
-          .then(dados => {
-
-
-            let oldPath = __dirname + '/../' + req.file.path + 'dir'
-            let newPath = dados.path
-
-            console.log("reqqqqqqqqq")
-            console.log(req.body)
-
-            console.log("Inseri o objeto:" + dados.id + "bd obj" + dados.path)
-
-            fs.renameSync(oldPath, newPath)
-
-            res.render('index')
-          })
-          .catch(erro => res.render('error', { error: erro }))
-      }
-      else {
-        res.render('RecursoManifestoInválido')
-        rm.deleteFolderRec(__dirname + '/../' + req.file.path + 'dir')
-      }
+          var obj_json = __dirname + '/../' + req.file.path + 'dir' + '/manifesto.json'
+          req.body.manifesto = JSON.stringify(require(obj_json))
 
 
 
+
+          console.log("O MANIEFESTO" + req.body.manifesto)
+
+          Recurso.insert(req.body)
+            .then(dados => {
+
+
+              let oldPath = __dirname + '/../' + req.file.path + 'dir'
+              let newPath = dados.path
+
+              console.log("reqqqqqqqqq")
+              console.log(req.body)
+
+              console.log("Inseri o objeto:" + dados.id + "bd obj" + dados.path)
+
+              fs.renameSync(oldPath, newPath)
+
+              res.render('index')
+            })
+            .catch(erro => res.render('error', { error: erro }))
+        }
+        else {
+          res.render('RecursoManifestoInválido')
+          rm.deleteFolderRec(__dirname + '/../' + req.file.path + 'dir')
+        }
+
+
+      })
+        .catch(err => res.render('error',{error:err}));
     }
     else {
       res.render('RecursoFormatoInválido')

@@ -1,29 +1,34 @@
 
 var fs = require('fs')
+var Tipo = require('../../controllers/tipos')
+var { log } = require('../../public/javascripts/debug')
 
 
+var tipos = undefined;
 
-module.exports.processaManifesto = (path) => {
+processaManifesto = (path,t) => {
 
     var manifesto = path + '/manifesto.json'
 
 
     if (fs.existsSync(manifesto)) {
 
-       
+
         //console.log("Manifesssto            " + manifesto)
-        try{  var file = require(manifesto)}
-        catch{
+        try { var file = require(manifesto) }
+        catch {
             console.log("Manifesto não respeita o formato json")
             return false
         }
-        if (processaPasta(path + '/data/', file)) return true
+         tipos=t;
+         if (processaPasta(path + '/data/', file)) return true;
+
     }
-    
+
 
     return false
 }
-
+module.exports.processaManifesto = processaManifesto;
 
 processaPasta = (current_path, pasta) => {
 
@@ -31,8 +36,11 @@ processaPasta = (current_path, pasta) => {
 
 
     pasta.ficheiros.forEach((ficheiro) => {
+        console.log("helo")
+
         if (processaFicheiro(current_path, ficheiro) == false) {
             //console.log("Não existe o ficheiro: " + current_path + ficheiro.nome)
+            log("houve um ficheiro que deu false")
             flag = false
         }
         //console.log("Existe o ficheiro: " + current_path + ficheiro.nome)
@@ -55,6 +63,7 @@ processaPasta = (current_path, pasta) => {
 
 
 
+
 processaFicheiro = (current_path, ficheiro) => {
 
 
@@ -62,20 +71,43 @@ processaFicheiro = (current_path, ficheiro) => {
 
         if (fs.existsSync(current_path + ficheiro.nome)) {
 
-           // console.log("ficheiro tipo:" + ficheiro.tipo)
-
-            //checkar se o tipo ta bom
-            //checkar a meta do tipo
 
 
-            return true
-        }
-        else return false
 
-    } catch (err) {
-        console.error(err)
+            var data = tipos.find(a => a.nome == ficheiro.tipo)
+
+            if (data != undefined) {
+                for (var i = 0; i < ficheiro.meta.length; i++) {
+
+
+                    var meta1_tipo = data.parametros.find(a => a.nome_param == ficheiro.meta[i].nome)
+                    log(meta1_tipo)
+                    log(data.parametros)
+                    log(ficheiro.meta[i])
+                    if (meta1_tipo && meta1_tipo.tipo_param.toUpperCase() == (typeof ficheiro.meta[i].valor).toUpperCase()) { log("all GUDDDDDDDDDDD") }
+
+                    else { log("errrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrorrrrrrrrrrrrrrr"); return false; }
+
+                }
+                return true
+
+            }   
+
     }
 
 
-    return false;
+    } catch (err) {
+    console.error(err)
+    return false
 }
+
+
+
+}
+
+
+
+/*
+Tipo.list().then( dados =>
+console.log("K" + processaManifesto('/home/jpedro/Desktop/playground',dados)))
+.catch(err=> log(err))*/

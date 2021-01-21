@@ -10,7 +10,6 @@ var Tipo = require('../controllers/tipos')
 router.get('/', function(req, res) {
   Tipo.list()
     .then(data => {
-
       res.render('tipos', { list: data })
     })
     .catch(err => res.render('error', { error: err }))
