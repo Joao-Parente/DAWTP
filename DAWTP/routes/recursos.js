@@ -6,6 +6,7 @@ var Recurso = require('../controllers/recursos')
 var Zip = require('../public/javascripts/unzip')
 var checkman = require('../public/javascripts/checkmanifesto')
 var travman = require('../public/javascripts/travessiamanifesto')
+var cp = require('../public/javascripts/cprecursivo')
 var rm = require('../public/javascripts/rmrecursivo')
 var Tipo = require('../controllers/tipos')
 var bman = require('../public/javascripts/buildmanifesto')
@@ -109,12 +110,15 @@ router.get('/download/:id/*', function (req, res) {
         // se for e for um diretorio retorna false
         // se for e for um ficheiro retorna true
         var man_result = travman.travessiaManifesto(tail_path, mani)
+
         //diretorio
         if (man_result != null && man_result != true) {
 
 
           //tenho de ver isto melhor
-/*
+
+          var tempfile = __dirname + '/../tempfile/data/' + path_recurso[path_recurso.length - 1];
+          cp.cpRecursivo(__dirname + '/../public/' + dados.path + '/data/' + tail_path,tempfile)
           // nome do zip
           var nome_zip = dados.titulo + '.zip'
 
@@ -124,10 +128,10 @@ router.get('/download/:id/*', function (req, res) {
           Zip.zip('../tempfile/', nome_zip)
           res.download(__dirname + '/../tempzip/' + nome_zip)
 
-          // rm.deleteFolderRec(__dirname + '/../tempfile/')
-          // fs.mkdirSync(__dirname + '/../tempfile/')
-          // fs.mkdirSync(__dirname + '/../tempfile/data') */
-
+          console.log("tou otu tou tou tou")
+          rm.deleteFolderRec(__dirname + '/../tempfile/')
+          fs.mkdirSync(__dirname + '/../tempfile/')
+          fs.mkdirSync(__dirname + '/../tempfile/data') 
 
         }
         //ficheiro
