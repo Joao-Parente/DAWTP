@@ -7,7 +7,7 @@ toDo
 
         joao
         * Exports/Imports: CSV com os campos do recurso ( incluindo o manifesto), path para os ficheiros
-        * Check manifesto: tem de verificar se o tipo do ficheiro e dos existentes              
+        * Check manifesto: tem de verificar se o tipo do ficheiro e dos existentes     <--- done, listar os tipos e depois dar isso como segundo param
 
         
         netorai
