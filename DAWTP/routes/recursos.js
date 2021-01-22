@@ -10,6 +10,7 @@ var cp = require('../public/javascripts/cprecursivo')
 var rm = require('../public/javascripts/rmrecursivo')
 var Tipo = require('../controllers/tipos')
 var bman = require('../public/javascripts/buildmanifesto')
+var newPath = require('../public/javascripts/createpath')
 var multer = require('multer')
 var upload = multer({ dest: 'uploads/' })
 var fs = require('fs');
@@ -108,7 +109,7 @@ router.get('/download/:id/*', function (req, res) {
         var man_result = travman.travessiaManifesto(tail_path, mani)
 
         //diretorio
-        if (man_result != null && man_result != true) {
+        if (man_result != null && man_result != true) { 
 
 
 
@@ -299,13 +300,20 @@ router.post('/novo', upload.single('myFile'), function (req, res) {
 
           log("O MANIEFESTO" + req.body.manifesto)
 
-          Recurso.insert(req.body)
+          var dest = newPath.createPath(req.body);
+
+          Recurso.insert(req.body,dest)
             .then(dados => {
+              
+              let oldPath = __dirname + '/../' + req.file.path + 'dir';
+              log("oldPath: " + oldPath)
 
+              let newPath = __dirname + '/../public/' + dados.path;
+              log("newPath: " + newPath)
 
-              let oldPath = __dirname + '/../' + req.file.path + 'dir'
-              let newPath = __dirname + '/../public/' + dados.path
-              log("new" + newPath)
+              let dir = __dirname + '/../public/' + dest;
+
+              if(fs.existsSync(dir)==false) fs.mkdirSync(dir)
 
               log("reqqqqqqqqq")
               log(req.body)

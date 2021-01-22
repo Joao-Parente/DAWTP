@@ -23,7 +23,7 @@ var db = mongoose.connection;
 //Bind connection to error event (to get notification of connection errors)
 db.on('error', console.error.bind(console, 'MongoDB connection error...'));
 db.once('open', function () {
-    console.log("Conexão ao MongoDB realizada com sucesso...")
+  console.log("Conexão ao MongoDB realizada com sucesso...")
 });
 
 var usersRouter = require('./routes/utilizadores');
@@ -31,7 +31,7 @@ var indexRouter = require('./routes/index');
 var recursosRouter = require('./routes/recursos');
 var tiposRouter = require('./routes/tipos');
 var publicacoesRouter = require('./routes/publicacoes');
-
+var exportRouter = require('./routes/export');
 
 
 
@@ -63,6 +63,7 @@ app.use('/utilizadores', usersRouter);
 app.use('/recursos', recursosRouter);
 app.use('/tipos', tiposRouter);
 app.use('/publicacoes', publicacoesRouter);
+app.use('/export', exportRouter);
 
 
 
@@ -72,12 +73,12 @@ app.use('/publicacoes', publicacoesRouter);
 
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   next(createError(404));
 });
 
 // error handler
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};

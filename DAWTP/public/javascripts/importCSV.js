@@ -25,7 +25,7 @@ importCSV = (path) => {
     obj_Recurso.produtor = parte1[5]
     obj_Recurso.visibilidade = parte1[6]
     obj_Recurso.likes = parte1[7]
-    obj_Recurso.path = parte1[8]
+
 
     var partes2_3 = partes.slice(1).join('{').split('}')
 

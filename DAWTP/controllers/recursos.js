@@ -24,19 +24,20 @@ module.exports.lookUp = i => {
         .exec()
 }
 
-module.exports.insert = ar =>{
+module.exports.insert = (ar, dest) =>{
     
-    ar.produtor="depende do login"
-    ar.dataRegisto=data.myDateTime()
-    ar.likes=0
+    ar.produtor = "depende do login"
+    ar.dataRegisto = data.myDateTime()
+    ar.likes = 0
 
-    ar.id=ar.dataRegisto+'-' +Math.random()
-    ar.hashtags=ar.hashtags.split(',')
-    console.log(ar.hashtags)
-    ar.path='fileStore/' +ar.id
+    ar.id = ar.dataRegisto+'-'+Math.random()
+
+    ar.hashtags = ar.hashtags.split(",");
+
+    ar.path = dest + ar.id;
 
     var newRecurso = new Recurso(ar)
-    return newRecurso.save()
+    return newRecurso.save();
 }
 
 
