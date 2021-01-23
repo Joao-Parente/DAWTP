@@ -14,13 +14,15 @@ module.exports.list = () => {
 
 module.exports.lookUp = id => {
     return Utilizador
-        .findOne({username: id })
+        .findOne({_id: id })
         .exec()
 }
 
 module.exports.insert = utili =>{
 
-   var d=tempo.myDateTime()
+
+    utili._id=utili.username
+    var d=tempo.myDateTime()
 
     utili.dataRegisto=d
     utili.dataUltimoAcesso=d

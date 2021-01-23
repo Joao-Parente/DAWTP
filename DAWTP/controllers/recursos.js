@@ -20,7 +20,7 @@ module.exports.listHashtags = (htags) => {
 
 module.exports.lookUp = i => {
     return Recurso
-        .findOne({id: i })
+        .findOne({_id: i })
         .exec()
 }
 
@@ -29,8 +29,11 @@ module.exports.insert = (ar, dest) =>{
     ar.produtor = "depende do login"
     ar.dataRegisto = data.myDateTime()
     ar.likes = 0
+    ar._id=ar.id
 
-   if(ar.id ==undefined) ar.id = ar.dataRegisto+'-'+Math.random()
+   if(ar._id ==undefined) ar._id = ar.dataRegisto+'-'+Math.random()
+   if(ar.dataCriacao == undefined || ar.dataCriacao == null|| ar.dataCriacao == '')  ar.dataCriacao = data.myDateTime()
+   if(ar.visibilidade == undefined) ar.visibilidade='publico'
 
     ar.hashtags = ar.hashtags.split(",");
 

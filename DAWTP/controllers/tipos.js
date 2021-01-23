@@ -18,6 +18,7 @@ module.exports.lookUp = i => {
 }
 
 module.exports.insert = ar =>{
+    ar._id=ar.nome
     var newTipo = new Tipo(ar)
     return newTipo.save()
 }

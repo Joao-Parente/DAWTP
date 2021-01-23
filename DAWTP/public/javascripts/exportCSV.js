@@ -103,6 +103,6 @@ Recursos.list().then(dados=> recursoToCSV(dados))
 Recursos.list().then(dados=> 
     
     dados.forEach(element => {
-        recursoToCSV(element)
+        log(recursoToCSV(element))
     }))
 .catch(err => log(err))*/

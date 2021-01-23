@@ -15,30 +15,30 @@ var { log } = require('./debug')
 
 csvToUtilizador = (csv) => {
 
-    var user={}
+    var user = {}
     var partes = csv.split(',')
-    user.nome=partes[0]
-    user.email=partes[1]
-    user.filiacao=csvtoFil(partes[2].slice(1).slice(0,-1))
-    user.dataRegisto=partes[3]
-    user.dataUltimoAcesso=partes[4]
-    user.username=partes[5]
-    user.password=partes[6]
-    user.nivel=partes[7]
-    user.posts=partes[8]
+    user.nome = partes[0]
+    user.email = partes[1]
+    user.filiacao = csvtoFil(partes[2].slice(1).slice(0, -1))
+    user.dataRegisto = partes[3]
+    user.dataUltimoAcesso = partes[4]
+    user.username = partes[5]
+    user.password = partes[6]
+    user.nivel = partes[7]
+    user.posts = partes[8]
 
     return user
 }
 module.exports.csvToUtilizador = csvToUtilizador
 
-csvtoFil=(csv)=>{
+csvtoFil = (csv) => {
 
-    var fil={}
+    var fil = {}
     var partes = csv.split(';')
-    fil.estudante=partes[0]
-    fil.docente=partes[1]
-    fil.curso=partes[2]
-    fil.departamento=partes[3]
+    fil.estudante = partes[0]
+    fil.docente = partes[1]
+    fil.curso = partes[2]
+    fil.departamento = partes[3]
     return fil
 
 }
@@ -58,10 +58,10 @@ csvToTipo = (csv) => {
 
 
 csvToParam = (csv) => {
-    var param={}
-    var partes= csv.split(',')
-    param.nome_param=partes[0]
-    param.tipo_param=partes[1]
+    var param = {}
+    var partes = csv.split(',')
+    param.nome_param = partes[0]
+    param.tipo_param = partes[1]
     return param
 }
 
@@ -101,12 +101,13 @@ csvToRecurso = (csv) => {
     })
 
     var obj = []
-    l.slice(1).substring(0, l.length - 2).split(';').forEach(
-        post => obj.push(csvToPost(post))
+    l.slice(1).substring(0, l.length - 2).split(';').forEach(post => {
+        if (post) obj.push(csvToPost(post))
+    }
     )
     obj_Recurso.posts = obj;
 
-      
+    
     return obj_Recurso
 }
 module.exports.csvToRecurso = csvToRecurso
@@ -125,7 +126,7 @@ csvToPost = (csv) => {
     postaux.coments = []
     //falta comentarios   
     partes.slice(2).forEach(comentario => {
-        postaux.coments.push(csvToComent(comentario))
+        if (comentario) postaux.coments.push(csvToComent(comentario))
     })
 
 
@@ -136,6 +137,7 @@ csvToPost = (csv) => {
 csvToComent = (csv) => {
 
     var postmeta = {}
+
     var campos = csv.split(',')
 
     postmeta.id = campos[0]

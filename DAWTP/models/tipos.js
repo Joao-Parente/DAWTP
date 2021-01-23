@@ -8,6 +8,7 @@ var param = new mongoose.Schema({
 
 
 var tipoSchema = new mongoose.Schema({
+    _id:String,
     nome:String,
     parametros:[param]
 

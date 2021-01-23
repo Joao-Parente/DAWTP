@@ -16,7 +16,7 @@ var postaux= new mongoose.Schema({
 
 
 var recursosSchema = new mongoose.Schema({
-    id:String,
+    _id:String,
     titulo:String,
     subtitulo:String,
     dataCriacao:Date,

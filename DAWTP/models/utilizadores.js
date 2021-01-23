@@ -10,6 +10,7 @@ var fil = new mongoose.Schema({
 });
 
 var utilizadoresSchema = new mongoose.Schema({
+    _id:String,
     nome: String,
     email: String,
     filiacao: fil,
