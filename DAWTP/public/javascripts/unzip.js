@@ -25,8 +25,9 @@ module.exports.zip = (path, nome) => {
 
 
     var tempzip= __dirname+'/../../tempzip/'+nome;
+    var local_folder = __dirname+'/../'+path
 
-    zip.addLocalFolder(__dirname+'/../'+path)
+    zip.addLocalFolder(local_folder)
 
     zip.writeZip(tempzip);
 
