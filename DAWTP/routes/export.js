@@ -12,6 +12,8 @@ var date = require('../public/javascripts/mymood')
 var fs = require('fs');
 
 
+
+
 function writetoCsv(path, str) {
   fs.writeFileSync(path, str, { flag: 'a+' }, (err) => {
     if (err) {
@@ -20,6 +22,10 @@ function writetoCsv(path, str) {
   })
 }
 
+router.get('/', function (req, res) {
+  res.render('menu_export')
+});
+
 router.get('/recursos', function (req, res) {
 
   Recurso.list()
@@ -27,7 +33,7 @@ router.get('/recursos', function (req, res) {
 
       var zip = Zip.create_zip();
 
-      var nome = 'export:' + Math.random() + ':' + date.myDateTime()
+      var nome = 'export:recursos' + Math.random() + ':' + date.myDateTime()
       var nome_zip = nome + '.zip'
       var nome_csv = nome + '.csv'
       writetoCsv(__dirname + '/../tempzip/' + nome_csv, exportcsv.csvRecurso)
@@ -64,7 +70,7 @@ router.get('/recursos', function (req, res) {
 router.get('/utilizadores', function (req, res) {
 
 
-  var nome = 'export:' + Math.random() + ':' + date.myDateTime()
+  var nome = 'export:users:' + Math.random() + ':' + date.myDateTime()
   var nome_csv = nome + '.csv'
   writetoCsv(__dirname + '/../tempfile/' + nome_csv, exportcsv.csvUtilizador)
 
@@ -72,7 +78,7 @@ router.get('/utilizadores', function (req, res) {
     .then(data => {
 
       data.forEach(user => {
-      writetoCsv(__dirname + '/../tempfile/' + nome_csv, exportcsv.utilizadorToCSV(user))
+        writetoCsv(__dirname + '/../tempfile/' + nome_csv, exportcsv.utilizadorToCSV(user))
       })
       res.download(__dirname + '/../tempfile/' + nome_csv, function (err) {
         fs.unlinkSync(__dirname + '/../tempfile/' + nome_csv);
@@ -85,6 +91,30 @@ router.get('/utilizadores', function (req, res) {
 
 });
 
+
+router.get('/tipos', function (req, res) {
+
+
+  var nome = 'export:tipo:' + Math.random() + ':' + date.myDateTime()
+  var nome_csv = nome + '.csv'
+  writetoCsv(__dirname + '/../tempfile/' + nome_csv, exportcsv.csvTipo)
+
+  Tipo.list()
+    .then(data => {
+
+      data.forEach(tipo => {
+        writetoCsv(__dirname + '/../tempfile/' + nome_csv, exportcsv.tipoToCSV(tipo))
+      })
+      res.download(__dirname + '/../tempfile/' + nome_csv, function (err) {
+        fs.unlinkSync(__dirname + '/../tempfile/' + nome_csv);
+        if (err) log(err)
+      });
+
+
+    })
+    .catch(err => res.render('error', { error: err }))
+
+});
 
 
 

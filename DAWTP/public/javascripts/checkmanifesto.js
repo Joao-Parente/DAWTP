@@ -6,7 +6,7 @@ var { log } = require('../../public/javascripts/debug')
 
 var tipos = undefined;
 
-processaManifesto = (path,t) => {
+processaManifesto = (path, t) => {
 
     var manifesto = path + '/manifesto.json'
 
@@ -20,8 +20,9 @@ processaManifesto = (path,t) => {
             console.log("Manifesto não respeita o formato json")
             return false
         }
-         tipos=t;
-         if (processaPasta(path + '/data/', file)) return true;
+        tipos = t;
+        log("dsnfsdfndjsn:                     " + path + '/data/')
+        if (processaPasta(path + '/data/', file)) return true;
 
     }
 
@@ -81,30 +82,25 @@ processaFicheiro = (current_path, ficheiro) => {
 
 
                     var meta1_tipo = data.parametros.find(a => a.nome_param == ficheiro.meta[i].nome)
-  
+
                     if (meta1_tipo && meta1_tipo.tipo_param.toUpperCase() == (typeof ficheiro.meta[i].valor).toUpperCase()) { log("all GUDDDDDDDDDDD") }
 
 
-                    else { log ("devia ser:" +meta1_tipo.tipo_param.toUpperCase())
-                    log("era: "+ficheiro.meta[i].valor.toUpperCase())
-                    log("tipo:"+(typeof ficheiro.meta[i].valor).toUpperCase())
-                        log("errrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrorrrrrrrrrrrrrrr"); return false; }
+                    else {
+                        log("devia ser:" + meta1_tipo.tipo_param.toUpperCase())
+                        log("era: " + ficheiro.meta[i].valor.toUpperCase())
+                        log("tipo:" + (typeof ficheiro.meta[i].valor).toUpperCase())
+                        log("errrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrorrrrrrrrrrrrrrr"); return false;
+                    }
 
                 }
                 return true
 
-            }   
+            }
+        }
+    } catch (err) { console.error(err); }
 
-    }
-
-
-    } catch (err) {
-    console.error(err)
     return false
-}
-
-
-
 }
 
 

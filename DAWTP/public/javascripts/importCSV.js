@@ -2,19 +2,84 @@
 
 
 var fs = require('fs');
+const { parse } = require('path');
 var { log } = require('./debug')
 
 //id,teste param certo,,null,data,depende do login,null,0,path,mani,[],posts
-var csv = "2021-01-08T20:57-0.45056682335108156,ex2,,Thu Oct 13 2016 01:00:00 GMT+0100 (Hora de verão da Europa Ocidental),Fri Jan 08 2021 20:57:00 GMT+0000 (Hora padrão da Europa Ocidental),depende do login,null,0,/home/jpedro/Documentos/MIEI/Miei MEU/4 Ano/1 Semestre/Desenvolvimento de aplicações Web/Trabalho_Pratico/DAWTP/DAWTP/controllers/../public/fileStore/2021-01-08T20:57-0.45056682335108156,{\"ficheiros\":[{\"nome\":\"manuel.pdf\",\"tipo\":\"pdf\",\"meta\":[{\"nome\":\"numero_pags\",\"valor\":\"3\"}]}],\"pasta_rec\":[{\"nome\":\"pasta1\",\"pasta\":{\"ficheiros\":[{\"nome\":\"teste.pdf\",\"tipo\":\"pdf\",\"meta\":[{\"nome\":\"numero_pags\",\"valor\":\"3\"}]}],\"pasta_rec\":[]}}]},[ok,lp],[[2021-01-08T21:06f0.9533242495320156,user_na_sessao, conteudo,Fri Jan 08 2021 21:06:00 GMT+0000 (Hora padrão da Europa Ocidental),[[idestu,nomesest,1 st coment,Fri Jan 08 2021 21:06:00 GMT+0000 (Hora padrão da Europa Ocidental)],[idestu,nomesest,1 st coment,Fri Jan 08 2021 21:06:00 GMT+0000 (Hora padrão da Europa Ocidental)]]]]"
+//var csv ='2021-01-22T11:47-0.5628631199793168,titulo1,subtitutlo,2024-04-23T00:00:00.000Z,2021-01-22T11:47:00.000Z,depende do login,privado,0,,["ola","joaquim"],[[2021-01-22T11:49f0.24918326421872572,user_na_sessao, conteudo,2021-01-22T11:49:00.000Z,[[idestu,nomesest,ola joaquo,2021-01-22T11:49:00.000Z],[idestu,nomesest,ola joaquo,2021-01-22T11:49:00.000Z]]];[2021-01-22T12:36f0.6196723084334976,user_na_sessao, conteudo,2021-01-22T12:36:00.000Z,[[idestu,nomesest,mfsdimf,2021-01-22T12:36:00.000Z],[idestu,nomesest,mfsdimf,2021-01-22T12:36:00.000Z]]]]'
 
 
 //id,teste param certo,,null,data,depende do login,null,0,path,mani,[],[posts]
-importCSV = (path) => {
+//"nome,email,[estudante;docente;curso;departamento],dataRegisto,dataUltimoAcesso,username,password,nivel,[post]"
+//module.exports.csvTipo= "nome,[param]"
+
+csvToUtilizador = (csv) => {
+
+    var user={}
+    var partes = csv.split(',')
+    user.nome=partes[0]
+    user.email=partes[1]
+    user.filiacao=csvtoFil(partes[2].slice(1).slice(0,-1))
+    user.dataRegisto=partes[3]
+    user.dataUltimoAcesso=partes[4]
+    user.username=partes[5]
+    user.password=partes[6]
+    user.nivel=partes[7]
+    user.posts=partes[8]
+
+    return user
+}
+module.exports.csvToUtilizador = csvToUtilizador
+
+csvtoFil=(csv)=>{
+
+    var fil={}
+    var partes = csv.split(';')
+    fil.estudante=partes[0]
+    fil.docente=partes[1]
+    fil.curso=partes[2]
+    fil.departamento=partes[3]
+    return fil
+
+}
+
+csvToTipo = (csv) => {
+
+    var tipo = {}
+    var partes = csv.split(',')
+    tipo.nome = partes[0];
+
+    tipo.parametros = []
+    partes.slice(1).join(',').replace(/[\]\[]/g, '').split(';').forEach(param => {
+        tipo.parametros.push(csvToParam(param))
+    })
+    return tipo
+}
+
+
+csvToParam = (csv) => {
+    var param={}
+    var partes= csv.split(',')
+    param.nome_param=partes[0]
+    param.tipo_param=partes[1]
+    return param
+}
+
+module.exports.csvToTipo = csvToTipo
+
+
+
+
+
+
+
+
+csvToRecurso = (csv) => {
 
 
     var obj_Recurso = {}
 
-    var partes = csv.split('{')
+    var partes = csv.split('[')
 
     var parte1 = partes[0].split(',')
     obj_Recurso.id = parte1[0]
@@ -27,35 +92,58 @@ importCSV = (path) => {
     obj_Recurso.likes = parte1[7]
 
 
-    var partes2_3 = partes.slice(1).join('{').split('}')
 
-    // log(partes2_3)
-    //,[hashtags],[posts]
-    var hash_posts = partes2_3.pop()
+    obj_Recurso.hashtags = partes[1].substring(0, partes[1].length - 2).replace(/\"+/g, '')
 
-    //slice(1).split('],');
-    hash_posts = hash_posts.slice(1).split('],')
-    log(hash_posts)
+    var l = ""
+    partes.slice(2).forEach(cont => {
+        l += "[" + cont;
+    })
 
-    obj_Recurso.hashtags = hash_posts[0] + ']'
-    
-    log( obj_Recurso.hashtags)
-    obj_Recurso.posts=hash_posts.slice(1).join('],')
-    log( obj_Recurso.posts)
-    //obj_Recurso.manifesto= '{'+partes2_3 +'}'
+    var obj = []
+    l.slice(1).substring(0, l.length - 2).split(';').forEach(
+        post => obj.push(csvToPost(post))
+    )
+    obj_Recurso.posts = obj;
 
-    log('{'+partes2_3.join('}')+'}')
+      
+    return obj_Recurso
+}
+module.exports.csvToRecurso = csvToRecurso
 
-    fs.writeFileSync('/home/jpedro/Desktop/playground/import.json', JSON.stringify(obj_Recurso), (err) => {
-        if (err) {
-            throw err;
-        }
+
+
+csvToPost = (csv) => {
+
+    var postaux = {}
+
+    var partes = csv.split('[').slice(1)
+
+    postaux.meta = csvToComent(partes[0])
+
+
+    postaux.coments = []
+    //falta comentarios   
+    partes.slice(2).forEach(comentario => {
+        postaux.coments.push(csvToComent(comentario))
     })
 
 
-
+    return postaux;
 }
-module.exports.importCSV = importCSV
 
+//[idestu,nomesest,ola joaquo,Fri Jan 22 2021 11:49:00 GMT+0000 (Hora padrão da Europa Ocidental)]
+csvToComent = (csv) => {
 
-//importCSV(2)
+    var postmeta = {}
+    var campos = csv.split(',')
+
+    postmeta.id = campos[0]
+    postmeta.nome = campos[1]
+    postmeta.conteudo = campos[2]
+    postmeta.data = campos[3].replace(/\]+/, '')
+
+    return postmeta;
+}
+
+//csvToRecurso('2021-01-22T11:47-0.5628631199793168,titulo1,subtitutlo,2024-04-23T00:00:00.000Z,2021-01-22T11:47:00.000Z,depende do login,privado,0,,["ola","joaquim"],[[2021-01-22T11:49f0.24918326421872572,user_na_sessao, conteudo,2021-01-22T11:49:00.000Z,[[idestu,nomesest,ola joaquo,2021-01-22T11:49:00.000Z],[idestu,nomesest,ola joaquo,2021-01-22T11:49:00.000Z]]];[2021-01-22T12:36f0.6196723084334976,user_na_sessao, conteudo,2021-01-22T12:36:00.000Z,[[idestu,nomesest,mfsdimf,2021-01-22T12:36:00.000Z],[idestu,nomesest,mfsdimf,2021-01-22T12:36:00.000Z]]]]')

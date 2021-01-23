@@ -1,0 +1,21 @@
+extends layout
+
+block content
+            .w3-container.w3-teal
+                h2 Import utilizador
+            
+
+            form.w3-container(action="/import/utilizadores" method="POST" enctype="multipart/form-data")
+
+                .w3-row.w3-margin-bottom
+                    .w3-col-s3
+                        label.w3-text-teal Select file
+                                  
+                    .w3-col.s9.w3-border
+                        input.w3-input.w3-border.w3-light-grey(type="file" name="myFile")    
+                     
+                input.w3-btn.w3-blue-grey(type="submit" value="Submit")
+
+
+
+                

@@ -1,0 +1,37 @@
+extends layout
+
+block content
+    .w3-card-4
+      header.w3-container.w3-teal
+        h3.w3-left Resultado import (DAW2020)
+      if lista.length > 0
+        .w3-container 
+          table.w3-table-all
+            tr 
+              th Input
+              th Status
+              th Msg
+
+
+
+            each s in lista
+              tr
+                
+                td=s.input
+                td=s.status
+                td=s.msg
+                if s.status==201               
+                  td  
+                     a(href=s.link) Ir para o recurso
+
+  
+
+
+      else
+        .w3-container
+          p Não houve import
+      footer.w3-container.w3-teal
+          p
+           a(href="/") Index 
+          p 
+           a(href="/recursos/novo") Novo          

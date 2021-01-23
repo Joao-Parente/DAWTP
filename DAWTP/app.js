@@ -32,7 +32,7 @@ var recursosRouter = require('./routes/recursos');
 var tiposRouter = require('./routes/tipos');
 var publicacoesRouter = require('./routes/publicacoes');
 var exportRouter = require('./routes/export');
-
+var importRouter = require('./routes/import');
 
 
 /* Iniciar express*/
@@ -64,7 +64,7 @@ app.use('/recursos', recursosRouter);
 app.use('/tipos', tiposRouter);
 app.use('/publicacoes', publicacoesRouter);
 app.use('/export', exportRouter);
-
+app.use('/import', importRouter);
 
 
 

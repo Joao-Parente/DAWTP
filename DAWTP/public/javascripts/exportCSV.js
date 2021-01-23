@@ -1,42 +1,40 @@
-
-
-
 var fs = require('fs');
+const recursos = require('../../models/recursos');
 var { log } = require('./debug')
-var Recursos = require('./../../controllers/recursos')
-/*
-exportCSV= (listRecurso) => {
+const Recursos = require('../../controllers/recursos');
 
-    var linha="id ,titulo,subtitulo,dataCriacao,dataRegisto,produtor,visibilidade,likes,[hastags],[post]\n"
-
-    listRecurso.forEach(recurso => {
-        linha+=recursoToCSV(recurso)
-    });
-
-   // log(JSON.stringify(linha))
-   fs.writeFileSync('/home/jpedro/Desktop/playground/recursos.csv', linha, (err) => {
-    if (err) {
-        throw err;
-    }})
-
-}
-
-module.exports.exportCSV= exportCSV*/
 module.exports.csvRecurso = "id,titulo,subtitulo,dataCriacao,dataRegisto,produtor,visibilidade,likes,[hastags],[post]\n"
-module.exports.csvUtilizador = "nome,email,[estudante,docente,curso,departamento],dataRegisto,dataUltimoAcesso,username,password,nivel,[post]"
+module.exports.csvUtilizador = "nome,email,[estudante,docente,curso,departamento],dataRegisto,dataUltimoAcesso,username,password,nivel,[post]\n"
+module.exports.csvTipo= "nome,[param]\n"
+
+tipoToCSV = (tipo) => {
+    var linha = tipo.nome + ",[" 
+
+    for (var i = 0; i < tipo.parametros.length; i++) {
+
+        linha += '[' +tipo.parametros[i].nome_param+ ','+tipo.parametros[i].tipo_param+']' 
+        if (i + 1 != tipo.parametros.length) linha += ";"
+    }
+    linha += "]\n"
+
+    return linha;
+}
+module.exports.tipoToCSV = tipoToCSV
+
+
 
 utilizadorToCSV = (utilizador) => {
     var linha = utilizador.nome + "," + utilizador.email + ",["
-        + utilizador.filiacao.estudante + "," + utilizador.filiacao.docente + ","
-        + utilizador.filiacao.curso + "," + utilizador.filiacao.departamento + "],"
-        + utilizador.dataRegisto + "," + utilizador.dataUltimoAcesso + ","
+        + utilizador.filiacao.estudante + ";" + utilizador.filiacao.docente + ";"
+        + utilizador.filiacao.curso + ";" + utilizador.filiacao.departamento + "],"
+        + JSON.stringify(utilizador.dataRegisto).slice(1).slice(0, -1) + "," + JSON.stringify(utilizador.dataUltimoAcesso).slice(1).slice(0, -1) + ","
         + utilizador.username + "," + utilizador.password + ","
         + utilizador.nivel
         + ",["
     for (var i = 0; i < utilizador.posts.length; i++) {
 
         linha += utilizador.posts[i]
-        if (i + 1 != recurso.hashtags.length) linha += ","
+        if (i + 1 != utilizador.posts.length) linha += ","
     }
     linha += "]\n"
 
@@ -49,8 +47,8 @@ module.exports.utilizadorToCSV = utilizadorToCSV
 
 recursoToCSV = (recurso) => {
     var linha = recurso.id + "," + recurso.titulo + ","
-        + recurso.subtitulo + "," + recurso.dataCriacao + ","
-        + recurso.dataRegisto + "," + recurso.produtor + ","
+        + recurso.subtitulo + "," + JSON.stringify(recurso.dataCriacao).slice(1).slice(0, -1) + ","
+        + JSON.stringify(recurso.dataRegisto).slice(1).slice(0, -1) + "," + recurso.produtor + ","
         + recurso.visibilidade + "," + recurso.likes + ","
         + ",["
 
@@ -67,7 +65,7 @@ recursoToCSV = (recurso) => {
     for (var i = 0; i < recurso.posts.length; i++) {
         log("aaaaaaaaaaaaa")
         linha += postToCSV(recurso.posts[i])
-        if (i + 1 != recurso.posts.length) linha += ","
+        if (i + 1 != recurso.posts.length) linha += ";"
     }
     linha = linha + "]\n"
     return linha;
@@ -79,7 +77,7 @@ postToCSV = (post) => {
 
     log("ddddddddddddddd")
     var linha = "[" + post.meta.id + "," + post.meta.nome + ","
-        + post.meta.conteudo + "," + post.meta.data + ",[";
+        + post.meta.conteudo + "," + JSON.stringify(post.meta.data).slice(1).slice(0, -1) + ",[";
 
     //comentarios
     for (var i = 0; i < post.coments.length; i++) {
@@ -91,14 +89,20 @@ postToCSV = (post) => {
     return linha;
 }
 comentToCSV = (coment) => {
-
+   
     var linha = "[" + coment.id + "," + coment.nome + ","
-        + coment.conteudo + "," + coment.data + "]";
+        + coment.conteudo + "," + JSON.stringify(coment.data).slice(1).slice(0, -1) + "]";
 
     return linha;
 }
 
 /*
-Recursos.list().then(dados=> exportCSV(dados))
+Recursos.list().then(dados=> recursoToCSV(dados))
 .catch(err => log(err))
-*/
+
+Recursos.list().then(dados=> 
+    
+    dados.forEach(element => {
+        recursoToCSV(element)
+    }))
+.catch(err => log(err))*/

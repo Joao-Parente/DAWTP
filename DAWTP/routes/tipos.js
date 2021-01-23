@@ -15,6 +15,16 @@ router.get('/', function(req, res) {
 });
 
 
+//Consultar 1 tipo
+router.get('/:nome', function (req, res) {
+  Tipo.lookUp(req.params.nome)
+    .then(data => {
+
+      if (data != null) res.render('tipo', { tipo: data })
+      else res.render('TipoNaoExiste')
+    })
+    .catch(err => res.render('error', { error: err }))
+});
 
 
 

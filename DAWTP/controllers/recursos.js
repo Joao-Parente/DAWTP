@@ -30,7 +30,7 @@ module.exports.insert = (ar, dest) =>{
     ar.dataRegisto = data.myDateTime()
     ar.likes = 0
 
-    ar.id = ar.dataRegisto+'-'+Math.random()
+   if(ar.id ==undefined) ar.id = ar.dataRegisto+'-'+Math.random()
 
     ar.hashtags = ar.hashtags.split(",");
 

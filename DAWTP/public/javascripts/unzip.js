@@ -1,18 +1,15 @@
 var AdmZip = require('adm-zip');
 const fs = require('fs');
 
-var archiver = require('archiver-promise');
-const { create } = require('../../models/tipos');
+const { unzip } = require('zlib');
  
     
 module.exports.unzip = (file) => {
 
     var extract_fileto = file + 'dir'
 
-    console.log("File: " + extract_fileto)
 
     fs.mkdirSync(extract_fileto)
-
 
     var zip = new AdmZip(file);
     zip.extractAllTo(extract_fileto, false)
