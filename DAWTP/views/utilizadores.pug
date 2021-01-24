@@ -1,8 +1,8 @@
-extends layout
+extends layoutUser
 
 block content
     .w3-card-4
-      header.w3-container.w3-teal
+      header.w3-container.w3-light-grey
         h3.w3-left Utilizadores Lista (DAW2020)
       if list.length > 0
         .w3-container 
@@ -43,11 +43,4 @@ block content
       else
         .w3-container
           p Não há utilizadores..
-      footer.w3-container.w3-teal   
-       p
-         a(href="/") Index
-       p
-         a(href="/utilizadores/registo") Registo
-           
-        
-         
+

@@ -1,8 +1,17 @@
-extends layout
+extends layoutUser
+
+block addmetadata
+
+  .w3-dropdown-hover.w3-mobile
+    button.w3-button Operações 
+      i.fa.fa-caret-down
+
+    .w3-dropdown-content.w3-bar-block.w3-dark-grey
+      a.w3-bar-item.w3-button.w3-mobile(href="/tipos/novo") Novo Tipo
 
 block content
     .w3-card-4
-      header.w3-container.w3-teal
+      header.w3-container.w3-light-grey
         h3.w3-left Tipo  (DAW2020)
       if list.length > 0
         .w3-container 
@@ -30,5 +39,3 @@ block content
       else
         .w3-container
           p Não há Tipos de ficheiros..
-      footer.w3-container.w3-teal
-         a(href="/") Index 

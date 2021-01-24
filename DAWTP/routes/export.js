@@ -10,6 +10,7 @@ var exportcsv = require('../public/javascripts/exportCSV')
 var Zip = require('../public/javascripts/unzip')
 var date = require('../public/javascripts/mymood')
 var fs = require('fs');
+var Auth = require('../public/javascripts/verifyauth.js')
 
 
 
@@ -22,11 +23,11 @@ function writetoCsv(path, str) {
   })
 }
 
-router.get('/', function (req, res) {
-  res.render('menu_export')
+router.get('/',Auth.verifyAuthAdmin, function (req, res) {
+  res.render('menu_export',{user:req.user})
 });
 
-router.get('/recursos', function (req, res) {
+router.get('/recursos',Auth.verifyAuthAdmin, function (req, res) {
 
   Recurso.list()
     .then(data => {
@@ -67,7 +68,7 @@ router.get('/recursos', function (req, res) {
 
 });
 
-router.get('/utilizadores', function (req, res) {
+router.get('/utilizadores',Auth.verifyAuthAdmin, function (req, res) {
 
 
   var nome = 'export:users:' + Math.random() + ':' + date.myDateTime()
@@ -92,7 +93,7 @@ router.get('/utilizadores', function (req, res) {
 });
 
 
-router.get('/tipos', function (req, res) {
+router.get('/tipos',Auth.verifyAuthAdmin, function (req, res) {
 
 
   var nome = 'export:tipo:' + Math.random() + ':' + date.myDateTime()

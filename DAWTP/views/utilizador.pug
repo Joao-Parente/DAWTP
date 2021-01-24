@@ -1,9 +1,11 @@
-extends layout
+extends layoutUser
+
+
 
 block content
 
 
-  .w3-container.w3-margin
+  .w3-container.w3-light-grey.w3-margin.border
     h1 Utilizador
     p Perfil de #{user.nome}... 
     dl
@@ -25,8 +27,3 @@ block content
       dt DataUltimoAcesso
       dd= user.dataUltimoAcesso     
 
-      address.w3-container.w3-margin Gerado por dawApp :: 2020-Nov
-        p
-          a(href="/") Index
-        p
-          a(href="/utilizadores") Utilizadores

@@ -1,39 +1,45 @@
-extends layout
+extends layoutUser
+
+block addmetadata
+
+  .w3-dropdown-hover.w3-mobile
+    button.w3-button Operações 
+      i.fa.fa-caret-down
+
+    .w3-dropdown-content.w3-bar-block.w3-dark-grey
+      a.w3-bar-item.w3-button.w3-mobile(href="/recursos/novo") Novo Recurso
+
+
 
 block content
-    .w3-card-4
-      header.w3-container.w3-teal
-        h3.w3-left Lista de Recursos (DAW2020)
-      if list.length > 0
-        .w3-container 
-          table.w3-table-all
-            tr 
-              th Titulo
-              th subtitulo
-              th dataCriacao
-              th dataRegisto
-              th Publicador
-              th likes
-              th hashtags
+  .w3-card-4
+    header.w3-container.w3-light-grey
+      h3.w3-left Lista de Recursos (DAW2020)
+    if list.length > 0
+      .w3-container 
+        table.w3-table-all
+          tr 
+            th Titulo
+            th subtitulo
+            th dataCriacao
+            th dataRegisto
+            th Publicador
+            th likes
+            th hashtags
 
 
-            each s in list
-              tr
-                td
-                   a(href="/recursos/"+s.id) #{s.titulo} 
-                td=s.subtitulo
-                td=s.dataCriacao
-                td=s.dataRegisto
-                td=s.produtor
-                td.likes=s.likes
-                td.hashtags=s.hashtags  
+          each s in list
+            tr
+              td
+                a(href="/recursos/"+s.id) #{s.titulo} 
+              td=s.subtitulo
+              td=s.dataCriacao
+              td=s.dataRegisto
+              td=s.produtor
+              td.likes=s.likes
+              td.hashtags=s.hashtags  
 
 
-      else
-        .w3-container
-          p Não há recursos..
-      footer.w3-container.w3-teal
-          p
-           a(href="/") Index 
-          p 
-           a(href="/recursos/novo") Novo          
+    else
+      .w3-container
+        p Não há recursos..

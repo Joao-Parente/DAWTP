@@ -19,6 +19,7 @@ var upload = multer({ dest: 'uploads/' })
 
 var checkman = require('../public/javascripts/checkmanifesto')
 var importCSV = require('../public/javascripts/importCSV')
+var Auth = require('../public/javascripts/verifyauth.js')
 
 function addlog(id, status, str, array, link) {
 
@@ -29,21 +30,21 @@ function addlog(id, status, str, array, link) {
   return result
 }
 
-router.get('/', function (req, res) {
-  res.render('menu_import')
+router.get('/',Auth.verifyAuthAdmin, function (req, res) {
+  res.render('menu_import',{user:req.user})
 });
 
-router.get('/recursos', function (req, res) {
-  res.render('import-recurso')
+router.get('/recursos',Auth.verifyAuthAdmin, function (req, res) {
+  res.render('import-recurso',{user:req.user})
 });
-router.get('/utilizadores', function (req, res) {
-  res.render('import-utilizador')
+router.get('/utilizadores',Auth.verifyAuthAdmin, function (req, res) {
+  res.render('import-utilizador',{user:req.user})
 });
-router.get('/tipos', function (req, res) {
-  res.render('import-tipo')
+router.get('/tipos',Auth.verifyAuthAdmin, function (req, res) {
+  res.render('import-tipo',{user:req.user})
 });
 
-router.post('/tipos', upload.single('myFile'), function (req, res) {
+router.post('/tipos', upload.single('myFile'),Auth.verifyAuthAdmin, function (req, res) {
 
 
   if (req.file != null) {
@@ -86,21 +87,21 @@ router.post('/tipos', upload.single('myFile'), function (req, res) {
           }
         }
       })
-      criar_promessas.then(() => { Promise.all(promisses).then(() => { log("Esperei por tudo"); fs.unlinkSync(req.file.path); res.render('resultado_import', { lista: alog }) }) })
+      criar_promessas.then(() => { Promise.all(promisses).then(() => { log("Esperei por tudo"); fs.unlinkSync(req.file.path); res.render('resultado_import', { lista: alog ,user:req.user}) }) })
 
 
 
 
     } else {
-      res.render('ImportFormatoInválidoUT')
+      res.render('ImportFormatoInválidoUT',{user:req.user})
     }
   }
-  else res.render('UploadSemSucesso')
+  else res.render('UploadSemSucesso',{user:req.user})
 
 })
 
 
-router.post('/utilizadores', upload.single('myFile'), function (req, res) {
+router.post('/utilizadores', upload.single('myFile'),Auth.verifyAuthAdmin, function (req, res) {
 
   if (req.file != null) {
 
@@ -142,25 +143,25 @@ router.post('/utilizadores', upload.single('myFile'), function (req, res) {
           }
         }
       })
-      criar_promessas.then(() => { Promise.all(promisses).then(() => { log("Esperei por tudo"); fs.unlinkSync(req.file.path); res.render('resultado_import', { lista: alog }) }) })
+      criar_promessas.then(() => { Promise.all(promisses).then(() => { log("Esperei por tudo"); fs.unlinkSync(req.file.path); res.render('resultado_import', { lista: alog,user:req.user }) }) })
 
 
 
     }
     else {
       log(req.file)
-      res.render('ImportFormatoInválidoUT')
+      res.render('ImportFormatoInválidoUT',{user:req.user})
     }
 
   }
-  else res.render('UploadSemSucesso')
+  else res.render('UploadSemSucesso',{user:req.user})
 
 })
 
 
 
 
-router.post('/recursos', upload.single('myFile'), function (req, res) {
+router.post('/recursos', upload.single('myFile'),Auth.verifyAuthAdmin, function (req, res) {
 
   if (req.file != null) {
 
@@ -243,7 +244,7 @@ router.post('/recursos', upload.single('myFile'), function (req, res) {
                 }
               }
             }
-          }); criar_promessas.then(() => { Promise.all(promisses).then(() => { log("Esperei por tudo");fs.unlinkSync(req.file.path); rm.deleteFolderRec(__dirname + '/../' + req.file.path + 'dir/'); res.render('resultado_import', { lista: alog }) }) })
+          }); criar_promessas.then(() => { Promise.all(promisses).then(() => { log("Esperei por tudo");fs.unlinkSync(req.file.path); rm.deleteFolderRec(__dirname + '/../' + req.file.path + 'dir/'); res.render('resultado_import', { lista: alog ,user:req.user}) }) })
 
         })
           .catch(err => { log(err); rm.deleteFolderRec(__dirname + '/../' + req.file.path + 'dir/'); res.render('error', { erro: err }) }) // a obter tipos
@@ -251,12 +252,12 @@ router.post('/recursos', upload.single('myFile'), function (req, res) {
       })
     } else {
       log(req.file)
-      res.render('ImportFormatoInválidoR')
+      res.render('ImportFormatoInválidoR',{user:req.user})
     }
 
 
   }
-  else res.render('UploadSemSucesso')
+  else res.render('UploadSemSucesso',{user:req.user})
 });
 
 module.exports = router;

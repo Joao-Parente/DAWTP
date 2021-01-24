@@ -1,0 +1,94 @@
+extends layout
+
+block content
+
+
+  .w3-container.w3-margin
+
+  
+  .button.w3-button.w3-black.3-large(onclick="document.getElementById('id01').style.display='block'") Login
+  .button.w3-button.w3-black.3-large(onclick="document.getElementById('id02').style.display='block'") Registo
+
+  .w3-modal( id="id01")
+    .w3-modal-content.w3-card-4.w3-animate-zoom(style="max-width:600px")
+
+      .w3-center
+        br
+        span.w3-button.w3-xlarge.w3-hover-red.w3-display-topright(onclick="document.getElementById('id01').style.display='none'" title="Close Modal") &times
+        img.w3-circle.w3-margin-top(src="/images/avatar.jpg"  alt="Avatar" style="width:30%;border-style: solid;" )
+      
+
+
+      form.w3-container(action='/utilizadores/login' method='POST')
+        .w3-section
+            label Username: 
+            input.w3-input.w3-border.w3-margin-bottom(type="text"  name="username" required)
+
+            label Password: 
+            input.w3-input.w3-input.w3-border(type="password"  name="password" required)
+            
+            input.w3-button.w3-block.w3-black.w3-section.w3-padding(type="submit" value="Enviar")
+
+
+      .w3-container.w3-border-top.w3-padding-16.w3-light-grey
+        button(onclick="document.getElementById('id01').style.display='none'" type="button") Cancel
+
+
+
+  .w3-modal( id="id02")
+    .w3-modal-content.w3-card-4.w3-animate-zoom(style="max-width:600px")
+
+      .w3-center
+        br
+        span.w3-button.w3-xlarge.w3-hover-red.w3-display-topright(onclick="document.getElementById('id02').style.display='none'" title="Close Modal") &times
+        img.w3-circle.w3-margin-top(src="/images/avatar.jpg"  alt="Avatar" style="width:30%;border-style: solid;" )
+      
+
+
+      form.w3-container(action='/utilizadores/registo' method='POST')
+        .w3-section
+            label Username: 
+            input.w3-input.w3-border.w3-margin-bottom(type="text"  name="username" required)
+
+            label Password: 
+            input.w3-input.w3-input.w3-border(type="password"  name="password" required)
+            
+
+            label Nome
+            input.w3-input.w3-border.w3-margin-bottom(type="text"  name="nome" required)
+
+            label Email
+            input.w3-input.w3-border.w3-margin-bottom(type="text"  name="email" required)
+
+            label Nível (0-Consumidor | 1-Produtor | 2- Admin)
+            select.w3-input.w3-border.w3-margin-bottom(name="nivel")
+                option(value=0) Consumidor
+                option(value=1) Produtor
+                option(value=2) Admin
+
+            br
+
+            label Estudante
+            input.w3-border.w3-margin-bottom(type="checkbox" name="filiacao.estudante" value="true")
+
+            br 
+
+            label Docente
+            input.w3-border.w3-margin-bottom(type="checkbox" name="filiacao.docente" value="true")
+
+            br
+
+            label Curso
+            input.w3-input.w3-border.w3-margin-bottom(type="text"  name="filiacao.curso" required)
+
+            label Departamento
+            input.w3-input.w3-border.w3-margin-bottom(type="text"  name="filiacao.departamento" required)
+
+
+            input.w3-button.w3-block.w3-black.w3-section.w3-padding(type="submit" value="Enviar")
+
+
+      .w3-container.w3-border-top.w3-padding-16.w3-light-grey
+        button(onclick="document.getElementById('id02').style.display='none'" type="button") Cancel
+
+

@@ -1,0 +1,15 @@
+extends layout
+
+block metadata
+
+    .w3-bar.w3-black
+      a.w3-bar-item.w3-button.w3-mobile(href="/") Index
+      a.w3-bar-item.w3-button.w3-mobile(href="/recursos") Recursos
+      a.w3-bar-item.w3-button.w3-mobile(href="/tipos") Tipos
+      a.w3-bar-item.w3-button.w3-mobile(href="/utilizadores") Utilizadores
+      if(user.nivel==2)
+        a.w3-bar-item.w3-button.w3-mobile(href="/export") Export
+        a.w3-bar-item.w3-button.w3-mobile(href="/import") Import
+      a.w3-bar-item.w3-button.w3-mobile.w3-right(href="/utilizadores/logout") Logout
+
+      block addmetadata

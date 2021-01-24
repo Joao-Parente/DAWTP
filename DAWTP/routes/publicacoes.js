@@ -52,7 +52,7 @@ router.get('/:idrecurso/:idpost', function (req, res) {
 
           
       
-          res.render('post', { infopost:post.meta,idrecurso: req.params.idrecurso, idpost: req.params.idpost })
+          res.render('post', { infopost:post.meta,idrecurso: req.params.idrecurso, idpost: req.params.idpost ,user:req.user})
         }
       });
 
@@ -153,7 +153,7 @@ router.get('/:idrecurso', function (req, res) {
         objlist.push(obj_post)
 
       })
-      res.render('posts',{list: objlist})
+      res.render('posts',{list: objlist,user:req.user})
     })
     .catch(err => res.render('error', { error: err }))
 

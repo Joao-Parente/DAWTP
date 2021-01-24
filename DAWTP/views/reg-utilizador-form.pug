@@ -2,21 +2,22 @@ extends layout
 
 block content
     .w3-container.w3-margin.w3-border
-        .w3-container.w3-blue
+        .w3-container.w3-black
             h3 Registo de utilizador:
         form.w3-container(action='/utilizadores/registo' method='POST')
 
             label Username: 
-            input.w3-input(type="text"  name="username")
+            input.w3-input(type="text"  name="username" required)
 
-            
+            label Password: 
+            input.w3-input(type="password"  name="password" required)
 
 
             label Nome
-            input.w3-input(type="text"  name="nome")
+            input.w3-input(type="text"  name="nome" required)
 
             label Email
-            input.w3-input(type="text"  name="email")
+            input.w3-input(type="text"  name="email" required)
 
             label Nível (0-Consumidor | 1-Produtor | 2- Admin)
             select(name="nivel")
@@ -37,10 +38,10 @@ block content
             br
 
             label Curso
-            input.w3-input(type="text"  name="filiacao.curso")
+            input.w3-input(type="text"  name="filiacao.curso" required)
 
             label Departamento
-            input.w3-input(type="text"  name="filiacao.departamento")
+            input.w3-input(type="text"  name="filiacao.departamento" required)
 
 
-            input.w3-btn.w3-blue(type="submit" value="Enviar")
+            input.w3-btn.w3-black(type="submit" value="Enviar")
