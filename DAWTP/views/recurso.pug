@@ -9,6 +9,17 @@ block scripts
     script( src='/javascripts/jquery-3.5.1.min.js')
     script( src='/javascripts/jquery.modal.min.js')
 
+block addmetadata
+
+  .w3-dropdown-hover.w3-mobile
+    button.w3-button Operações 
+      i.fa.fa-caret-down
+
+    .w3-dropdown-content.w3-bar-block.w3-dark-grey
+      a.w3-bar-item.w3-button.w3-mobile(href="/publicacoes/"+recurso.id) Posts do Recurso
+      a.w3-bar-item.w3-button.w3-mobile(href="/publicacoes/"+recurso.id+'/novo') Novo Post
+      a.w3-bar-item.w3-button.w3-mobile(href="/recursos/download/"+recurso.id) Download
+
 
 block content
 
@@ -109,16 +120,3 @@ block content
           p Ficheiros
         .w3-container
           p Não há ficheiros....
-
-
-
-
-    footer.w3-container.w3-light-grey
-      p
-        a(href="/") Index 
-      p
-        a(href="/publicacoes/"+recurso.id) Posts do recurso
-      p
-        a(href="/publicacoes/"+recurso.id+'/novo') Novo Post  
-      p
-        a(href="/recursos/download/"+recurso.id) Download Recurso
