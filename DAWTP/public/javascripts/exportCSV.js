@@ -46,7 +46,7 @@ utilizadorToCSV = (utilizador) => {
 module.exports.utilizadorToCSV = utilizadorToCSV
 
 recursoToCSV = (recurso) => {
-    var linha = recurso.id + "," + recurso.titulo + ","
+    var linha = recurso._id + "," + recurso.titulo + ","
         + recurso.subtitulo + "," + JSON.stringify(recurso.dataCriacao).slice(1).slice(0, -1) + ","
         + JSON.stringify(recurso.dataRegisto).slice(1).slice(0, -1) + "," + recurso.produtor + ","
         + recurso.visibilidade + "," + recurso.likes + ","

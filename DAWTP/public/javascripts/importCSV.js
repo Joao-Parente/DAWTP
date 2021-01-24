@@ -82,7 +82,7 @@ csvToRecurso = (csv) => {
     var partes = csv.split('[')
 
     var parte1 = partes[0].split(',')
-    obj_Recurso.id = parte1[0]
+    obj_Recurso._id = parte1[0]
     obj_Recurso.titulo = parte1[1]
     obj_Recurso.subtitulo = parte1[2]
     obj_Recurso.dataCriacao = parte1[3]

@@ -16,10 +16,12 @@ function preview(tipo,nome,pfileStore,down){//tipo,path){
         
         case 'js' :  ficheiro= '<object data="'+pfileStore + '"></object>';break;
 
+        
 
 
         default:
-            var ficheiro = '<p>' + nome+ ', ' + type + '</p>'
+            ficheiro= '<object data="'+pfileStore + '"></object>';
+            //ficheiro = '<p>' + nome+ ', ' + type + '</p>'
 
     }
 

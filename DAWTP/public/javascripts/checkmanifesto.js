@@ -21,7 +21,7 @@ processaManifesto = (path, t) => {
             return false
         }
         tipos = t;
-        log("dsnfsdfndjsn:                     " + path + '/data/')
+        //log("dsnfsdfndjsn:                     " + path + '/data/')
         if (processaPasta(path + '/data/', file)) return true;
 
     }
@@ -37,12 +37,15 @@ processaPasta = (current_path, pasta) => {
 
 
     pasta.ficheiros.forEach((ficheiro) => {
-        console.log("helo")
 
         if (processaFicheiro(current_path, ficheiro) == false) {
-            //console.log("Não existe o ficheiro: " + current_path + ficheiro.nome)
-            log("houve um ficheiro que deu false")
+            log("Não existe o ficheiro: " + current_path + ficheiro.nome)
+            //log("houve um ficheiro que deu false")
             flag = false
+        }
+        else if(/[\_a-zA-Z0-9+\- ]+/.test(ficheiro.nome)==false){
+            log("Ficheiro: "+ficheiro.nome +"Carateres invalidos")
+            flag=false
         }
         //console.log("Existe o ficheiro: " + current_path + ficheiro.nome)
     })
@@ -51,11 +54,15 @@ processaPasta = (current_path, pasta) => {
         pasta.pasta_rec.forEach((p) => {
             if (fs.existsSync(current_path + p.nome) == false) {
 
-                //console.log("A pasta não existe: " + current_path + p.nome)
+                log("A pasta não existe: " + current_path + p.nome)
 
                 flag = false
             }
             else if (processaPasta(current_path + p.nome + '/', p.pasta) == false) flag = false
+            else if(/[\_a-zA-Z0-9+\- ]+/.test(pasta.nome)==false){
+                log("Ficheiro: "+ficheiro.nome +"Carateres invalidos")
+                flag=false
+            }
         })
     }
 
@@ -87,11 +94,11 @@ processaFicheiro = (current_path, ficheiro) => {
 
 
                     else {
-                        log("devia ser:" + meta1_tipo.tipo_param.toUpperCase())
+                        log("Ficheiro:"+ ficheiro.nome +" devia ser:" + meta1_tipo.tipo_param.toUpperCase())
                         log("era: " + ficheiro.meta[i].valor.toUpperCase())
-                        log("tipo:" + (typeof ficheiro.meta[i].valor).toUpperCase())
-                        log("errrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrorrrrrrrrrrrrrrr"); return false;
+                        return false;
                     }
+                    
 
                 }
                 return true

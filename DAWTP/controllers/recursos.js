@@ -29,15 +29,18 @@ module.exports.insert = (ar, dest) =>{
     ar.produtor = "depende do login"
     ar.dataRegisto = data.myDateTime()
     ar.likes = 0
-    ar._id=ar.id
 
+   
    if(ar._id ==undefined) ar._id = ar.dataRegisto+'-'+Math.random()
+
+   if(ar.titulo ==undefined || ar.titulo=='') ar.titulo=ar._id
+
    if(ar.dataCriacao == undefined || ar.dataCriacao == null|| ar.dataCriacao == '')  ar.dataCriacao = data.myDateTime()
    if(ar.visibilidade == undefined) ar.visibilidade='publico'
 
     ar.hashtags = ar.hashtags.split(",");
 
-    ar.path = dest + ar.id;
+    ar.path = dest + ar._id;
 
     var newRecurso = new Recurso(ar)
     return newRecurso.save();

@@ -73,6 +73,8 @@ router.get('/:id', function (req, res) {
 
         var result = JSON.parse(dados.manifesto);
         log("                           DOWNLOAD: " + req.params.id)
+        log("atao joao" )
+          log(result)
         res.render('recurso', { manifesto: result, recurso: dados, path_g: dados.path + '/data', download: req.params.id }) //manifesto.ficheiros: [] ,recursod ados
 
       }
@@ -241,7 +243,7 @@ router.get('/:id/*', function (req, res) {
       if (dados != null) {
 
         var mani = JSON.parse(dados.manifesto);
-
+        log("hiiiiiiiiiiiiiiiiii")
         var tail_path = path_recurso.slice(1).join('/')
 
         var man_result = travman.travessiaManifesto(tail_path, mani)
@@ -250,7 +252,8 @@ router.get('/:id/*', function (req, res) {
           //log("/recursos/download/" + path_recurso.join('/'))       
           log("                           DOWNLOAD: " + path_recurso.join('/'))
           console.log("Manifesto" + JSON.stringify(mani))
-
+          log("ataomanel" )
+          log(man_result)
           res.render('recurso', { manifesto: man_result, recurso: dados, path_g: dados.path + '/data/' + path_recurso.slice(1).join('/') + '/', download: path_recurso.join('/') })
         }
 
@@ -318,7 +321,7 @@ router.post('/novo', upload.single('myFile'), function (req, res) {
               log("reqqqqqqqqq")
               log(req.body)
 
-              console.log("Inseri o objeto:" + dados.id + "bd obj" + dados.path)
+              console.log("Inseri o objeto:" + dados._id + "bd obj" + dados.path)
 
               fs.renameSync(oldPath, newPath)
 
