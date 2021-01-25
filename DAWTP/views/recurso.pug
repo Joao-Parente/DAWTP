@@ -2,12 +2,12 @@ extends layoutUser
 
 block scripts
 
-    link(rel='stylesheet' href='/stylesheets/style.css')
-    link(rel='stylesheet' href='/stylesheets/jquery.modal.min.css')
+  link(rel='stylesheet' href='/stylesheets/style.css')
+  link(rel='stylesheet' href='/stylesheets/jquery.modal.min.css')
 
-    script( src='/javascripts/preview.js')
-    script( src='/javascripts/jquery-3.5.1.min.js')
-    script( src='/javascripts/jquery.modal.min.js')
+  script( src='/javascripts/preview.js')
+  script( src='/javascripts/jquery-3.5.1.min.js')
+  script( src='/javascripts/jquery.modal.min.js')
 
 block addmetadata
 
@@ -27,7 +27,7 @@ block content
 
   .w3-card-4
     header.w3-container.w3-light-grey
-      h3.w3-left Recurso #{recurso.titulo} (DAW2020)
+      h3.w3-left Recurso: #{recurso.titulo} 
 
     .w3-container 
       table.w3-table-all
@@ -48,8 +48,9 @@ block content
           td=recurso.dataCriacao
           td=recurso.dataRegisto
           td=recurso.produtor
-          td=recurso.likes
+          td=recurso.likes.length
           td=recurso.hashtags
+
 
 
     if manifesto.pasta_rec.length > 0
@@ -96,20 +97,20 @@ block content
                 td=s.nome
                 td=s.tipo
                 td=s.subtitulo
-                td
+                if  s.meta.length > 0
 
-                td  
-                  table.w3-table-all
-                    tr
-                      th Nome Parametro
-                      th Valor Parametro
-
-                    each meta in s.meta
+                  td  
+                    table.w3-table-all
                       tr
-                        td=meta.nome
-                        td=meta.valor
+                        th Nome Parametro
+                        th Valor Parametro
 
-
+                      each meta in s.meta
+                        tr
+                          td=meta.nome
+                          td=meta.valor
+                else
+                  td Este ficheiro não tem metadata associada...
 
 
 
@@ -120,3 +121,7 @@ block content
           p Ficheiros
         .w3-container
           p Não há ficheiros....
+
+
+    a(href='/recursos/like/'+download) 
+      img.w3-circle.w3-margin-top(src="/images/like.png" alt="Avatar" style="width:2%;border-style: solid;" )

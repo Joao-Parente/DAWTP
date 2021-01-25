@@ -1,0 +1,50 @@
+extends layoutUser
+
+block content
+    .w3-container.w3-margin.w3-border
+        .w3-container.w3-black
+            h3 Editar  utilizador:
+        form.w3-container(action='/utilizadores/editar/'+user.username method='POST')
+
+
+            input(type="hidden" name="_id" value=user._id)
+
+            label Username: 
+            input.w3-input(type="text"  name="username" required readonly value=user.username)
+
+            label Password: 
+            input.w3-input(type="password"  name="password" required)
+
+
+            label Nome
+            input.w3-input(type="text"  name="nome" required value=user.nome)
+
+            label Email
+            input.w3-input(type="text"  name="email" required value=user.email)
+
+            label Nível (0-Consumidor | 1-Produtor | 2- Admin)
+            select(name="nivel" readonly)
+                option(value=0) Consumidor
+                option(value=1) Produtor
+                option(value=2) Admin
+
+            br
+
+            label Estudante
+            input(type="checkbox" name="filiacao.estudante" value=user.filiacao.estudante)
+
+            br 
+
+            label Docente
+            input(type="checkbox" name="filiacao.docente"  value=user.filiacao.docente)
+
+            br
+
+            label Curso
+            input.w3-input(type="text"  name="filiacao.curso" required value=user.filiacao.curso)
+
+            label Departamento
+            input.w3-input(type="text"  name="filiacao.departamento" required value=user.filiacao.departamento)
+
+
+            input.w3-btn.w3-black(type="submit" value="Enviar")

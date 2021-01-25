@@ -23,7 +23,7 @@ var recursosSchema = new mongoose.Schema({
     dataRegisto:Date,
     produtor:String,
     visibilidade:String,    
-    likes:Number,
+    likes:[String],
     path:String,
 
     manifesto:String,

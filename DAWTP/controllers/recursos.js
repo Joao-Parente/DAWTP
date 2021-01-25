@@ -24,11 +24,13 @@ module.exports.lookUp = i => {
         .exec()
 }
 
-module.exports.insert = (ar, dest) =>{
+module.exports.insert = (ar, dest,user) =>{
     
-    ar.produtor = "depende do login"
+    //Atributos que dependem da altura da insercao
+    ar.produtor = user._id
+    if(ar.visibilidade == undefined) ar.visibilidade='publico'
     ar.dataRegisto = data.myDateTime()
-    ar.likes = 0
+    ar.likes = []
 
    
    if(ar._id ==undefined) ar._id = ar.dataRegisto+'-'+Math.random()
@@ -36,26 +38,25 @@ module.exports.insert = (ar, dest) =>{
    if(ar.titulo ==undefined || ar.titulo=='') ar.titulo=ar._id
 
    if(ar.dataCriacao == undefined || ar.dataCriacao == null|| ar.dataCriacao == '')  ar.dataCriacao = data.myDateTime()
-   if(ar.visibilidade == undefined) ar.visibilidade='publico'
+   
 
     ar.hashtags = ar.hashtags.split(",");
 
+
+    //path
     ar.path = dest + ar._id;
 
+
+
+    
     var newRecurso = new Recurso(ar)
     return newRecurso.save();
 }
 
+module.exports.edit = t => {
+    return Recurso.findByIdAndUpdate({_id: t._id}, t, {new: true})
+}
 
-module.exports.edit = ar => {
-    return Recurso 
-    .updateOne({id: ar.id}, {$set: {titulo: ar.titulo,
-        subtitulo: ar.subtitulo, dataCriacao: ar.dataCriacao,
-        dataRegisto:ar.dataRegisto,produtor:ar.produtor,
-        visibilidade:ar.visibilidade,likes:ar.likes,
-        hashtags:ar.hashtags,posts:ar.posts,metadata:ar.metadata}})
-    .exec()
-} 
 
 
 module.exports.remove = i => {

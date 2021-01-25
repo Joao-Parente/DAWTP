@@ -22,7 +22,7 @@ var Auth = require('../public/javascripts/verifyauth.js')
 
 
 // Lista Recursos
-router.get('/',Auth.verifyAuth, function (req, res) {
+router.get('/', Auth.verifyAuth, function (req, res) {
 
 
   if (req.query.hashtags) {
@@ -31,7 +31,7 @@ router.get('/',Auth.verifyAuth, function (req, res) {
     Recurso.listHashtags(req.query.hashtags)
       .then(data => {
 
-        res.render('recursos', { list: data ,user:req.user})
+        res.render('recursos', { list: data, user: req.user })
       })
       .catch(err => res.render('error', { error: err }))
   }
@@ -39,7 +39,7 @@ router.get('/',Auth.verifyAuth, function (req, res) {
     Recurso.list()
       .then(data => {
 
-        res.render('recursos', { list: data,user:req.user })
+        res.render('recursos', { list: data, user: req.user })
       })
       .catch(err => res.render('error', { error: err }))
   }
@@ -48,22 +48,44 @@ router.get('/',Auth.verifyAuth, function (req, res) {
 
 
 
-
 //Novo recurso
-router.get('/novo',Auth.verifyAuth, function (req, res) {
-  res.render('novo-recurso-form',{user:req.user})
+router.get('/novo', Auth.verifyAuthUserorAdminCreate, function (req, res) {
+  res.render('novo-recurso-form', { user: req.user })
 });
 
 //Esquema estrtura manifesto
-router.get('/estrutura-manifesto',Auth.verifyAuth, function (req, res) {
-  res.render('EstruturaManifesto',{user:req.user})
+router.get('/estrutura-manifesto', Auth.verifyAuthUserorAdminCreate, function (req, res) {
+  res.render('EstruturaManifesto', { user: req.user })
 });
 
+
+router.get('/like/:id/*', Auth.verifyAuth, function (req, res) {
+  log("hiii")
+  Recurso.lookUp(req.params.id)
+    .then(dados => {
+
+      log("req.")
+      log(req.user)
+      if (dados.likes.includes(req.user._id)) {
+        dados.likes.splice( dados.likes.indexOf(req.user._id), 1);
+      }
+      else {
+        dados.likes.push(req.user._id)
+      }
+      Recurso.edit(dados)
+        .then(el => res.redirect('/recursos/'+req.url.split('/').splice(2).join('/')))
+        .catch(err => res.render('error', { error: err }))
+
+
+    })
+    .catch(err => res.render('error', { error: err }))
+
+});
 
 
 
 //Consulta 1 recurso
-router.get('/:id',Auth.verifyAuth, function (req, res) {
+router.get('/:id', Auth.verifyAuth, function (req, res) {
 
   log("obtemm inicio recurso")
 
@@ -74,14 +96,15 @@ router.get('/:id',Auth.verifyAuth, function (req, res) {
 
         var result = JSON.parse(dados.manifesto);
         log("                           DOWNLOAD: " + req.params.id)
-        log("atao joao" )
-          log(result)
-        res.render('recurso', { manifesto: result, recurso: dados, path_g: dados.path + '/data', download: req.params.id,user:req.user }) //manifesto.ficheiros: [] ,recursod ados
+        log("atao joao")
+        log(result)
+        
+        res.render('recurso', { manifesto: result, recurso: dados, path_g: dados.path + '/data', download: req.params.id, user: req.user }) //manifesto.ficheiros: [] ,recursod ados
 
       }
 
       else {
-        res.render('RecursoInexistente',{user:req.user})
+        res.render('RecursoInexistente', { user: req.user })
       }
 
 
@@ -91,7 +114,7 @@ router.get('/:id',Auth.verifyAuth, function (req, res) {
 });
 
 //Download de parte de um recurso
-router.get('/download/:id/*',Auth.verifyAuth, function (req, res) {
+router.get('/download/:id/*', Auth.verifyAuth, function (req, res) {
 
 
   var path_recurso = req.url.split('/').slice(2)
@@ -112,33 +135,33 @@ router.get('/download/:id/*',Auth.verifyAuth, function (req, res) {
         var man_result = travman.travessiaManifesto(tail_path, mani)
 
         //diretorio
-        if (man_result != null && man_result != true) { 
+        if (man_result != null && man_result != true) {
 
 
 
-          var random_tempdir=Math.random()+'_'+Math.random()+'-' +Math.random();
-          fs.mkdirSync(__dirname + '/../tempfile/'+random_tempdir);
-          fs.mkdirSync(__dirname + '/../tempfile/'+random_tempdir+'/data');
-          var tempfile = __dirname + '/../tempfile/'+random_tempdir+'/data/' + path_recurso[path_recurso.length - 1];
-          cp.cpRecursivo(__dirname + '/../public/' + dados.path + '/data/' + tail_path,tempfile)
-         
+          var random_tempdir = Math.random() + '_' + Math.random() + '-' + Math.random();
+          fs.mkdirSync(__dirname + '/../tempfile/' + random_tempdir);
+          fs.mkdirSync(__dirname + '/../tempfile/' + random_tempdir + '/data');
+          var tempfile = __dirname + '/../tempfile/' + random_tempdir + '/data/' + path_recurso[path_recurso.length - 1];
+          cp.cpRecursivo(__dirname + '/../public/' + dados.path + '/data/' + tail_path, tempfile)
+
           // nome do zip
           var nome_zip = dados.titulo + '.zip'
 
-          var tempzip  = __dirname + '/../tempzip/'+nome_zip
+          var tempzip = __dirname + '/../tempzip/' + nome_zip
 
           //cria um manifesto
-          bman.buildManifesto(__dirname + '/../tempfile/'+random_tempdir+'/data')
+          bman.buildManifesto(__dirname + '/../tempfile/' + random_tempdir + '/data')
 
-          Zip.zip('../tempfile/'+random_tempdir+'/', nome_zip)
-          res.download(tempzip,function(err){
-               rm.deleteFolderRec(__dirname + '/../tempfile/'+random_tempdir)
-               fs.unlinkSync(tempzip);
-               if (err) log(err)
+          Zip.zip('../tempfile/' + random_tempdir + '/', nome_zip)
+          res.download(tempzip, function (err) {
+            rm.deleteFolderRec(__dirname + '/../tempfile/' + random_tempdir)
+            fs.unlinkSync(tempzip);
+            if (err) log(err)
           });
-          
 
-       
+
+
 
 
         }
@@ -149,35 +172,35 @@ router.get('/download/:id/*',Auth.verifyAuth, function (req, res) {
           var nome_zip = path_recurso[path_recurso.length - 1] + '.zip'
 
           //path para o tempfile
-          var random_tempdir=Math.random()+'_'+Math.random()+'-' +Math.random();
-          fs.mkdirSync(__dirname + '/../tempfile/'+random_tempdir);
-          fs.mkdirSync(__dirname + '/../tempfile/'+random_tempdir+'/data');
-          var tempfile = __dirname + '/../tempfile/'+random_tempdir+'/data/' + path_recurso[path_recurso.length - 1];
-          
-          var tempzip  = __dirname + '/../tempzip/'+nome_zip
+          var random_tempdir = Math.random() + '_' + Math.random() + '-' + Math.random();
+          fs.mkdirSync(__dirname + '/../tempfile/' + random_tempdir);
+          fs.mkdirSync(__dirname + '/../tempfile/' + random_tempdir + '/data');
+          var tempfile = __dirname + '/../tempfile/' + random_tempdir + '/data/' + path_recurso[path_recurso.length - 1];
+
+          var tempzip = __dirname + '/../tempzip/' + nome_zip
 
           //copiar o file para o diretorio de tempfile
           fs.copyFileSync(__dirname + '/../public/' + dados.path + '/data/' + tail_path, tempfile);
-          
+
           //criar manifesto
-          bman.buildManifesto(__dirname + '/../tempfile/'+random_tempdir+'/data')
+          bman.buildManifesto(__dirname + '/../tempfile/' + random_tempdir + '/data')
 
-         
 
-          Zip.zip('../tempfile/'+random_tempdir, nome_zip)
-          res.download(tempzip,function(err){
-            rm.deleteFolderRec(__dirname + '/../tempfile/'+random_tempdir)
+
+          Zip.zip('../tempfile/' + random_tempdir, nome_zip)
+          res.download(tempzip, function (err) {
+            rm.deleteFolderRec(__dirname + '/../tempfile/' + random_tempdir)
             fs.unlinkSync(tempzip);
             if (err) log(err)
-       });
-          
+          });
+
 
         }
 
-        else res.render('DiretorioRecursoInvalido',{user:req.user})
+        else res.render('DiretorioRecursoInvalido', { user: req.user })
 
       } else {
-        res.render('RecursoInexistente',{user:req.user})
+        res.render('RecursoInexistente', { user: req.user })
       }
     })
 
@@ -191,7 +214,7 @@ router.get('/download/:id/*',Auth.verifyAuth, function (req, res) {
 
 
 // Donwload recurso completo
-router.get('/download/:id',Auth.verifyAuth, function (req, res) {
+router.get('/download/:id', Auth.verifyAuth, function (req, res) {
   // ir a base de dados ver onde esta a ser gurdado o recurso de id  , zipar enviar e destuir zip
 
 
@@ -216,7 +239,7 @@ router.get('/download/:id',Auth.verifyAuth, function (req, res) {
 
 
       else {
-        res.render('RecursoInexistente',{user:req.user})
+        res.render('RecursoInexistente', { user: req.user })
       }
 
 
@@ -231,7 +254,7 @@ router.get('/download/:id',Auth.verifyAuth, function (req, res) {
 
 
 // Preview Recurso (sem ser o inicial)
-router.get('/:id/*',Auth.verifyAuth, function (req, res) {
+router.get('/:id/*', Auth.verifyAuth, function (req, res) {
 
 
   var path_recurso = req.url.split('/').slice(1)
@@ -253,15 +276,15 @@ router.get('/:id/*',Auth.verifyAuth, function (req, res) {
           //log("/recursos/download/" + path_recurso.join('/'))       
           log("                           DOWNLOAD: " + path_recurso.join('/'))
           console.log("Manifesto" + JSON.stringify(mani))
-          log("ataomanel" )
+          log("ataomanel")
           log(man_result)
-          res.render('recurso', { manifesto: man_result, recurso: dados, path_g: dados.path + '/data/' + path_recurso.slice(1).join('/') + '/', download: path_recurso.join('/'),user:req.user })
+          res.render('recurso', { manifesto: man_result, recurso: dados, path_g: dados.path + '/data/' + path_recurso.slice(1).join('/') + '/', download: path_recurso.join('/'), user: req.user })
         }
 
-        else res.render('DiretorioRecursoInvalido',{user:req.user})
+        else res.render('DiretorioRecursoInvalido', { user: req.user })
 
       } else {
-        res.render('RecursoInexistente',{user:req.user})
+        res.render('RecursoInexistente', { user: req.user })
       }
     })
 
@@ -279,7 +302,7 @@ router.get('/:id/*',Auth.verifyAuth, function (req, res) {
 
 
 // Upload de um recurso
-router.post('/novo', upload.single('myFile'),Auth.verifyAuth, function (req, res) {
+router.post('/novo', upload.single('myFile'), Auth.verifyAuthUserorAdminCreate, function (req, res) {
 
 
 
@@ -306,9 +329,9 @@ router.post('/novo', upload.single('myFile'),Auth.verifyAuth, function (req, res
 
           var dest = newPath.createPath(req.body);
 
-          Recurso.insert(req.body,dest)
+          Recurso.insert(req.body, dest, req.user)
             .then(dados => {
-              
+
               let oldPath = __dirname + '/../' + req.file.path + 'dir';
               log("oldPath: " + oldPath)
 
@@ -317,21 +340,18 @@ router.post('/novo', upload.single('myFile'),Auth.verifyAuth, function (req, res
 
               let dir = __dirname + '/../public/' + dest;
 
-              if(fs.existsSync(dir)==false) fs.mkdirSync(dir)
+              if (fs.existsSync(dir) == false) fs.mkdirSync(dir)
 
-              log("reqqqqqqqqq")
-              log(req.body)
-
-              console.log("Inseri o objeto:" + dados._id + "bd obj" + dados.path)
+              log("Inseri o objeto:" + dados._id + "bd obj" + dados.path)
 
               fs.renameSync(oldPath, newPath)
 
-              res.render('index',{user:req.user})
+              res.render('index', { user: req.user })
             })
             .catch(erro => res.render('error', { error: erro }))
         }
         else {
-          res.render('RecursoManifestoInválido',{user:req.user})
+          res.render('RecursoManifestoInválido', { user: req.user })
           rm.deleteFolderRec(__dirname + '/../' + req.file.path + 'dir')
         }
 
@@ -340,14 +360,15 @@ router.post('/novo', upload.single('myFile'),Auth.verifyAuth, function (req, res
         .catch(err => res.render('error', { error: err }));
     }
     else {
-      res.render('RecursoFormatoInválido',{user:req.user})
+      res.render('RecursoFormatoInválido', { user: req.user })
       rm.deleteFolderRec(__dirname + '/../' + req.file.path + 'dir')
     }
 
   }
-  else res.render('UploadSemSucesso',{user:req.user})
+  else res.render('UploadSemSucesso', { user: req.user })
 
 });
+
 
 
 module.exports = router;

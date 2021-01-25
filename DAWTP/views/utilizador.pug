@@ -1,29 +1,43 @@
 extends layoutUser
 
 
+block addmetadata
+
+  if(user.nivel>1 || user_data._id==user._id)
+    .w3-dropdown-hover.w3-mobile
+      button.w3-button Operações 
+        i.fa.fa-caret-down
+
+
+        .w3-dropdown-content.w3-bar-block.w3-dark-grey
+          a.w3-bar-item.w3-button.w3-mobile(href="/utilizadores/editar/"+user_data._id) Editar
+          a.w3-bar-item.w3-button.w3-mobile(href="/utilizadores/delete/"+user_data._id) Eliminar Conta
+
+
+
 
 block content
 
 
   .w3-container.w3-light-grey.w3-margin.border
-    h1 Utilizador
-    p Perfil de #{user.nome}... 
+
+    h1 Perfil de #{user_data.nome}... 
     dl
       dt Nome
-      dd= user.nome
+      dd= user_data.nome
       dt Username
-      dd= user.username
+      dd= user_data.user_dataname
       dt Email
-      dd= user.email
+      dd= user_data.email
       dt Filiacao    
-      if(user.filiacao.estudante==true) 
-                  dd= "Estudante /"+ user.filiacao.curso+" / "+user.filiacao.departamento
+      if(user_data.filiacao.estudante==true) 
+                  dd= "Estudante /"+ user_data.filiacao.curso+" / "+user_data.filiacao.departamento
       else
-                  dd= "Docente / "+ user.filiacao.curso + " / "+ user.filiacao.departamento
+                  dd= "Docente / "+ user_data.filiacao.curso + " / "+ user_data.filiacao.departamento
       dt Nivel
-      dd= user.nivel
+      dd= user_data.nivel
       dt DataRegisto
-      dd= user.dataRegisto
+      dd= user_data.dataRegisto
       dt DataUltimoAcesso
-      dd= user.dataUltimoAcesso     
+      dd= user_data.dataUltimoAcesso     
 

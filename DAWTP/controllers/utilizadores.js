@@ -7,7 +7,7 @@ var tempo = require('../public/javascripts/mymood')
 //Return student list
 module.exports.list = () => {
     return Utilizador
-            .find()
+            .find() 
             .sort({nome:1})
             .exec()
 }
@@ -18,15 +18,23 @@ module.exports.lookUp = id => {
         .exec()
 }
 
+
+
 module.exports.insert = utili =>{
 
 
     utili._id=utili.username
-    var d=tempo.myDateTime()
+    utili.dataRegisto=tempo.myDateTime()
 
-    utili.dataRegisto=d
-    utili.dataUltimoAcesso=d
     var newUtilizador = new Utilizador(utili)
-
     return newUtilizador.save()
+}
+
+module.exports.edit = t => {
+    return Utilizador.findByIdAndUpdate({_id: t._id}, t, {new: true})
+}
+
+
+module.exports.delete = id => {
+    return Utilizador.deleteOne({_id: id})
 }

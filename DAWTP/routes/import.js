@@ -222,7 +222,7 @@ router.post('/recursos', upload.single('myFile'),Auth.verifyAuthAdmin, function 
                         var dest = newPath.createPath(recurso);
 
 
-                        Recurso.insert(recurso, dest)
+                        Recurso.insert(recurso, dest,req.user)
                           .then(dados => {
                             let oldPath = __dirname + '/../' + req.file.path + 'dir/' + recurso._id + 'dir'
 
