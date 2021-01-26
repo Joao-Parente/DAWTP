@@ -87,11 +87,6 @@ router.get('/logout', Auth.verifyAuth, function (req, res) {
 
 router.get('/delete/:username', Auth.verifyAuthUserorAdminEdit, function (req, res) {
 
-
-  User.lookUp(req.params.username)
-    .then(data => {
-
-
       User.delete(req.params.username)
         .then(el => {
 
@@ -108,11 +103,9 @@ router.get('/delete/:username', Auth.verifyAuthUserorAdminEdit, function (req, r
           else res.redirect('/utilizadores')
 
         })
-        .catch(err => res.render('error', { error: err }))
-
-    })
-    .catch(err => res.render('UtilizadorNaoExiste', { user: req.user }))
+        .catch(err => res.render('UtilizadorNaoExiste', { user: req.user }))    
 });
+
 router.get('/editar/:username', Auth.verifyAuthUserorAdminEdit, function (req, res) {
   User.lookUp(req.params.username)
     .then(data => {

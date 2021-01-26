@@ -1,3 +1,7 @@
+const { recursoToCSV } = require("./exportCSV");
+var Recurso = require('../../controllers/recursos')
+var { log } = require('./debug');
+
 verifyAuth = (req, res, next) => {
   if (req.isAuthenticated()) {
     //req.isAuthenticated() will return true if user is logged in
@@ -28,7 +32,7 @@ verifyAuthAdmin = (req, res, next) => {
 verifyAuthUserorAdminCreate = (req, res, next) => {
   if (req.isAuthenticated()) {
 
-    if (req.user.nivel >0 ) next()
+    if (req.user.nivel > 0) next()
     else res.render('SemPermissoes', { user: req.user })
 
   } else
@@ -39,7 +43,7 @@ verifyAuthUserorAdminCreate = (req, res, next) => {
 
 
 
-//Permissoes para alterar
+//Permissoes para alterar (User)
 verifyAuthUserorAdminEdit = (req, res, next) => {
   if (req.isAuthenticated()) {
 
@@ -50,9 +54,26 @@ verifyAuthUserorAdminEdit = (req, res, next) => {
     res.redirect("/utilizadores/menu");
 
 }
+//Permissoes para alterar (Recurso)
+verifyAuthUserorAdminEditRecurso = (req, res, next) => {
 
+  if (req.isAuthenticated()) {
+
+    Recurso.lookUp(req.params.id)
+      .then(data => {
+
+        if (req.user.nivel == 2 || req.user._id == data.produtor) next()
+        else res.render('SemPermissoes', { user: req.user })
+      })
+      .catch(el=>res.render('SemPermissoes', { user: req.user }))
+
+  } else
+    res.redirect("/utilizadores/menu");
+
+}
 
 module.exports.verifyAuthAdmin = verifyAuthAdmin;
 module.exports.verifyAuth = verifyAuth;
 module.exports.verifyAuthUserorAdminEdit = verifyAuthUserorAdminEdit
 module.exports.verifyAuthUserorAdminCreate = verifyAuthUserorAdminCreate
+module.exports.verifyAuthUserorAdminEditRecurso = verifyAuthUserorAdminEditRecurso

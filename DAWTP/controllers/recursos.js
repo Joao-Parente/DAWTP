@@ -2,6 +2,7 @@
 
 var Recurso = require('../models/recursos')
 var data = require('../public/javascripts/mymood')
+var {myDateTime} = require('../public/javascripts/mymood')
 
 
 //Return student arst
@@ -26,29 +27,18 @@ module.exports.lookUp = i => {
 
 module.exports.insert = (ar, dest,user) =>{
     
-    //Atributos que dependem da altura da insercao
+    //Atributos que dependem de quem insere
     ar.produtor = user._id
-    if(ar.visibilidade == undefined) ar.visibilidade='publico'
-    ar.dataRegisto = data.myDateTime()
-    ar.likes = []
 
-   
-   if(ar._id ==undefined) ar._id = ar.dataRegisto+'-'+Math.random()
+    // o Input de uma data num form se não puser nada vem definido como ''
+    console.log(ar)
+    if(ar.dataCriacao=='') ar.dataCriacao= myDateTime()
 
-   if(ar.titulo ==undefined || ar.titulo=='') ar.titulo=ar._id
-
-   if(ar.dataCriacao == undefined || ar.dataCriacao == null|| ar.dataCriacao == '')  ar.dataCriacao = data.myDateTime()
-   
-
-    ar.hashtags = ar.hashtags.split(",");
-
-
-    //path
+    //Path
+    if(ar._id ==undefined) ar._id = myDateTime()+'-'+Math.random()
     ar.path = dest + ar._id;
 
 
-
-    
     var newRecurso = new Recurso(ar)
     return newRecurso.save();
 }
@@ -61,7 +51,7 @@ module.exports.edit = t => {
 
 module.exports.remove = i => {
     
-    return Recurso.deleteOne({id: i})
+    return Recurso.deleteOne({_id: i})
                   .exec()
 }
 

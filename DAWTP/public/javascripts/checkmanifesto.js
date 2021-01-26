@@ -82,7 +82,7 @@ processaFicheiro = (current_path, ficheiro) => {
 
 
 
-            var data = tipos.find(a => a.nome == ficheiro.tipo)
+            var data = tipos.find(a => a._id == ficheiro.tipo)
 
             if (data != undefined) {
                 for (var i = 0; i < ficheiro.meta.length; i++) {

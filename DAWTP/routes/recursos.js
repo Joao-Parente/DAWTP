@@ -1,6 +1,5 @@
 var express = require('express');
 var router = express.Router();
-var fse = require('fs-extra');
 var User = require('../controllers/utilizadores')
 var Recurso = require('../controllers/recursos')
 var Zip = require('../public/javascripts/unzip')
@@ -59,6 +58,31 @@ router.get('/estrutura-manifesto', Auth.verifyAuthUserorAdminCreate, function (r
 });
 
 
+//like se tiver no inicio
+router.get('/like/:id', Auth.verifyAuth, function (req, res) {
+  log("hiii")
+  Recurso.lookUp(req.params.id)
+    .then(dados => {
+
+      log("req.")
+      log(req.user)
+      if (dados.likes.includes(req.user._id)) {
+        dados.likes.splice(dados.likes.indexOf(req.user._id), 1);
+      }
+      else {
+        dados.likes.push(req.user._id)
+      }
+      Recurso.edit(dados)
+        .then(el => res.redirect('/recursos/' + req.params.id))
+        .catch(err => res.render('error', { error: err }))
+
+
+    })
+    .catch(err => res.render('error', { error: err }))
+
+});
+
+//like se nao tiver no inico do recurso
 router.get('/like/:id/*', Auth.verifyAuth, function (req, res) {
   log("hiii")
   Recurso.lookUp(req.params.id)
@@ -67,13 +91,13 @@ router.get('/like/:id/*', Auth.verifyAuth, function (req, res) {
       log("req.")
       log(req.user)
       if (dados.likes.includes(req.user._id)) {
-        dados.likes.splice( dados.likes.indexOf(req.user._id), 1);
+        dados.likes.splice(dados.likes.indexOf(req.user._id), 1);
       }
       else {
         dados.likes.push(req.user._id)
       }
       Recurso.edit(dados)
-        .then(el => res.redirect('/recursos/'+req.url.split('/').splice(2).join('/')))
+        .then(el => res.redirect('/recursos/' + req.url.split('/').splice(2).join('/')))
         .catch(err => res.render('error', { error: err }))
 
 
@@ -98,7 +122,7 @@ router.get('/:id', Auth.verifyAuth, function (req, res) {
         log("                           DOWNLOAD: " + req.params.id)
         log("atao joao")
         log(result)
-        
+
         res.render('recurso', { manifesto: result, recurso: dados, path_g: dados.path + '/data', download: req.params.id, user: req.user }) //manifesto.ficheiros: [] ,recursod ados
 
       }
@@ -249,6 +273,49 @@ router.get('/download/:id', Auth.verifyAuth, function (req, res) {
 
 });
 
+router.get('/delete/:id', Auth.verifyAuthUserorAdminEditRecurso, function (req, res) {
+
+  Recurso.remove(req.params.id)
+    .then(el => {
+      res.redirect('/recursos')
+    })
+    .catch(err => res.render('UtilizadorNaoExiste', { user: req.user }))
+});
+
+router.get('/editar/:id', Auth.verifyAuthUserorAdminEditRecurso, function (req, res) {
+  Recurso.lookUp(req.params.id)
+    .then(data => {
+
+      if (data != null)
+        res.render('edit-recurso-form', { user: req.user, recurso: data })
+      else
+        res.render('RecursoInexistente', { user: req.user })
+    })
+    .catch(err => res.render('RecursoInexistente', { user: req.user }))
+});
+router.post('/editar/:id', Auth.verifyAuthUserorAdminEditRecurso, function (req, res) {
+  Recurso.lookUp(req.params.id)
+    .then(data => {
+
+      if (data != null) {
+        data.titulo = req.body.titulo;
+        data.subtitulo = req.body.subtitulo;
+        //tratar dos hashtags
+        var tags=req.body.hashtags.split(',')
+        req.body.hashtags=[]
+        tags.forEach( tag=>{
+          if(tag!='')req.body.hashtags.push(tag)
+        })
+        Recurso.edit(data)
+          .then(dados => res.redirect('/recursos/' + data._id))
+          .catch(err => res.render('RecursoInexistente', { user: req.user }))
+      }
+
+      else
+        res.render('RecursoInexistente', { user: req.user })
+    })
+    .catch(err => res.render('RecursoInexistente', { user: req.user }))
+});
 
 
 
@@ -324,6 +391,13 @@ router.post('/novo', upload.single('myFile'), Auth.verifyAuthUserorAdminCreate, 
           var obj_json = __dirname + '/../' + req.file.path + 'dir' + '/manifesto.json'
           req.body.manifesto = JSON.stringify(require(obj_json))
 
+          //tratar dos hashtags
+          var tags=req.body.hashtags.split(',')
+          req.body.hashtags=[]
+          tags.forEach( tag=>{
+            if(tag!='')req.body.hashtags.push(tag)
+          })
+   
 
           log("O MANIEFESTO" + req.body.manifesto)
 
@@ -346,7 +420,7 @@ router.post('/novo', upload.single('myFile'), Auth.verifyAuthUserorAdminCreate, 
 
               fs.renameSync(oldPath, newPath)
 
-              res.render('index', { user: req.user })
+              res.redirect('/recursos/' + dados._id)
             })
             .catch(erro => res.render('error', { error: erro }))
         }

@@ -21,11 +21,6 @@ module.exports.lookUp = id => {
 
 
 module.exports.insert = utili =>{
-
-
-    utili._id=utili.username
-    utili.dataRegisto=tempo.myDateTime()
-
     var newUtilizador = new Utilizador(utili)
     return newUtilizador.save()
 }

@@ -19,7 +19,12 @@ block addmetadata
       a.w3-bar-item.w3-button.w3-mobile(href="/publicacoes/"+recurso.id) Posts do Recurso
       a.w3-bar-item.w3-button.w3-mobile(href="/publicacoes/"+recurso.id+'/novo') Novo Post
       a.w3-bar-item.w3-button.w3-mobile(href="/recursos/download/"+recurso.id) Download
+      if(user.nivel>1 || recurso.produtor==user._id)
+        a.w3-bar-item.w3-button.w3-mobile(href="/recursos/delete/"+recurso.id) Delete Recurso
+        a.w3-bar-item.w3-button.w3-mobile(href="/recursos/editar/"+recurso.id) Edit Recurso
 
+
+      
 
 block content
 
@@ -33,7 +38,6 @@ block content
       table.w3-table-all
         tr 
           th Titulo
-          th Tipo
           th Subtitulo
           th DataCriação
           th DataRegisto 
@@ -43,7 +47,6 @@ block content
 
         tr
           td=recurso.titulo
-          td=recurso.tipo
           td=recurso.subtitulo
           td=recurso.dataCriacao
           td=recurso.dataRegisto

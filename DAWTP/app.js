@@ -55,8 +55,8 @@ passport.use(new LocalStrategy(
 
 // Indica-se ao passport como serializar o utilizador
 passport.serializeUser((user,done) => {
-  console.log('Serielização, id: ' + user.username)
-  done(null, user.username)
+  console.log('Serielização, id: ' + user._id)
+  done(null, user._id)
 });
 
 // Desserialização: a partir do id obtem-se a informação do utilizador

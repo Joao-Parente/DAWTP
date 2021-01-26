@@ -16,7 +16,7 @@ var Auth = require('../public/javascripts/verifyauth.js')
 
 
 function writetoCsv(path, str) {
-  fs.writeFileSync(path, str, { flag: 'a+' }, (err) => {
+  fs.writeFileSync(path, str+'\n', { flag: 'a+' }, (err) => {
     if (err) {
       throw err;
     }

@@ -21,7 +21,7 @@ router.get('/:idrecurso/novo', function (req, res) {
       var user = "user_na_sessao"
       var conteudo = " conteudo"
 
-      var jsonStr = '{"meta":{"id":"' + id + '","nome":"' + user + '",\
+      var jsonStr = '{"meta":{"_id":"' + id + '","nome":"' + user + '",\
       "conteudo":"' + conteudo + '","data":"' + data_agr.myDateTime() + '"},\
       "coments":[]}';
 
@@ -113,9 +113,9 @@ router.post('/:idrecurso/:idpost/coments', function (req, res) {
 
         dados.posts.forEach(post => {
 
-          if (post.meta.id == req.params.idpost) {
+          if (post.meta._id == req.params.idpost) {
             console.log(post.coments);
-            var newComent = JSON.parse('{ "id":"' + 'idestu' + '","nome":"' + 'nomesest' + '","conteudo":"' + req.body.conteudo + '","data":"' + data_agr.myDateTime() + '"}');
+            var newComent = JSON.parse('{ "_id":"' + 'idestu' + '","nome":"' + 'nomesest' + '","conteudo":"' + req.body.conteudo + '","data":"' + data_agr.myDateTime() + '"}');
             post.coments.push(newComent);
             console.log("antes");
             console.log(post.coments);

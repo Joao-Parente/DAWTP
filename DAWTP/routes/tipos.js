@@ -16,6 +16,7 @@ router.get('/',Auth.verifyAuth, function(req, res) {
 });
 
 
+
 //Consultar 1 tipo
 router.get('/:nome',Auth.verifyAuth, function (req, res) {
   Tipo.lookUp(req.params.nome)
