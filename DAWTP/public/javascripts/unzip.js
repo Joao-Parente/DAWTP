@@ -1,26 +1,83 @@
 var AdmZip = require('adm-zip');
 const fs = require('fs');
 
-const { unzip } = require('zlib');
 var u = require('unzip-stream')
-var {log}= require('./debug')
+var { log } = require('./debug')
+const { spawn } = require('child_process');
+var pat = require('path')
 
 unzipBigFiles = (file) => {
 
     return new Promise((resolve) => {
 
-        
-    var stream=fs.createReadStream(file).pipe(u.Extract({ path: file + 'dir' }));
 
-    stream.on("end", () => resolve());
-    stream.on("close", () => resolve());
-    stream.on("error", error => {log("Erro: "+error);resolve()});
+        var stream = fs.createReadStream(file).pipe(u.Extract({ path: file + 'dir' }));
 
-    //stream.on('end', () =>{fs.unlinkSync(file);log('terminei');resolve()});
+        stream.on("end", () => resolve());
+        stream.on("close", () => resolve());
+        stream.on("error", error => { log("Erro: " + error); resolve() });
+
     })
-    
+
 }
 module.exports.unzipBigFiles = unzipBigFiles
+
+zipBigFiles = (path, nome) => {
+
+    return new Promise((resolve) => {
+
+        var tempzip = __dirname + '/../../tempzip/' + nome;
+        var file_or_folder = __dirname + '/../' + path
+    
+
+        const ls = spawn('zip', ['-r', tempzip,pat.basename(file_or_folder),"manifesto.json" ],{cwd:pat.resolve(file_or_folder, '..')});
+
+        ls.stdout.on('data', (data) => {
+            console.log(`stdout: ${data}`);
+        });
+
+        ls.stderr.on('data', (data) => {
+            console.error(`stderr: ${data}`);
+        });
+
+        ls.on('close', (code) => {
+            console.log(`child process exited with code ${code}`);
+            resolve()
+        });
+    })
+}
+module.exports.zipBigFiles = zipBigFiles
+
+zipAddtoBigZip = (file,nome_zip)=> {
+
+    return new Promise((resolve) => {
+
+
+        const ls = spawn('zip', ['-r',__dirname + '/../../tempzip/' + nome_zip, pat.basename(file)],{cwd:pat.resolve(file, '..')});
+
+
+        ls.stdout.on('data', (data) => {
+            console.log(`stdout: ${data}`);
+        });
+
+        ls.stderr.on('data', (data) => {
+            console.error(`stderr: ${data}`);
+        });
+
+        ls.on('close', (code) => {
+            console.log(`child process exited with code ${code}`);
+            resolve()
+        });
+    })
+}
+module.exports.zipAddtoBigZip = zipAddtoBigZip
+
+
+/*
+
+
+
+
 
 module.exports.unzip = (file) => {
 
@@ -48,23 +105,26 @@ module.exports.zip = (path, nome) => {
     zip.addLocalFolder(local_folder)
 
     zip.writeZip(tempzip);
-
 }
-
-module.exports.create_zip = () => {
+create_zip = () => {
     return new AdmZip()
 }
 
-module.exports.add_folder_to_zip = (path, zip) => {
+module.exports.create_zip = create_zip
+
+add_folder_to_zip = (path, zip) => {
     zip.addLocalFolder(__dirname + '/../' + path)
 }
-module.exports.add_file_to_zip = (path, zip, callback) => {
+module.exports.add_folder_to_zip = add_folder_to_zip
+
+add_file_to_zip = (path, zip) => {
 
     zip.addLocalFile(__dirname + '/../' + path)
 }
-module.exports.close_zip = (nome, zip) => {
+module.exports.add_file_to_zip = add_file_to_zip
+
+close_zip = (nome, zip) => {
     zip.writeZip(__dirname + '/../../tempzip/' + nome);
 }
-
-//unzipBigFiles('/media/jpedro/D/EXPORT\ SIPS/maxzip.zip').then(() => log("works!!"))
-
+module.exports.close_zip = close_zip
+*/

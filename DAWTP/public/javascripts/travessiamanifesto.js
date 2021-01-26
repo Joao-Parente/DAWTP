@@ -33,6 +33,7 @@ module.exports.travessiaManifesto = (path, manifesto) => {
         for (var i = 0; i < manifesto.ficheiros.length; i++) {    
            if  (manifesto.ficheiros[i].nome==strarray[0])return true;
         };
+
     }
 
     return null// igual ao de baixo

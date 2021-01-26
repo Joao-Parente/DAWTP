@@ -43,11 +43,11 @@ csvToTipo = (csv) => {
 
     var tipo = {}
     var partes = csv.split(',')
-    tipo.nome = partes[0];
+    tipo._id = partes[0];
 
     tipo.parametros = []
     partes[1].replace(/[\]\[]/g, '').split(';').forEach(param => {
-        tipo.parametros.push(csvToParam(param))
+        if (param != '') tipo.parametros.push(csvToParam(param))
     })
     return tipo
 }

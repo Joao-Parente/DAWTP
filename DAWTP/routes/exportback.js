@@ -16,89 +16,59 @@ var Auth = require('../public/javascripts/verifyauth.js')
 
 
 function writetoCsv(path, str) {
-  fs.writeFileSync(path, str + '\n', { flag: 'a+' }, (err) => {
+  fs.writeFileSync(path, str+'\n', { flag: 'a+' }, (err) => {
     if (err) {
       throw err;
     }
   })
 }
 
-router.get('/', Auth.verifyAuthAdmin, function (req, res) {
-  res.render('menu_export', { user: req.user })
+router.get('/',Auth.verifyAuthAdmin, function (req, res) {
+  res.render('menu_export',{user:req.user})
 });
 
-router.get('/recursos', Auth.verifyAuthAdmin, function (req, res) {
+router.get('/recursos',Auth.verifyAuthAdmin, function (req, res) {
 
   Recurso.list()
     .then(data => {
 
+      var zip = Zip.create_zip();
+
       var nome = 'export:recursos' + Math.random() + ':' + date.myDateTime()
-      var nome_zipFinal = nome + '.zip'
+      var nome_zip = nome + '.zip'
       var nome_csv = nome + '.csv'
       writetoCsv(__dirname + '/../tempzip/' + nome_csv, exportcsv.csvRecurso)
 
-      var promisses = []
+      data.forEach(recurso => {
 
-      let criar_promessas = new Promise((resolve) => {
+        log(exportcsv.recursoToCSV(recurso))
+        //escrever para o csv este recurso
+        writetoCsv(__dirname + '/../tempzip/' + nome_csv, exportcsv.recursoToCSV(recurso))
 
+        var path_zip = recurso.path + '/'
+        var nome_zip = recurso.id + '.zip'
+        var temp_zip = '../tempzip/' + nome_zip
+        Zip.zip(path_zip, nome_zip)
+        Zip.add_file_to_zip(temp_zip, zip);
 
-        for (var i = 0; i < data.length; i++) {
-          var recurso = data[i]
-          writetoCsv(__dirname + '/../tempzip/' + nome_csv, exportcsv.recursoToCSV(recurso))
+        fs.unlinkSync(__dirname + '/' + temp_zip);
 
-          let pins = new Promise((resolve) => {
-            log(exportcsv.recursoToCSV(recurso))
-            //Escrever para o csv este recurso
-
-            var path_zip = recurso.path + '/data'
-            var nome_zip = recurso.id + '.zip'
-            var temp_zip = '../tempzip/' + nome_zip
-
-
-            //zipa o recurso
-            Zip.zipBigFiles(path_zip, nome_zip).then(() => {
-
-              //Adiciona o zip do recurso ao zip geral
-              zipAddtoBigZip(__dirname + '/' + temp_zip, nome_zipFinal).then(() => {
-
-                //Elimina o zip do recurso
-                fs.unlinkSync(__dirname + '/' + temp_zip);
-
-                resolve()
-
-              }).catch(err => log(err + "erro de zip"))
-            }).catch(err => log(err + "erro de zip"))
-          })
-          promisses.push(pins)
-        }
-        resolve()
       })
+      Zip.add_file_to_zip('../tempzip/' + nome_csv, zip);
+      fs.unlinkSync(__dirname + '/../tempzip/' + nome_csv);
+      Zip.close_zip(nome_zip, zip)
 
-
-      criar_promessas.then(() => Promise.all(promisses).then(() => {
-        // Adiciona o csv ao zip geral
-        zipAddtoBigZip(__dirname + '/../tempzip/' + nome_csv, nome_zipFinal).then(() => {
-
-          //elimina o csv
-          fs.unlinkSync(__dirname + '/../tempzip/' + nome_csv);
-          //Zip.close_zip(nome_zip, zip)
-
-          res.download(__dirname + '/../tempzip/' + nome_zipFinal, function (err) {
-            //elimina o zip geral
-            fs.unlinkSync(__dirname + '/../tempzip/' + nome_zipFinal);
-            if (err) log(err)
-          });
-
-        })
-      }))
-
+      res.download(__dirname + '/../tempzip/' + nome_zip, function (err) {
+        fs.unlinkSync(__dirname + '/../tempzip/' + nome_zip);
+        if (err) log(err)
+      });
 
     })
     .catch(err => res.render('error', { error: err }))
 
 });
 
-router.get('/utilizadores', Auth.verifyAuthAdmin, function (req, res) {
+router.get('/utilizadores',Auth.verifyAuthAdmin, function (req, res) {
 
 
   var nome = 'export:users:' + Math.random() + ':' + date.myDateTime()
@@ -123,7 +93,7 @@ router.get('/utilizadores', Auth.verifyAuthAdmin, function (req, res) {
 });
 
 
-router.get('/tipos', Auth.verifyAuthAdmin, function (req, res) {
+router.get('/tipos',Auth.verifyAuthAdmin, function (req, res) {
 
 
   var nome = 'export:tipo:' + Math.random() + ':' + date.myDateTime()

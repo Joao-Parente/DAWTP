@@ -24,7 +24,7 @@ block addmetadata
         a.w3-bar-item.w3-button.w3-mobile(href="/recursos/editar/"+recurso.id) Edit Recurso
 
 
-      
+
 
 block content
 
@@ -71,6 +71,9 @@ block content
               tr
                 td
                   a(href='/recursos/'+download+"/"+p.nome) #{p.nome} 
+                td
+                  a(href='/recursos/download/'+download+"/"+p.nome) Download
+
 
     else 
       .w3-container 

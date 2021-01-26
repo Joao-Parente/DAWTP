@@ -77,7 +77,7 @@ router.post('/tipos', upload.single('myFile'),Auth.verifyAuthAdmin, function (re
                 var linha = line
                 Tipo.insert(tipo)
                   .then(dados => {
-                    alog = addlog(linha, 201, "Importado com sucesso", alog, '/tipos/' + dados.nome)
+                    alog = addlog(linha, 201, "Importado com sucesso", alog, '/tipos/' + dados._id)
                     resolve()
                   })
                   .catch(err => { log(err); alog = addlog(linha, 409, "Não conseguiu importar,inserção inválida", alog, null); resolve() })
@@ -133,7 +133,7 @@ router.post('/utilizadores', upload.single('myFile'),Auth.verifyAuthAdmin, funct
                 var linha = line
                 Utilizador.insert(user)
                   .then(dados => {
-                    alog = addlog(linha, 201, "Importado com sucesso", alog, '/utilizadores/' + user.username)
+                    alog = addlog(linha, 201, "Importado com sucesso", alog, '/utilizadores/' + user._id)
                     resolve()
                   })
                   .catch(err => { log(err); alog = addlog(linha, 409, "Não conseguiu importar, inserção inválida", alog, null); resolve() })
