@@ -1,6 +1,7 @@
 createPath = (dados) => {
 
     //verifica se o nome para a pasta é válido
+    if(dados.hashtags.length>0 )dados.hashtags[0]=dados.hashtags[0].replace(/[:]/g, '')
     if (dados.hashtags.length > 0 && dados.hashtags[0].normalize("NFD").replace(/[\u0300-\u036f]/g, "").match(/^(\w+\.?)*\w+$/)) {
         var dest = 'fileStore/' + dados.hashtags[0] + '/';
     }
