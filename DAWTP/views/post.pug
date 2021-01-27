@@ -20,7 +20,7 @@ block addmetadata
       a.w3-bar-item.w3-button.w3-mobile(href="/recursos/"+idrecurso) Voltar ao Recurso
       a.w3-bar-item.w3-button.w3-mobile(href="/publicacoes/"+recurso.id) Posts do Recurso
 
-      if(user.nivel>1 || recurso.produtor==user._id)
+      if(user.nivel>1 || infopost.nome==user._id)
         a.w3-bar-item.w3-button.w3-mobile(href="/publicacoes/"+idrecurso+'/'+idpost+'/editar') Edit Post
         a.w3-bar-item.w3-button.w3-mobile(href="/publicacoes/"+idrecurso+'/'+idpost+'/delete') Delete Post
 

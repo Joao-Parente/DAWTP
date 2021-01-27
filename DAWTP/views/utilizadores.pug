@@ -23,7 +23,7 @@ block content
                 
                   td=s.nome                                 
                   td
-                    a(href="/utilizadores/"+s.username) #{s.username}
+                    a(href="/utilizadores/"+s._id) #{s._id}
                   td=s.email
 
                   if(s.filiacao.estudante==true && s.filiacao.docente==true ) 
