@@ -13,9 +13,7 @@ var newPath = require('../public/javascripts/createpath')
 var multer = require('multer')
 var upload = multer({ dest: 'uploads/' })
 var fs = require('fs');
-const { unzip } = require('zlib');
-const { exportCSV } = require('../public/javascripts/exportCSV');
-const { importCSV } = require('../public/javascripts/importCSV');
+
 var { log } = require('../public/javascripts/debug');
 var Auth = require('../public/javascripts/verifyauth.js')
 

@@ -1,0 +1,17 @@
+extends layoutUser
+
+block content
+    .w3-container.w3-margin.w3-border
+        .w3-container.w3-black
+            h3 Editar Post sobre o Recurso: #{recurso.titulo}:
+        form.w3-container(action='/publicacoes/'+recurso._id+'/'+ post.meta._id+'/editar/' method='POST')
+
+
+
+            label Data: 
+            input.w3-input(type="text" name="data" required readonly value=post.meta.data)
+            label User: 
+            input.w3-input(type="text" name="nome"  required readonly value=post.meta.nome)
+            label Conteudo: 
+            input.w3-input(type="text" name="conteudo" required value=post.meta.conteudo  )
+            input.w3-btn.w3-black(type="submit" value="Enviar")
