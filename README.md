@@ -17,7 +17,7 @@
 
 ## Screenshots
 
-[comment]: <> <img width="432" src="">
+[comment]: <img width="432" src="">
 
 ## Features
 
@@ -54,7 +54,6 @@ Existem 3 níveis de acesso ao sistema cada um com as suas devidas permissôes C
 ####    "unzip-stream": "^0.3.1",
 ####    "util": "^0.12.3",
 ####    "uuid": "^8.3.2"
-<br>
 ####     zip: ZIP is a compression and file packaging utility for Unix.  
 
 
