@@ -17,7 +17,10 @@
 
 ## Screenshots
 
-[comment]: <img width="432" src="">
+<img width="432" src="https://github.com/Joao-Parente/DAWTP/blob/2nd-branch/imagens_README/index.png">
+<img width="432" src="https://github.com/Joao-Parente/DAWTP/blob/2nd-branch/imagens_README/recursos.png">
+<img width="432" src="https://github.com/Joao-Parente/DAWTP/blob/2nd-branch/imagens_README/tipos.png">
+<img width="432" src="https://github.com/Joao-Parente/DAWTP/blob/2nd-branch/imagens_README/users.png">
 
 ## Features
 
@@ -32,6 +35,7 @@ Permite editarutilizadores,recursos,tipos de ficheiros e publicações.
 
 ### Níveis de Acesso
 Existem 3 níveis de acesso ao sistema cada um com as suas devidas permissôes Consumidor(0),Produtor(1),Admin(2)
+### etc...
 
 ## Dependências
 
