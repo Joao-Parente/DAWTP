@@ -39,7 +39,8 @@ block content
               td=s.subtitulo
               td=s.dataCriacao
               td=s.dataRegisto
-              td=s.produtor
+              td
+                a(href='/utilizadores/'+s.produtor) #{s.produtor} 
               td.likes=s.likes.length
               td.hashtags=s.hashtags  
 

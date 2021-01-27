@@ -50,7 +50,8 @@ block content
           td=recurso.subtitulo
           td=recurso.dataCriacao
           td=recurso.dataRegisto
-          td=recurso.produtor
+          td
+             a(href='/utilizadores/'+recurso.produtor) #{recurso.produtor} 
           td=recurso.likes.length
           td=recurso.hashtags
 
