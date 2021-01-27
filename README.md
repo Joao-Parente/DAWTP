@@ -60,8 +60,8 @@ Existem 3 níveis de acesso ao sistema cada um com as suas devidas permissôes C
 ####    "uuid": "^8.3.2"
 ####     zip: ZIP is a compression and file packaging utility for Unix.  
 
-## Relatório
-<a href="https://github.com/Joao-Parente/DAWTP/blob/2nd-branch/relat%C3%B3rioDAWTP.pdf">Ir</a>
+## <a href="https://github.com/Joao-Parente/DAWTP/blob/2nd-branch/relat%C3%B3rioDAWTP.pdf">Relatório</a>
+
 ## Download e Executar
 
 ```sh
