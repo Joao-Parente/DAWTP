@@ -5,9 +5,11 @@ block content
 
   .w3-container.w3-margin
 
-  
-  .button.w3-button.w3-black.3-large(onclick="document.getElementById('id01').style.display='block'") Login
-  .button.w3-button.w3-black.3-large(onclick="document.getElementById('id02').style.display='block'") Registo
+  .menu(style="text-align: center;  position: absolute;top: 50%;left:40%")
+    img.w3-circle.w3-margin-top(src="/images/favicon.ico"  alt="icon" style="width:30%; "  )
+    .butoes(style="padding-top: 50px;padding-right: 30px; padding-bottom: 50px;  padding-left: 80px;")
+      .button.w3-button.w3-black.3-large(onclick="document.getElementById('id01').style.display='block'") Login
+      .button.w3-button.w3-black.3-large(onclick="document.getElementById('id02').style.display='block'") Registo
 
   .w3-modal( id="id01")
     .w3-modal-content.w3-card-4.w3-animate-zoom(style="max-width:600px")

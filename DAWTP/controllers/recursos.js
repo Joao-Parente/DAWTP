@@ -35,7 +35,7 @@ module.exports.insert = (ar, dest,user) =>{
     if(ar.dataCriacao=='') ar.dataCriacao= myDateTime()
 
     //Path
-    if(ar._id ==undefined) ar._id = myDateTime()+'-'+Math.random()
+    if(ar._id ==undefined) ar._id = (myDateTime()+'-'+Math.random()).replace(/[:]/g, '')
     ar.path = dest + ar._id;
 
 
