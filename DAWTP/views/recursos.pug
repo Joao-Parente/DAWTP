@@ -43,6 +43,12 @@ block content
                 a(href='/utilizadores/'+s.produtor) #{s.produtor} 
               td.likes=s.likes.length
               td.hashtags=s.hashtags  
+              if( user.nivel>1 || user._id == s.produtor)              
+                td 
+                  a(href="/recursos/editar/"+s._id) Edit
+                td
+                  a(href="/recursos/delete/"+s._id) Delete 
+
 
 
     else
