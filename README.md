@@ -23,6 +23,8 @@
 <img width="432" src="https://github.com/Joao-Parente/DAWTP/blob/2nd-branch/imagens_README/recursos.png">
 <img width="432" src="https://github.com/Joao-Parente/DAWTP/blob/2nd-branch/imagens_README/tipos.png">
 <img width="432" src="https://github.com/Joao-Parente/DAWTP/blob/2nd-branch/imagens_README/users.png">
+<img width="432" src="https://github.com/Joao-Parente/DAWTP/blob/2nd-branch/imagens_README/import_resultado.png">
+
 
 ## Features
 
