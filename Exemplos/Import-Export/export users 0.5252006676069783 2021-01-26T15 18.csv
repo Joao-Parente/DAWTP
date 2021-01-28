@@ -1,0 +1,3 @@
+_id,nome,email,[estudante,docente,curso,departamento],dataRegisto,dataUltimoAcesso,password,nivel
+admin,Admin User,admin@admin.pt,[false;false;Admin;Admin],2021-01-26T09:22:00.000Z,2021-01-26T14:16:00.000Z,admin,2
+joao123,João Pedro Afonso,jpbp.pfdrp@gmail.com,[true;false;Miei;Informática],2021-01-26T09:22:00.000Z,2021-01-26T09:22:00.000Z,123,0
