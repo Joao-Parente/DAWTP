@@ -3,13 +3,31 @@ extends layout
 block content
 
 
-  .w3-container.w3-margin
+  link(rel='stylesheet' href='/stylesheets/index.css')
 
-  .menu(style="text-align: center;  position: absolute;top: 50%;left:40%")
-    img.w3-circle.w3-margin-top(src="/images/favicon.ico"  alt="icon" style="width:30%; "  )
-    .butoes(style="padding-top: 50px;padding-right: 30px; padding-bottom: 50px;  padding-left: 80px;")
-      .button.w3-button.w3-black.3-large(onclick="document.getElementById('id01').style.display='block'") Login
-      .button.w3-button.w3-black.3-large(onclick="document.getElementById('id02').style.display='block'") Registo
+  section
+    header
+      img.logo(src="/images/favicon.ico" alt="icon"  )
+      ul
+        li 
+          button(onclick="document.getElementById('id01').style.display='block'") Login
+        li
+          button(onclick="document.getElementById('id02').style.display='block'") Registo
+    .content
+      .textBox
+        h2 Recursos Académicos
+        p Plataforma para guardar Recursos académicos, visualiza-los, fazer downloads deles, comenta-los,etc
+    .imgBox 
+        img(src="/images/img1.png" )                   
+
+
+
+
+
+
+
+
+
 
   .w3-modal( id="id01")
     .w3-modal-content.w3-card-4.w3-animate-zoom(style="max-width:600px")
@@ -17,19 +35,19 @@ block content
       .w3-center
         br
         span.w3-button.w3-xlarge.w3-hover-red.w3-display-topright(onclick="document.getElementById('id01').style.display='none'" title="Close Modal") &times
-        img.w3-circle.w3-margin-top(src="/images/avatar.jpg"  alt="Avatar" style="width:30%;border-style: solid;" )
-      
+        img.w3-circle.w3-margin-top(src="/images/avatar.jpg" alt="Avatar" style="width:30%;border-style: solid;" )
+
 
 
       form.w3-container(action='/utilizadores/login' method='POST')
         .w3-section
-            label Username: 
-            input.w3-input.w3-border.w3-margin-bottom(type="text"  name="username" required)
+          label Username: 
+          input.w3-input.w3-border.w3-margin-bottom(type="text" name="username" required)
 
-            label Password: 
-            input.w3-input.w3-input.w3-border(type="password"  name="password" required)
-            
-            input.w3-button.w3-block.w3-black.w3-section.w3-padding(type="submit" value="Enviar")
+          label Password: 
+          input.w3-input.w3-input.w3-border(type="password" name="password" required)
+
+          input.w3-button.w3-block.w3-black.w3-section.w3-padding(type="submit" value="Enviar")
 
 
       .w3-container.w3-border-top.w3-padding-16.w3-light-grey
@@ -43,51 +61,51 @@ block content
       .w3-center
         br
         span.w3-button.w3-xlarge.w3-hover-red.w3-display-topright(onclick="document.getElementById('id02').style.display='none'" title="Close Modal") &times
-        img.w3-circle.w3-margin-top(src="/images/avatar.jpg"  alt="Avatar" style="width:30%;border-style: solid;" )
-      
+        img.w3-circle.w3-margin-top(src="/images/avatar.jpg" alt="Avatar" style="width:30%;border-style: solid;" )
+
 
 
       form.w3-container(action='/utilizadores/registo' method='POST')
         .w3-section
-            label Username: 
-            input.w3-input.w3-border.w3-margin-bottom(type="text"  name="_id" required)
+          label Username: 
+          input.w3-input.w3-border.w3-margin-bottom(type="text" name="_id" required)
 
-            label Password: 
-            input.w3-input.w3-input.w3-border(type="password"  name="password" required)
-            
-
-            label Nome
-            input.w3-input.w3-border.w3-margin-bottom(type="text"  name="nome" required)
-
-            label Email
-            input.w3-input.w3-border.w3-margin-bottom(type="text"  name="email" required)
-
-            label Nível (0-Consumidor | 1-Produtor | 2- Admin)
-            select.w3-input.w3-border.w3-margin-bottom(name="nivel")
-                option(value=0) Consumidor
-                option(value=1) Produtor
-                option(value=2) Admin
-
-            br
-
-            label Estudante
-            input.w3-border.w3-margin-bottom(type="checkbox" name="filiacao.estudante" value="true")
-
-            br 
-
-            label Docente
-            input.w3-border.w3-margin-bottom(type="checkbox" name="filiacao.docente" value="true")
-
-            br
-
-            label Curso
-            input.w3-input.w3-border.w3-margin-bottom(type="text"  name="filiacao.curso" required)
-
-            label Departamento
-            input.w3-input.w3-border.w3-margin-bottom(type="text"  name="filiacao.departamento" required)
+          label Password: 
+          input.w3-input.w3-input.w3-border(type="password" name="password" required)
 
 
-            input.w3-button.w3-block.w3-black.w3-section.w3-padding(type="submit" value="Enviar")
+          label Nome
+          input.w3-input.w3-border.w3-margin-bottom(type="text" name="nome" required)
+
+          label Email
+          input.w3-input.w3-border.w3-margin-bottom(type="text" name="email" required)
+
+          label Nível (0-Consumidor | 1-Produtor | 2- Admin)
+          select.w3-input.w3-border.w3-margin-bottom(name="nivel")
+            option(value=0) Consumidor
+            option(value=1) Produtor
+            option(value=2) Admin
+
+          br
+
+          label Estudante
+          input.w3-border.w3-margin-bottom(type="checkbox" name="filiacao.estudante" value="true")
+
+          br 
+
+          label Docente
+          input.w3-border.w3-margin-bottom(type="checkbox" name="filiacao.docente" value="true")
+
+          br
+
+          label Curso
+          input.w3-input.w3-border.w3-margin-bottom(type="text" name="filiacao.curso" required)
+
+          label Departamento
+          input.w3-input.w3-border.w3-margin-bottom(type="text" name="filiacao.departamento" required)
+
+
+          input.w3-button.w3-block.w3-black.w3-section.w3-padding(type="submit" value="Enviar")
 
 
       .w3-container.w3-border-top.w3-padding-16.w3-light-grey
