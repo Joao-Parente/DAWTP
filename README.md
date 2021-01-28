@@ -17,6 +17,8 @@
 
 ## Screenshots
 
+
+<img width="432" src="https://github.com/Joao-Parente/DAWTP/blob/2nd-branch/imagens_README/index_por_login.png">
 <img width="432" src="https://github.com/Joao-Parente/DAWTP/blob/2nd-branch/imagens_README/index.png">
 <img width="432" src="https://github.com/Joao-Parente/DAWTP/blob/2nd-branch/imagens_README/recursos.png">
 <img width="432" src="https://github.com/Joao-Parente/DAWTP/blob/2nd-branch/imagens_README/tipos.png">
