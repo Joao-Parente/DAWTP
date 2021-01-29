@@ -73,7 +73,7 @@ zipAddtoBigZip = (file,nome_zip)=> {
 module.exports.zipAddtoBigZip = zipAddtoBigZip
 
 
-/*
+
 
 
 
@@ -127,4 +127,3 @@ close_zip = (nome, zip) => {
     zip.writeZip(__dirname + '/../../tempzip/' + nome);
 }
 module.exports.close_zip = close_zip
-*/
