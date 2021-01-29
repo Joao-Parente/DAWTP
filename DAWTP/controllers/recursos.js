@@ -55,3 +55,66 @@ module.exports.remove = i => {
                   .exec()
 }
 
+
+
+module.exports.listHashtags = (htags) => {
+    return Recurso
+            .find({ hashtags : { $all : htags }})
+            .sort({dataCriacao:-1,titulo:1})
+            .exec()
+}
+
+module.exports.listAno = (ano) => {
+    var startDate = ano + "-01-01T00:00:00.000Z";
+    var endDate = ano + "-12-31T00:00:00.000Z";
+    return Recurso
+            .find({ dataCriacao :  { $gte: new Date(startDate), $lte: new Date(endDate) }})
+            .sort({titulo:1})
+            .exec()
+}
+
+module.exports.listTitulo = () => {
+    return Recurso
+            .find()
+            .sort({titulo:1})
+            .exec()
+}
+
+module.exports.listAntigos = () => {
+    return Recurso
+            .find()
+            .sort({dataCriacao:1,titulo:-1})
+            .exec()
+}
+
+module.exports.listLikes = () => {
+    return Recurso
+            .aggregate([
+                { "$project": {
+                    "_id": 1,
+                    "titulo": 1,
+                    "subtitulo": 1,
+                    "dataCriacao": 1,
+                    "dataRegisto": 1,
+                    "produtor": 1,
+                    "visibilidade": 1,
+                    "path": 1,
+                    "manifesto": 1,
+                    "hashtags": 1,
+                    "posts": 1,
+                    "likes": 1,
+                    "length": { "$size": "$likes" }
+                }},
+                { "$sort": { "length": -1 } }
+            ])
+            .exec()
+}
+
+
+module.exports.listNoticia = () => {
+    return Recurso
+            .find({visibilidade: "publico"})
+            .sort({dataCriacao:1})
+            .limit(5)
+            .exec()
+}

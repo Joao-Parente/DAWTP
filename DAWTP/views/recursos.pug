@@ -18,7 +18,23 @@ block addmetadata
 block content
   .w3-card-4
     header.w3-container.w3-light-grey
-      h3.w3-left Lista de Recursos 
+      h3.w3-left Lista de Recursos
+    .w3-container.w3-margin 
+      p Ordenar por:
+      form.w3-container(style="float:left;display:inline" action='/recursos' method='GET')
+        input.w3-input.w3-border(style="width:150px;float:left;display:inline" type="text"  name="hashtags")
+        input.w3-btn.w3-black(style="float:left;display:inline" type="submit" value="Hashtag")
+      
+      form.w3-container(style="float:left;display:inline" action='/recursos' method='GET')
+        input.w3-input.w3-border(style="width:150px;float:left;display:inline" type="text"  name="ano")
+        input.w3-btn.w3-black(style="float:left;display:inline" type="submit" value="Ano")
+
+      a.w3-btn.w3-black(style="float:left;display:inline;margin-left:30px" href="/recursos?byTitulo=true") Título
+      a.w3-btn.w3-black(style="float:left;display:inline;margin-left:30px" href="/recursos") Mais Recentes
+      a.w3-btn.w3-black(style="float:left;display:inline;margin-left:30px" href="/recursos?byAntigos=true") Mais Antigos
+      a.w3-btn.w3-black(style="float:left;display:inline;margin-left:30px" href="/recursos?byLikes=true") Melhor Classificados
+
+
     if list.length > 0
       .w3-container 
         table.w3-table-all
@@ -35,7 +51,7 @@ block content
           each s in list
             tr
               td
-                a(href="/recursos/"+s.id) #{s.titulo} 
+                a(href="/recursos/"+s._id) #{s.titulo} 
               td=s.subtitulo
               td=s.dataCriacao
               td=s.dataRegisto

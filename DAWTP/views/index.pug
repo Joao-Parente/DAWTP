@@ -1,27 +1,34 @@
 extends layoutUser
 
 block content
- 
+
 
   .w3-container.w3-margin
 
-      .w3-card-4
+    .w3-card-4
 
-        header.w3-container.w3-light-grey
-          h3 Notícias
+      header.w3-container.w3-light-grey
+        h3 Notícias
+
+        if data.length > 0
+          each s in data
+            
+            p(style="display:inline;float:left") #{s.dataRegisto}: #{s.produtor} publicou um recurso "#{s.titulo}"!
+            a.w3-button.w3-dark-grey.w3-margin(href="/recursos/"+s._id style="display:inline;float:left" ) Ver
+        else
+          p Não há notícias..
 
   .w3-container.w3-margin
 
-      .w3-card-4
+    .w3-card-4
 
-        header.w3-container.w3-light-grey
-          h3 Eu
-        .w3-container
-          p Nome: #{user.nome}
-          hr
-          img.w3-left.w3-circle(src="/images/avatar.jpg" alt="Avatar" class="")
-          p Curso: #{user.filiacao.curso}
-          p Departamento: #{user.filiacao.departamento}
-          p Nível de acesso: #{user.nivel}    
-        button.w3-button.w3-block.w3-dark-grey(onclick="location.href='/utilizadores/"+user._id+"';" ) Meu Perfil
-
+      header.w3-container.w3-light-grey
+        h3 Eu
+      .w3-container
+        p Nome: #{user.nome}
+        hr
+        img.w3-left.w3-circle(src="/images/avatar.jpg" alt="Avatar" class="")
+        p Curso: #{user.filiacao.curso}
+        p Departamento: #{user.filiacao.departamento}
+        p Nível de acesso: #{user.nivel}    
+      button.w3-button.w3-block.w3-dark-grey(onclick="location.href='/utilizadores/"+user._id+"';" ) Meu Perfil
