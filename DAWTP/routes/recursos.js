@@ -155,12 +155,12 @@ router.get('/download/:id/*', Auth.verifyAuth, function (req, res) {
         // se for e for um diretorio retorna false
         // se for e for um ficheiro retorna true
         var man_result = travman.travessiaManifesto(tail_path, mani)
-        log("Resultado do man"+ man_result)
+        log("Resultado do man" + man_result)
         //diretorio
         if (man_result != null && man_result != true) {
 
 
-         log("ISOT E UM DIRETORIO")
+          log("ISOT E UM DIRETORIO")
           var random_tempdir = Math.random() + '_' + Math.random() + '-' + Math.random();
           fs.mkdirSync(__dirname + '/../tempfile/' + random_tempdir);
           fs.mkdirSync(__dirname + '/../tempfile/' + random_tempdir + '/data');
@@ -175,16 +175,17 @@ router.get('/download/:id/*', Auth.verifyAuth, function (req, res) {
           //cria um manifesto
           bman.buildManifesto(__dirname + '/../tempfile/' + random_tempdir + '/data')
 
-          // Zip.zip('../tempfile/' + random_tempdir + '/', nome_zip)
-          Zip.zipBigFiles('../tempfile/' + random_tempdir + '/data', nome_zip).then(() => {
+           Zip.zip('../tempfile/' + random_tempdir + '/', nome_zip)
+          //
+         // Zip.zipBigFiles('../tempfile/' + random_tempdir + '/data', nome_zip).then(() => {
 
             res.download(tempzip, function (err) {
               rm.deleteFolderRec(__dirname + '/../tempfile/' + random_tempdir)
               fs.unlinkSync(tempzip);
               if (err) log(err)
             });
-          })
-            .catch(err => log("Servidor tem de ter zip instalado"))
+          //})
+            //.catch(err => log("Servidor tem de ter zip instalado"))
 
 
 
@@ -212,15 +213,15 @@ router.get('/download/:id/*', Auth.verifyAuth, function (req, res) {
 
 
 
-          // Zip.zip('../tempfile/' + random_tempdir, nome_zip)
-          Zip.zipBigFiles('../tempfile/' + random_tempdir + '/data', nome_zip).then(() => {
+           Zip.zip('../tempfile/' + random_tempdir, nome_zip)
+          //Zip.zipBigFiles('../tempfile/' + random_tempdir + '/data', nome_zip).then(() => {
             res.download(tempzip, function (err) {
               rm.deleteFolderRec(__dirname + '/../tempfile/' + random_tempdir)
               fs.unlinkSync(tempzip);
               if (err) log(err)
             });
-          })
-            .catch(err => log("Servidor tem de ter zip instalado"))
+         // })
+          //  .catch(err => log("Servidor tem de ter zip instalado"))
 
         }
 
@@ -253,19 +254,20 @@ router.get('/download/:id', Auth.verifyAuth, function (req, res) {
 
       if (dados != null) {
 
-        var path_zip = dados.path + '/data'
+        var path_zip = dados.path 
         var nome_zip = dados.titulo + '.zip'
 
-        Zip.zipBigFiles(path_zip, nome_zip).then(() => {
-
+        Zip.zip(path_zip, nome_zip)
+       // Zip.zipBigFiles(path_zip, nome_zip).then(() => {
+          
 
           //zipa tudo para /tempzip e faz download dai (zipar noo sitio tava a por o zip dentro X)  )
           res.download(__dirname + '/../tempzip/' + nome_zip, function (err) {
             fs.unlinkSync(__dirname + '/../tempzip/' + nome_zip);
             if (err) log(err)
           });
-        })
-          .catch(err => log(err + "erro a zipar"))
+      //  })
+        //  .catch(err => log(err + "erro a zipar"))
 
       }
 
@@ -283,11 +285,14 @@ router.get('/download/:id', Auth.verifyAuth, function (req, res) {
 
 router.get('/delete/:id', Auth.verifyAuthUserorAdminEditRecurso, function (req, res) {
 
-  Recurso.remove(req.params.id)
-    .then(el => {
-      res.redirect('/recursos')
-    })
-    .catch(err => res.render('UtilizadorNaoExiste', { user: req.user }))
+  Recurso.lookUp(req.params.id).then(dados => {
+
+    rm.deleteFolderRec(__dirname + '/../public/'+dados.path)
+    Recurso.remove(req.params.id)
+      .then(el => res.redirect('/recursos'))
+      .catch(err => res.render('UtilizadorNaoExiste', { user: req.user }))
+  })
+  .catch(err => res.render('UtilizadorNaoExiste', { user: req.user }))
 });
 
 router.get('/editar/:id', Auth.verifyAuthUserorAdminEditRecurso, function (req, res) {
@@ -304,15 +309,14 @@ router.get('/editar/:id', Auth.verifyAuthUserorAdminEditRecurso, function (req, 
 router.post('/editar/:id', Auth.verifyAuthUserorAdminEditRecurso, function (req, res) {
   Recurso.lookUp(req.params.id)
     .then(data => {
-
       if (data != null) {
         data.titulo = req.body.titulo;
         data.subtitulo = req.body.subtitulo;
         //tratar dos hashtags
         var tags = req.body.hashtags.split(',')
-        req.body.hashtags = []
+        data.hashtags = []
         tags.forEach(tag => {
-          if (tag != '') req.body.hashtags.push(tag)
+          if (tag != '') data.hashtags.push(tag)
         })
         Recurso.edit(data)
           .then(dados => res.redirect('/recursos/' + data._id))
@@ -342,16 +346,15 @@ router.get('/:id/*', Auth.verifyAuth, function (req, res) {
       if (dados != null) {
 
         var mani = JSON.parse(dados.manifesto);
-        log("hiiiiiiiiiiiiiiiiii")
         var tail_path = path_recurso.slice(1).join('/')
 
         var man_result = travman.travessiaManifesto(tail_path, mani)
         if (man_result != null && man_result != true) {
 
           //log("/recursos/download/" + path_recurso.join('/'))       
-          log("                           DOWNLOAD: " + path_recurso.join('/'))
+          log("                           path: " + path_recurso.join('/'))
           console.log("Manifesto" + JSON.stringify(mani))
-          log("ataomanel")
+          log("ataoz  ")
           log(man_result)
           res.render('recurso', { manifesto: man_result, recurso: dados, path_g: dados.path + '/data/' + path_recurso.slice(1).join('/') + '/', download: path_recurso.join('/'), user: req.user })
         }
@@ -387,8 +390,8 @@ router.post('/novo', upload.single('myFile'), Auth.verifyAuthUserorAdminCreate, 
 
     if (req.file.mimetype == 'application/zip') {
 
-      Zip.unzipBigFiles(req.file.path).then(() => {
-
+      //Zip.unzipBigFiles(req.file.path).then(() => {
+        Zip.unzip(req.file.path) //this is sync
 
         var fl = true;
         Tipo.list().then(dados => {
@@ -428,7 +431,7 @@ router.post('/novo', upload.single('myFile'), Auth.verifyAuthUserorAdminCreate, 
                 log("Inseri o objeto:" + dados._id + "bd obj" + dados.path)
 
                 fs.renameSync(oldPath, newPath)
-
+                //fs.unlinkSync(req.file.path);
                 res.redirect('/recursos/' + dados._id)
               })
               .catch(erro => res.render('error', { error: erro }))
@@ -436,16 +439,20 @@ router.post('/novo', upload.single('myFile'), Auth.verifyAuthUserorAdminCreate, 
           else {
             res.render('RecursoManifestoInválido', { user: req.user })
             rm.deleteFolderRec(__dirname + '/../' + req.file.path + 'dir')
+            fs.unlinkSync(req.file.path);
+          
+
           }
 
 
         })
-      })
-        .catch(err => res.render('error', { error: err }));
+     // })
+       // .catch(err => res.render('error', { error: err }));
     }
     else {
       res.render('RecursoFormatoInválido', { user: req.user })
       rm.deleteFolderRec(__dirname + '/../' + req.file.path + 'dir')
+      fs.unlinkSync(req.file.path);
     }
 
   }
