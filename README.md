@@ -67,7 +67,7 @@ Existem 3 níveis de acesso ao sistema cada um com as suas devidas permissôes C
 ####    "adm-zip": "^0.5.2",
 
 
-## <a href="https://github.com/Joao-Parente/DAWTP/blob/2nd-branch/relat%C3%B3rioDAWTP.pdf">Relatório</a>
+## <a href="https://github.com/Joao-Parente/DAWTP/blob/2nd-branch/relatorioDAWTP.pdf">Relatório</a>
 
 ## Download e Executar
 
