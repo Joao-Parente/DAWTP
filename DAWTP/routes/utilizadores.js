@@ -43,8 +43,7 @@ router.get('/registo', function (req, res) {
 
 //Registo
 router.post('/registo', function (req, res) {
-
-
+  
   User.insert(req.body)
     .then(dados => res.redirect('/'))
     .catch(erro => res.render('error', { error: erro }))

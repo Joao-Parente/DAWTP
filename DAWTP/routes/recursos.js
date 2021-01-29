@@ -21,11 +21,45 @@ var Auth = require('../public/javascripts/verifyauth.js')
 // Lista Recursos
 router.get('/', Auth.verifyAuth, function (req, res) {
 
-
   if (req.query.hashtags) {
 
-
     Recurso.listHashtags(req.query.hashtags)
+      .then(data => {
+
+        res.render('recursos', { list: data, user: req.user })
+      })
+      .catch(err => res.render('error', { error: err }))
+  }
+  else if (req.query.ano) {
+
+    Recurso.listAno(req.query.ano)
+      .then(data => {
+
+        res.render('recursos', { list: data, user: req.user })
+      })
+      .catch(err => res.render('error', { error: err }))
+  }
+  else if (req.query.byTitulo) {
+
+    Recurso.listTitulo(req.query.byTitulo)
+      .then(data => {
+
+        res.render('recursos', { list: data, user: req.user })
+      })
+      .catch(err => res.render('error', { error: err }))
+  }
+  else if (req.query.byAntigos) {
+
+    Recurso.listAntigos(req.query.byAntigos)
+      .then(data => {
+
+        res.render('recursos', { list: data, user: req.user })
+      })
+      .catch(err => res.render('error', { error: err }))
+  }
+  else if (req.query.byLikes) {
+
+    Recurso.listLikes(req.query.byLikes)
       .then(data => {
 
         res.render('recursos', { list: data, user: req.user })
@@ -41,6 +75,12 @@ router.get('/', Auth.verifyAuth, function (req, res) {
       .catch(err => res.render('error', { error: err }))
   }
 });
+
+
+
+
+
+
 
 
 
@@ -109,7 +149,7 @@ router.get('/like/:id/*', Auth.verifyAuth, function (req, res) {
 //Consulta 1 recurso
 router.get('/:id', Auth.verifyAuth, function (req, res) {
 
-  log("obtemm inicio recurso")
+  log("obtem inicio recurso")
 
   Recurso.lookUp(req.params.id)
     .then(dados => {

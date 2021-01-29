@@ -18,8 +18,6 @@ module.exports.lookUp = id => {
         .exec()
 }
 
-
-
 module.exports.insert = utili =>{
     var newUtilizador = new Utilizador(utili)
     return newUtilizador.save()
