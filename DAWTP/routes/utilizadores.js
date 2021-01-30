@@ -43,10 +43,18 @@ router.get('/registo', function (req, res) {
 
 //Registo
 router.post('/registo', function (req, res) {
-
-
-  User.insert(req.body)
-    .then(dados => res.redirect('/'))
+  
+  User.lookUp(req.body._id)
+    .then(dados => {
+      if(dados == null){
+        User.insert(req.body)
+          .then(dados => res.redirect('/'))
+          .catch(erro => res.render('error', { error: erro }))
+      }
+      else{
+        res.render('reg-utilizador-form', { erro: "Username indisponível!" })
+      }
+    })
     .catch(erro => res.render('error', { error: erro }))
 
 });
