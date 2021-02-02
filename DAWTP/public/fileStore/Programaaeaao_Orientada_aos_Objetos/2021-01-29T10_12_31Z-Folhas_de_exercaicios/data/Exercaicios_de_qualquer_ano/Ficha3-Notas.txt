@@ -1,0 +1,5 @@
+
+Ficha 3
+
+Refaça a classe Stand por forma a que não exista um limite máximo ao número de carros no Stand.
+Para tal, utilizar a classe GrowingArray que deverá completar. Teste as classes desenvolvidas com Unit Testing. 

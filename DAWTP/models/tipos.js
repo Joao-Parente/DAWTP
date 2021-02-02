@@ -13,4 +13,4 @@ var tipoSchema = new mongoose.Schema({
 
 });
 
-module.exports = mongoose.model('tipo', tipoSchema, 'tipos')
+module.exports = mongoose.model('tipo', tipoSchema)

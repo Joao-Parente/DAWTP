@@ -2,17 +2,19 @@ extends layoutUser
 
 block addmetadata
 
-  .w3-dropdown-hover.w3-mobile
-    button.w3-button Operações 
-      i.fa.fa-caret-down
+  if(user.nivel>0)
+    .w3-dropdown-hover.w3-mobile
+      button.w3-button Operações 
+        i.fa.fa-caret-down
 
-    .w3-dropdown-content.w3-bar-block.w3-dark-grey
-      a.w3-bar-item.w3-button.w3-mobile(href="/tipos/novo") Novo Tipo
+      .w3-dropdown-content.w3-bar-block.w3-dark-grey
+        a.w3-bar-item.w3-button.w3-mobile(href="/tipos/novo") Novo Tipo
 
 block content
-    .w3-card-4
-      header.w3-container.w3-light-grey
-        h3.w3-left Tipo  (DAW2020)
+  .w3-stretch
+    header.w3-container.w3-margin.w3-border
+      .w3-container.w3-black
+        h3.w3-left Lista de Tipos
       if list.length > 0
         .w3-container 
           table.w3-table-all
@@ -23,7 +25,8 @@ block content
 
             each s in list
               tr
-                td=s._id
+                td
+                  a(href="/tipos/"+s._id) #{s._id} 
                 td  
                   table.w3-table-all
                     tr

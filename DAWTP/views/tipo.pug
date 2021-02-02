@@ -1,25 +1,37 @@
 extends layoutUser
 
+block addmetadata
+
+  if(user.nivel>0)
+    .w3-dropdown-hover.w3-mobile
+      button.w3-button Operações 
+        i.fa.fa-caret-down
+
+      .w3-dropdown-content.w3-bar-block.w3-dark-grey
+        a.w3-bar-item.w3-button.w3-mobile(href="/tipos/editar/"+ tipo._id) Edit
+        a.w3-bar-item.w3-button.w3-mobile(href="/tipos/delete/"+ tipo._id) Delete
+
+
 block content
 
+  .w3-stretch
 
-  .w3-container.w3-margin
-    h1 Tipo de ficheiros #{tipo.nome}... 
+    header.w3-container.w3-margin.w3-border
+      .w3-container.w3-black
+          h3 Tipo de Ficheiro: #{tipo._id}
 
-
-    table.w3-table-all
-      tr
-        th Nome Parametro
-        th Valor Parametro
-
-      each meta in tipo.parametros
+      .w3-container 
+      table.w3-table-all
         tr
-          td=meta.nome_param
-          td=meta.tipo_param
+          th Nome Parametro
+          th Valor Parametro
+
+        each meta in tipo.parametros
+          tr
+            td=meta.nome_param
+            td=meta.tipo_param
 
 
-    address.w3-container.w3-margin Gerado por dawApp :: 2020-Nov
-      p
+      footer.w3-container.w3-black
+        p
         a(href="/") Index
-      p
-        a(href="/tipos") Tipos

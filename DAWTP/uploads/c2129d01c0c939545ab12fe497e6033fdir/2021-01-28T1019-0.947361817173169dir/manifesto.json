@@ -1,0 +1,10 @@
+{
+    "ficheiros": [{
+        "nome": "manuel.pdf",
+        "tipo": "pdf",
+        "meta": [{
+            "nome": "numero_pags",
+            "valor": 11
+        }]
+    }]
+}
