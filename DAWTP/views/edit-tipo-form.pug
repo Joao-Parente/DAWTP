@@ -1,0 +1,32 @@
+extends layoutUser
+
+block scripts
+    link(rel='stylesheet' href='/stylesheets/style.css')
+
+    script(src='/javascripts/addparam.js')
+    script(Src='/javascripts/jquery-3.5.1.min.js')
+
+block content
+    .w3-stretch
+        header.w3-container.w3-margin.w3-border
+            .w3-container.w3-black
+                h3 Editar Tipo de Ficheiro: !{tipo._id}
+            form.w3-container(action='/tipos/editar/'+tipo._id method='POST')
+
+
+
+                label <b>Nome:</b>
+                input.w3-input(type="text" name="_id" required  value=tipo._id)
+                
+                fieldset(id="grupo")
+                
+                    each t in tipo.parametros
+                        label <b>Nome Parametro:</b> 
+                        input.w3-input(type="text" name="nome_param"  value=t.nome_param)
+                        label <b>Valor Parametro:</b>
+                        input.w3-input(type="text" name="tipo_param"   value=t.tipo_param)
+                
+                input(type="hidden" id="count" name="count" value="") 
+
+                input.w3-btn.w3-black(type="submit" value="Enviar")
+                input.w3-btn.w3-blue-grey(type="button" value="Add" onclick="addparam()")   

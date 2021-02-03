@@ -1,0 +1,42 @@
+extends layoutUser
+
+block scripts
+    link(rel='stylesheet' href='/stylesheets/style.css')
+
+    script(src='/javascripts/addparam.js')
+    script(Src='/javascripts/jquery-3.5.1.min.js')
+
+block content
+
+    .w3-stretch
+        header.w3-container.w3-margin.w3-border
+            .w3-container.w3-black
+                h3 Inserir Novo Tipo
+            
+            form.w3-container(action="/tipos/novo" method="POST")
+                .w3-row.w3-margin-bottom
+
+                    .w3-col.s3
+                        label.w3-text-black Nome   
+                        
+                    .w3-col.s12.w3-border
+                        input.w3-input.w3-border.w3-light-grey(type="text" name="_id")
+                
+                fieldset(id="grupo")
+    
+                    .w3-col.s12
+                        label.w3-text-black(for='nome') Nome Parametro
+
+                    .w3-col.s12.w3-border
+                        input.w3-input.w3-border.w3-light-grey(type="text" name="nome_param")
+
+                    .w3-col.s12
+                        label.w3-text-black(for='tipo')  Valor Parametro   
+
+                    .w3-col.s12.w3-border
+                        input.w3-input.w3-border.w3-light-grey(type="text" name="tipo_param")
+
+                input(type="hidden" id="count" name="count" value="")   
+
+                input.w3-btn.w3-black(type="submit" value="Enviar")
+                input.w3-btn.w3-blue-grey(type="button" value="Add" onclick="addparam()")
