@@ -339,6 +339,9 @@ router.get('/editar/:id', Auth.verifyAuthUserorAdminEditRecurso, function (req, 
     })
     .catch(err => res.render('RecursoInexistente', { user: req.user }))
 });
+
+
+
 router.post('/editar/:id', Auth.verifyAuthUserorAdminEditRecurso, function (req, res) {
   Recurso.lookUp(req.params.id)
     .then(data => {
