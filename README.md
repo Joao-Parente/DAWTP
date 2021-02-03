@@ -4,9 +4,9 @@
 
 <div align="center">
  <img src="https://github.com/Joao-Parente/DAWTP/blob/2nd-branch/DAWTP/public/images/favicon.ico" width="256" height="256">
-  <h1>Gestão de Recursos académicos</h1>
+  <h1>Plataforma de Gestão e Disponibilização de Recursos Educativos</h1>
   <p>
-    <b>Plataforma para guardar Recursos académicos, visualiza-los, fazer downloads deles, comenta-los,etc </b>
+    <b>Plataforma para armazenar, consultar, fazer download, publicar e comentar recursos académicos...</b>
   </p>
   <br>
   <br>
@@ -30,17 +30,17 @@
 
 ## Features
 
-### Upload Conteúdo
-Aceita upload de recursos respeitando o formato do pacote SIP definido
+### Upload de Conteúdo
+Aceita upload de recursos respeitando o formato do pacote SIP definido.
 
-### Download Conteúdo
-Permite fazer download de 3 tipos de conteúdo um recurso, parte de um recurso ou apenas um ficheiro.
+### Download de Conteúdo
+Permite fazer download de 3 tipos de conteúdo: um recurso, parte de um recurso ou apenas um ficheiro.
 
 ### Edição/Eliminação de Conteúdo
-Permite editarutilizadores,recursos,tipos de ficheiros e publicações.
+Permite editar utilizadores, recursos, tipos de ficheiros e publicações.
 
 ### Níveis de Acesso
-Existem 3 níveis de acesso ao sistema cada um com as suas devidas permissôes Consumidor(0),Produtor(1),Admin(2)
+Existem 3 níveis de acesso ao sistema cada um com as suas devidas permissôes Consumidor(0), Produtor(1), Admin(2).
 ### etc...
 
 ## Dependências
