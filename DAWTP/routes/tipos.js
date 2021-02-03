@@ -58,7 +58,7 @@ router.post('/novo', Auth.verifyAuthUserorAdminCreate, function (req, res) {
 
 
 //Delete tipo
-router.get('/delete/:_id', Auth.verifyAuthUserorAdminEditRecurso, function (req, res) {
+router.get('/delete/:_id', Auth.verifyAuthUserorAdminCreate, function (req, res) {
 
   Tipo.lookUp(req.params._id)
 
@@ -85,7 +85,7 @@ router.get('/:_id',Auth.verifyAuth, function (req, res) {
 
 
 //Aceder a pagina de edição do tipo
-router.get('/editar/:_id', Auth.verifyAuthUserorAdminEditRecurso, function (req, res) {
+router.get('/editar/:_id', Auth.verifyAuthUserorAdminCreate, function (req, res) {
   Tipo.lookUp(req.params._id)
     .then(data => {
 
@@ -99,7 +99,7 @@ router.get('/editar/:_id', Auth.verifyAuthUserorAdminEditRecurso, function (req,
 
 
 // Enviar o tipo atualizado
-router.post('/editar/:_id', Auth.verifyAuthUserorAdminEditRecurso, function (req, res) {
+router.post('/editar/:_id', Auth.verifyAuthUserorAdminCreate, function (req, res) {
   Tipo.lookUp(req.params._id)
     .then(data => {
       if (data != null) {
