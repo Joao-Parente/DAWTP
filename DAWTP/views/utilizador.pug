@@ -2,49 +2,52 @@ extends layoutUser
 
 
 block addmetadata
+  
+  link(href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet")
 
   if(user.nivel>1 || user_data._id==user._id)
     .w3-dropdown-hover.w3-mobile
       button.w3-button Operações 
-        i.fa.fa-caret-down
+        span.material-icons(style="font-size:17px") keyboard_arrow_down
 
-
-        .w3-dropdown-content.w3-bar-block.w3-dark-grey
-          a.w3-bar-item.w3-button.w3-mobile(href="/utilizadores/editar/"+user_data._id) Editar
-          a.w3-bar-item.w3-button.w3-mobile(href="/utilizadores/delete/"+user_data._id) Eliminar Conta
+      .w3-dropdown-content.w3-bar-block.w3-dark-grey
+        a.w3-bar-item.w3-button.w3-mobile(href="/utilizadores/editar/"+user_data._id) Editar Conta
+        a.w3-bar-item.w3-button.w3-mobile.w3-hover-red(href="/utilizadores/delete/"+user_data._id) Eliminar Conta
 
 
 
 
 block content
+  header.w3-container.w3-light-grey
+    h1 Perfil de #{user_data.nome}
+  .w3-container
+    img.w3-left.w3-border.w3-margin(style="display:inline;float:left" src="/images/avatar.jpg" alt="Avatar" class="")
+    .w3-container.w3-padding-16(style="display:inline;float:left")
+      dl
+        dt 
+          b Nome:
+        dd= user_data.nome
+        dt
+          b Username:
+        dd= user_data._id
+        dt 
+          b Email:
+        dd= user_data.email
+        dt 
+          b Filiação:   
+        if(user_data.filiacao.estudante==true) 
+          dd= "Estudante /"+ user_data.filiacao.curso+" / "+user_data.filiacao.departamento
+        else
+          dd= "Docente / "+ user_data.filiacao.curso + " / "+ user_data.filiacao.departamento
+        dt 
+          b Nível:
+        dd= user_data.nivel
+        dt
+          b Data de Registo:
+        dd= user_data.dataRegisto
+        dt 
+          b Data do Último Acesso:
+        dd= user_data.dataUltimoAcesso     
 
-
-  .w3-container.w3-light-grey.w3-margin.border
-
-    h1 Perfil de #{user_data.nome}... 
-    dl
-      dt 
-        b Nome
-      dd= user_data.nome
-      dt
-        b Username
-      dd= user_data._id
-      dt 
-        b Email
-      dd= user_data.email
-      dt 
-        b Filiacao    
-      if(user_data.filiacao.estudante==true) 
-        dd= "Estudante /"+ user_data.filiacao.curso+" / "+user_data.filiacao.departamento
-      else
-        dd= "Docente / "+ user_data.filiacao.curso + " / "+ user_data.filiacao.departamento
-      dt 
-        b Nivel
-      dd= user_data.nivel
-      dt
-        b DataRegisto
-      dd= user_data.dataRegisto
-      dt 
-        b DataUltimoAcesso
-      dd= user_data.dataUltimoAcesso     
-
+  footer.w3-container.w3-padding-16.w3-black
+    .w3-center Recursos Académicos &copy; 2021

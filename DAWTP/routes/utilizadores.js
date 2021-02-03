@@ -15,14 +15,15 @@ var passport = require('passport')
 router.get('/menu', function (req, res) {
   res.render('index_porlogin')
 });
+
 //Login
 router.get('/login', function (req, res) {
-  console.log('3?')
   res.render('login-form')
 });
-router.post('/login', passport.authenticate('local'), Auth.verifyAuth, function (req, res) {
-  console.log('4?')
 
+
+router.post('/login', passport.authenticate('local'), Auth.verifyAuth, function (req, res) {
+  
   User.lookUp(req.user._id)
     .then(data => {
 

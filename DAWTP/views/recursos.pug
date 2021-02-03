@@ -2,17 +2,15 @@ extends layoutUser
 
 block addmetadata
 
-
+  link(href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet")
 
   if(user.nivel>0)
     .w3-dropdown-hover.w3-mobile
       button.w3-button Operações 
-        i.fa.fa-caret-down
+        span.material-icons(style="font-size:17px") keyboard_arrow_down
 
-
-        .w3-dropdown-content.w3-bar-block.w3-dark-grey       
-          a.w3-bar-item.w3-button.w3-mobile(href="/recursos/novo") Novo Recurso
-
+      .w3-dropdown-content.w3-bar-block.w3-dark-grey       
+        a.w3-bar-item.w3-button.w3-mobile.w3-hover-green(href="/recursos/novo") Novo Recurso
 
 
 block content
@@ -23,35 +21,33 @@ block content
       p Ordenar por:
       form.w3-container(style="float:left;display:inline" action='/recursos' method='GET')
         input.w3-input.w3-border(style="width:150px;float:left;display:inline" type="text"  name="hashtags")
-        input.w3-btn.w3-black(style="float:left;display:inline" type="submit" value="Hashtag")
+        input.w3-button.w3-round.w3-black(style="float:left;display:inline" type="submit" value="Hashtag")
       
       form.w3-container(style="float:left;display:inline" action='/recursos' method='GET')
         input.w3-input.w3-border(style="width:150px;float:left;display:inline" type="text"  name="ano")
-        input.w3-btn.w3-black(style="float:left;display:inline" type="submit" value="Ano")
+        input.w3-button.w3-round.w3-black(style="float:left;display:inline" type="submit" value="Ano")
 
-      a.w3-btn.w3-black(style="float:left;display:inline;margin-left:30px" href="/recursos?byTitulo=true") Título
-      a.w3-btn.w3-black(style="float:left;display:inline;margin-left:30px" href="/recursos") Mais Recentes
-      a.w3-btn.w3-black(style="float:left;display:inline;margin-left:30px" href="/recursos?byAntigos=true") Mais Antigos
-      a.w3-btn.w3-black(style="float:left;display:inline;margin-left:30px" href="/recursos?byLikes=true") Melhor Classificados
+      a.w3-button.w3-round.w3-black(style="float:left;display:inline;margin-left:30px" href="/recursos?byTitulo=true") Título
+      a.w3-button.w3-round.w3-black(style="float:left;display:inline;margin-left:30px" href="/recursos") Mais Recentes
+      a.w3-button.w3-round.w3-black(style="float:left;display:inline;margin-left:30px" href="/recursos?byAntigos=true") Mais Antigos
+      a.w3-button.w3-round.w3-black(style="float:left;display:inline;margin-left:30px" href="/recursos?byLikes=true") Melhor Classificados
 
 
     if list.length > 0
       .w3-container 
         table.w3-table-all
-          tr 
-            th Titulo
-            th subtitulo
-            th dataCriacao
-            th dataRegisto
+          tr
+            th Título
+            th Subtítulo
+            th Data de Criação
+            th Data de Registo
             th Publicador
-            th likes
-            th hashtags
-
+            th Likes
+            th Hashtags
 
           each s in list
-            tr
-              td
-                a(href="/recursos/"+s._id) #{s.titulo} 
+            tr.w3-hover-grey(onclick="document.location='/recursos/"+s._id+"';")
+              td=s.titulo 
               td=s.subtitulo
               td=s.dataCriacao
               td=s.dataRegisto
@@ -61,12 +57,15 @@ block content
               td.hashtags=s.hashtags  
               if( user.nivel>1 || user._id == s.produtor)              
                 td 
-                  a(href="/recursos/editar/"+s._id) Edit
+                  a.w3-button.w3-round.w3-black.w3-hover-white(href="/recursos/editar/"+s._id)
+                    span.material-icons(style="font-size:18px") edit
                 td
-                  a(href="/recursos/delete/"+s._id) Delete 
-
-
+                  a.w3-button.w3-round.w3-black.w3-hover-red(href="/recursos/delete/"+s._id)
+                    span.material-icons(style="font-size:18px") delete
 
     else
       .w3-container
-        p Não há recursos..
+        p Não há recursos...
+
+    footer.w3-container.w3-padding-16.w3-black
+        .w3-center Recursos Académicos &copy; 2021

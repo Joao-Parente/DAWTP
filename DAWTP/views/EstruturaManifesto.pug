@@ -2,24 +2,24 @@ extends layoutUser
 
 block content
 
-  .w3-container.w3-margin
+  header.w3-container.w3-light-grey
     h1  Estrutura manifesto
 
-
-
-    p O manifesto é um ficheiro com um objeto json com duas chaves
+  .w3-container.w3-margin
+    p O manifesto é um ficheiro com um objeto JSON com duas chaves:
 
     ul 
-      li ficheiros : Um array de ficheiros
-      li pasta_rec : um array de pastas
+      li ficheiros: Um array de ficheiros
+      li pasta_rec: um array de pastas
 
-    p Um ficheiro é um objeto com uma chave nome que diz o nome do ficheiro, uma chave tipo que diz o tipo do ficheiro e uma chave meta que é um array onde em cada elemento tem uma chave que é o nome do atributo da meta-data e o seu valor o seu devido valor
+    p Um ficheiro é um objeto com uma chave nome que diz o nome do ficheiro, uma chave tipo que diz o tipo do ficheiro e uma chave meta que é um array onde em cada elemento tem uma chave que é o nome do atributo da meta-data e o seu valor o seu devido valor.
 
-    p uma pasta é o objeto principal recursivamente ou seja uma chave ficheiros e outra chave pasta_rec
+    p Uma pasta é o objeto principal recursivamente ou seja uma chave ficheiros e outra chave pasta_rec.
   
+    a.w3-button.w3-black.w3-round.w3-margin.w3-right(href="/") Index 
 
-
-    a(href="/") Regressar 
+  footer.w3-container.w3-padding-16.w3-black
+    .w3-center Recursos Académicos &copy; 2021   
     
 
 

@@ -31,9 +31,7 @@ header
 header .logo
 {
     position: relative;
-    max-width: 80px;
-    border-style: solid;
-    border-radius: 50%;
+    max-width: 70px;
 }
 header ul{
     position: relative;

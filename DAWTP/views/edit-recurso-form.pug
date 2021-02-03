@@ -1,17 +1,18 @@
 extends layoutUser
 
 block content
-    .w3-container.w3-margin.w3-border
-        .w3-container.w3-black
-            h3 Editar recurso: !{recurso.titulo}:
-        form.w3-container(action='/recursos/editar/'+recurso._id method='POST')
+    
+    .w3-container.w3-light-grey
+        h3 Editar Recurso: !{recurso.titulo}
+    form.w3-container(action='/recursos/editar/'+recurso._id method='POST')
 
-
-
-            label Titulo: 
-            input.w3-input(type="text" name="titulo" required  value=recurso.titulo)
-            label Subtitulo: 
-            input.w3-input(type="text" name="subtitulo"   value=recurso.subtitulo)
-            label Hashtags: 
-            input.w3-input(type="text" name="hashtags"   )
-            input.w3-btn.w3-black(type="submit" value="Enviar")
+        label Título: 
+        input.w3-input(type="text" name="titulo" required  value=recurso.titulo)
+        label Subtítulo: 
+        input.w3-input(type="text" name="subtitulo" value=recurso.subtitulo)
+        label Hashtags: 
+        input.w3-input(type="text" name="hashtags")
+        input.w3-button.w3-round.w3-black.w3-margin(type="submit" value="Enviar")
+    
+    footer.w3-container.w3-padding-16.w3-black
+        .w3-center Recursos Académicos &copy; 2021

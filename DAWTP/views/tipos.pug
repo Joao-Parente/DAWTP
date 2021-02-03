@@ -2,43 +2,45 @@ extends layoutUser
 
 block addmetadata
 
+  link(href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet")
+
   if(user.nivel>0)
     .w3-dropdown-hover.w3-mobile
       button.w3-button Operações 
-        i.fa.fa-caret-down
+        span.material-icons(style="font-size:17px") keyboard_arrow_down
 
       .w3-dropdown-content.w3-bar-block.w3-dark-grey
-        a.w3-bar-item.w3-button.w3-mobile(href="/tipos/novo") Novo Tipo
+        a.w3-bar-item.w3-button.w3-mobile.w3-hover-green(href="/tipos/novo") Novo Tipo
 
 block content
-  .w3-stretch
-    header.w3-container.w3-margin.w3-border
-      .w3-container.w3-black
+  .w3-card-4
+    header.w3-container.w3-light-grey
         h3.w3-left Lista de Tipos
-      if list.length > 0
-        .w3-container 
-          table.w3-table-all
-            tr 
-              th Nome
-              th Parametros
+    if list.length > 0
+      .w3-container 
+        table.w3-table-all
+          tr 
+            th Nome
+            th Parâmetros
 
-
-            each s in list
-              tr
-                td
-                  a(href="/tipos/"+s._id) #{s._id} 
-                td  
-                  table.w3-table-all
+          each s in list
+            tr.w3-hover-grey(onclick="document.location='/tipos/"+s._id+"';")
+              td
+                p #{s._id} 
+              td  
+                table.w3-table-all
+                  tr
+                    th Nome do Parâmetro
+                    th Tipo do Parâmetro
+                  
+                  each t in s.parametros
                     tr
-                      th Nome Parametro
-                      th Tipo Parametro
-                    
-                    each t in s.parametros
-                     tr
-                       td=t.nome_param
-                       td=t.tipo_param
+                      td=t.nome_param
+                      td=t.tipo_param
 
-
-      else
-        .w3-container
-          p Não há Tipos de ficheiros..
+    else
+      .w3-container
+        p Não há tipos de ficheiros...
+    
+    footer.w3-container.w3-padding-16.w3-black
+        .w3-center Recursos Académicos &copy; 2021

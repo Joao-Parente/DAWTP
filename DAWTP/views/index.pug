@@ -4,31 +4,35 @@ block content
 
 
   .w3-container.w3-margin
-
     .w3-card-4
-
       header.w3-container.w3-light-grey
         h3 Notícias
-
+      .w3-container.w3-padding
         if data.length > 0
           each s in data
-            
-            p(style="display:inline;float:left") #{s.dataRegisto}: #{s.produtor} publicou um recurso "#{s.titulo}"!
-            a.w3-button.w3-dark-grey.w3-margin(href="/recursos/"+s._id style="display:inline;float:left" ) Ver
+            a(style="text-decoration:none" href="/recursos/"+s._id)
+              .w3-container.w3-hover-light-grey.w3-padding-16
+                p #{s.dataRegisto}: <b>#{s.produtor}</b> registou um novo recurso <i>"#{s.titulo}"</i>!
         else
-          p Não há notícias..
+          p Não há notícias...
+
 
   .w3-container.w3-margin
-
     .w3-card-4
-
       header.w3-container.w3-light-grey
         h3 Eu
       .w3-container
-        p Nome: #{user.nome}
-        hr
-        img.w3-left.w3-circle(src="/images/avatar.jpg" alt="Avatar" class="")
-        p Curso: #{user.filiacao.curso}
-        p Departamento: #{user.filiacao.departamento}
-        p Nível de acesso: #{user.nivel}    
+        img.w3-left.w3-circle(style="display:inline;float:left" src="/images/avatar.jpg" alt="Avatar" class="")
+        .w3-container(style="display:inline;float:left")
+          b Nome: 
+          p #{user.nome}
+          b Curso:
+          p #{user.filiacao.curso}
+          b Departamento:
+          p #{user.filiacao.departamento}
+          b Nível de acesso:
+          p #{user.nivel}    
       button.w3-button.w3-block.w3-dark-grey(onclick="location.href='/utilizadores/"+user._id+"';" ) Meu Perfil
+
+  footer.w3-container.w3-padding-16.w3-black
+        .w3-center Recursos Académicos &copy; 2021

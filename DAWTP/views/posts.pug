@@ -1,35 +1,37 @@
 extends layoutUser
 
 block content
-    .w3-card-4
-      header.w3-container.w3-light-grey
-        h3.w3-left Lista de Posts (DAW2020)
-      if list.length > 0
-        .w3-container 
-          table.w3-table-all
-            tr 
-              th TituloRecurso
-              th PublicadorRecurso
-              th CriadorPost
-              th DataPost
-              th Post
+
+  link(href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet")
+    
+  header.w3-container.w3-light-grey
+    h3.w3-left Lista de Posts
+  if list.length > 0
+    .w3-container 
+      table.w3-table-all
+        tr 
+          th Título do Recurso
+          th Publicador do Recurso
+          th Criador do Post
+          th Data do Post
+          th Post
 
 
-            each s in list
-              tr
-                td
-                  a(href="/recursos/"+s.idrecurso) #{s.titulo_recurso} 
-                td=s.publicador_recurso
-                td=s.meta.nome
-                td=s.meta.data
-                td 
-                  a(href="/publicacoes/"+s.idrecurso+'/'+s.idpost) Ir para o post
- 
+        each s in list
+          tr
+            td
+              a(href="/recursos/"+s.idrecurso) #{s.titulo_recurso} 
+            td=s.publicador_recurso
+            td=s.meta.nome
+            td=s.meta.data
+            td
+              a.w3-button.w3-round.w3-black.w3-hover-grey(href="/publicacoes/"+s.idrecurso+'/'+s.idpost)
+                span.material-icons(style="font-size:17px") find_in_page
 
+  else
+    .w3-container
+      p Não há posts deste recurso...
 
-      else
-        .w3-container
-          p Não há posts deste recurso..
-      footer.w3-container.w3-light-grey
-          p
-           a(href="/") Index 
+  footer.w3-container.w3-padding-16.w3-black
+        .w3-center Recursos Académicos &copy; 2021
+      

@@ -6,27 +6,23 @@ block content
   link(rel='stylesheet' href='/stylesheets/index.css')
 
   section
-    header
-      img.logo(src="/images/favicon.ico" alt="icon"  )
+    header.w3-black
+      img.logo(src="/images/favicon.png" alt="icon")
       ul
         li 
-          button(onclick="document.getElementById('id01').style.display='block'") Login
+          button.w3-button.w3-round.w3-black.w3-hover-white(onclick="document.getElementById('id01').style.display='block'") Login
         li
-          button(onclick="document.getElementById('id02').style.display='block'") Registo
+          button.w3-button.w3-round.w3-black.w3-hover-white(onclick="document.getElementById('id02').style.display='block'") Registo
     .content
       .textBox
-        h2 Recursos Académicos
-        p Plataforma para guardar Recursos académicos, visualiza-los, fazer downloads deles, comenta-los,etc
+        h2
+          b Recursos Académicos
+        p Plataforma para armazenar, consultar, fazer download, publicar e comentar recursos académicos...
     .imgBox 
         img(src="/images/img1.png" )                   
 
-
-
-
-
-
-
-
+  footer.w3-container.w3-padding-16.w3-black
+    .w3-center Recursos Académicos &copy; 2021
 
 
   .w3-modal( id="id01")
@@ -47,11 +43,11 @@ block content
           label Password: 
           input.w3-input.w3-input.w3-border(type="password" name="password" required)
 
-          input.w3-button.w3-block.w3-black.w3-section.w3-padding(type="submit" value="Enviar")
+          input.w3-button.w3-block.w3-black.w3-section.w3-padding(type="submit" value="Login")
 
 
       .w3-container.w3-border-top.w3-padding-16.w3-light-grey
-        button(onclick="document.getElementById('id01').style.display='none'" type="button") Cancel
+        button(onclick="document.getElementById('id01').style.display='none'" type="button") Cancelar
 
 
 
@@ -73,35 +69,34 @@ block content
           label Password: 
           input.w3-input.w3-input.w3-border(type="password" name="password" required)
 
-
-          label Nome
+          label Nome:
           input.w3-input.w3-border.w3-margin-bottom(type="text" name="nome" required)
 
-          label Email
+          label Email:
           input.w3-input.w3-border.w3-margin-bottom(type="text" name="email" required)
 
-          label Nível (0-Consumidor | 1-Produtor | 2- Admin)
+          label Nível (0 - Consumidor | 1 - Produtor | 2 - Admin)
           select.w3-input.w3-border.w3-margin-bottom(name="nivel")
             option(value=0) Consumidor
             option(value=1) Produtor
             option(value=2) Admin
 
-          br
+          
 
-          label Estudante
-          input.w3-border.w3-margin-bottom(type="checkbox" name="filiacao.estudante" value="true")
+          label Estudante 
+          input.w3-check.w3-border.w3-margin-bottom(type="checkbox" name="filiacao.estudante" value="true")
 
           br 
 
-          label Docente
-          input.w3-border.w3-margin-bottom(type="checkbox" name="filiacao.docente" value="true")
+          label Docente 
+          input.w3-check.w3-border.w3-margin-bottom(type="checkbox" name="filiacao.docente" value="true")
 
           br
 
-          label Curso
+          label Curso:
           input.w3-input.w3-border.w3-margin-bottom(type="text" name="filiacao.curso" required)
 
-          label Departamento
+          label Departamento:
           input.w3-input.w3-border.w3-margin-bottom(type="text" name="filiacao.departamento" required)
 
 
@@ -109,6 +104,6 @@ block content
 
 
       .w3-container.w3-border-top.w3-padding-16.w3-light-grey
-        button(onclick="document.getElementById('id02').style.display='none'" type="button") Cancel
+        button(onclick="document.getElementById('id02').style.display='none'" type="button") Cancelar
 
 

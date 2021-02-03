@@ -1,54 +1,55 @@
 extends layoutUser
 
 block content
-            .w3-container.w3-light-grey
-                h2 Upload Recurso
-            
-
-            form.w3-container(action="/recursos/novo" method="POST" enctype="multipart/form-data")
-                .w3-row.w3-margin-bottom
-                    .w3-col.s3
-                        label.w3-text-black Titulo   
-
-                    .w3-col.s9.w3-border
-                        input.w3-input.w3-border.w3-light-grey(type="text" name="titulo")
-
-                    .w3-col.s3
-                        label.w3-text-black subtitulo   
-
-                    .w3-col.s9.w3-border
-                        input.w3-input.w3-border.w3-light-grey(type="text" name="subtitulo")
-
-                    .w3-col.s3
-                        label.w3-text-black dataCriacao   
-
-                    .w3-col.s9.w3-border
-                        input.w3-input.w3-border.w3-light-grey(type="date" name="dataCriacao" )
+    .w3-container.w3-light-grey
+        h2 Upload Recurso
 
 
+    form.w3-container.w3-margin(action="/recursos/novo" method="POST" enctype="multipart/form-data")
+        .w3-row.w3-margin-bottom
+            .w3-col.s3
+                label.w3-text-black Título   
 
-                    .w3-col.s3
-                        label.w3-text-black Privado
-                    .w3-col.s9.w3-border
-                        input.w3-input.w3-border.w3-light-grey(type="checkbox" name="visibilidade" value="privado")
+            .w3-col.s9.w3-border
+                input.w3-input.w3-border.w3-light-grey(type="text" name="titulo")
 
+            .w3-col.s3
+                label.w3-text-black Subtítulo   
 
-                    .w3-col.s3
-                        label.w3-text-black Hashtags (separado por virgulas)   
+            .w3-col.s9.w3-border
+                input.w3-input.w3-border.w3-light-grey(type="text" name="subtitulo")
 
-                    .w3-col.s9.w3-border
-                        input.w3-input.w3-border.w3-light-grey(type="text" name="hashtags" )
+            .w3-col.s3
+                label.w3-text-black Data de Criação   
 
-
-
-                input.w3-btn.w3-blue-grey(type="submit" value="Submit")
-
-                .w3-row.w3-margin-bottom
-                    .w3-col-s3
-                        label.w3-text-black Select file
-                                  
-                    .w3-col.s9.w3-border
-                        input.w3-input.w3-border.w3-light-grey(type="file" name="myFile")    
+            .w3-col.s9.w3-border
+                input.w3-input.w3-border.w3-light-grey(type="date" name="dataCriacao" )
 
 
+            .w3-col.s3
+                label.w3-text-black Privado
+            .w3-col.s9.w3-margin-bottom
+                input.w3-check.w3-light-grey(type="checkbox" name="visibilidade" value="privado")
+
+
+            .w3-col.s3
+                label.w3-text-black Hashtags (separadas por vírgulas)   
+
+            .w3-col.s9.w3-border
+                input.w3-input.w3-border.w3-light-grey(type="text" name="hashtags" )
+
+
+        .w3-row.w3-margin-bottom
+            .w3-col-s3
+                label.w3-text-black Selecionar ficheiro
+                            
+            .w3-col.s9.w3-border
+                input.w3-input.w3-border.w3-light-grey(type="file" name="myFile")
                 
+        input.w3-button.w3-round.w3-black(type="submit" value="Submit")
+
+    footer.w3-container.w3-padding-16.w3-black
+        .w3-center Recursos Académicos &copy; 2021   
+
+
+        

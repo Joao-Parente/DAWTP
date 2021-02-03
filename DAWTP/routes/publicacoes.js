@@ -14,16 +14,14 @@ var Auth = require('../public/javascripts/verifyauth.js')
 
 
 
-
-
-router.get('/:idrecurso/novo', Auth.verifyAuth, function (req, res) {
+router.post('/:idrecurso/novo', Auth.verifyAuth, function (req, res) {
 
   Recurso.lookUp(req.params.idrecurso)
     .then(dados => {
 
       var id = data_agr.myDateTime() + 'f' + Math.random();
       var user = req.user._id
-      var conteudo = "Conteudo"
+      var conteudo = req.body.conteudo
 
       var jsonStr = '{"meta":{"_id":"' + id + '","nome":"' + user + '",\
       "conteudo":"' + conteudo + '","data":"' + data_agr.myDateTime() + '"},\
@@ -32,6 +30,7 @@ router.get('/:idrecurso/novo', Auth.verifyAuth, function (req, res) {
       dados.posts.push(JSON.parse(jsonStr));
       if (debug) console.log("DADOSSS")
       if (debug) console.log(dados)
+
       Recurso.edit(dados).then().catch();
 
       res.redirect('/publicacoes/' + req.params.idrecurso + '/' + id)
@@ -90,6 +89,8 @@ router.get('/:idrecurso/:idpost/editar', Auth.verifyAuthUserorAdminEditRecurso, 
     })
     .catch(err => { console.log(err); res.render('RecursoInexistente', { user: req.user }) })
 });
+
+
 router.post('/:idrecurso/:idpost/editar', Auth.verifyAuthUserorAdminEditRecurso, function (req, res) {
   Recurso.lookUp(req.params.idrecurso)
     .then(data => {

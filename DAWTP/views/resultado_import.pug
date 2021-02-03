@@ -1,32 +1,31 @@
 extends layoutUser
 
 block content
-    .w3-card-4
-      header.w3-container.w3-light-grey
-        h3.w3-left Resultado import 
-      if lista.length > 0
-        .w3-container 
-          table.w3-table-all
-            tr 
-              th Input
-              th Status
-              th Msg
+  .w3-card-4
+    header.w3-container.w3-light-grey
+      h3.w3-left Resultado do Import 
+    if lista.length > 0
+      .w3-container 
+        table.w3-table-all
+          tr 
+            th Input
+            th Status
+            th Message
+
+          each s in lista
+            tr
+              
+              td=s.input
+              td=s.status
+              td=s.msg
+              if s.status==201               
+                td  
+                    a.w3-button.w3-round.w3-black.w3-margin(href=s.link) Ver
+
+    else
+      .w3-container
+        p Não houve import...
 
 
-
-            each s in lista
-              tr
-                
-                td=s.input
-                td=s.status
-                td=s.msg
-                if s.status==201               
-                  td  
-                     a(href=s.link) Ir para o recurso
-
-  
-
-
-      else
-        .w3-container
-          p Não houve import
+  footer.w3-container.w3-padding-16.w3-black
+      .w3-center Recursos Académicos &copy; 2021

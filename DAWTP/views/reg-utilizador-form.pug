@@ -1,49 +1,51 @@
 extends layout
 
 block content
-    .w3-container.w3-margin.w3-border
-        .w3-container.w3-black
-            h3 Registo de utilizador:
+    .w3-container.w3-black
+        h3 Registo de Utilizador
+    
+    form.w3-container.w3-margin(action='/utilizadores/registo' method='POST')
+
+        label Username: 
+        input.w3-input(type="text"  name="_id" required)
+        if(erro)
+            p.w3-text-red #{erro}
             
-        form.w3-container(action='/utilizadores/registo' method='POST')
+        label Password: 
+        input.w3-input(type="password"  name="password" required)
 
-            label Username: 
-            input.w3-input(type="text"  name="_id" required)
-            if(erro)
-                p.w3-text-red #{erro}
-                
-            label Password: 
-            input.w3-input(type="password"  name="password" required)
+        label Nome:
+        input.w3-input(type="text"  name="nome" required)
 
-            label Nome
-            input.w3-input(type="text"  name="nome" required)
+        label Email:
+        input.w3-input(type="text"  name="email" required)
 
-            label Email
-            input.w3-input(type="text"  name="email" required)
+        label Nível (0 - Consumidor | 1 - Produtor | 2 - Admin): 
+        select(name="nivel")
+            option(value=0) Consumidor
+            option(value=1) Produtor
+            option(value=2) Admin
 
-            label Nível (0-Consumidor | 1-Produtor | 2- Admin)
-            select(name="nivel")
-                option(value=0) Consumidor
-                option(value=1) Produtor
-                option(value=2) Admin
+        br.w3-margin
 
-            br
+        label Estudante 
+        input.w3-check(type="checkbox" name="filiacao.estudante" value="true")
 
-            label Estudante
-            input(type="checkbox" name="filiacao.estudante" value="true")
+        br 
 
-            br 
+        label Docente 
+        input.w3-check(type="checkbox" name="filiacao.docente" value="true")
 
-            label Docente
-            input(type="checkbox" name="filiacao.docente" value="true")
+        br.w3-margin
 
-            br
+        label Curso:
+        input.w3-input(type="text"  name="filiacao.curso" required)
 
-            label Curso
-            input.w3-input(type="text"  name="filiacao.curso" required)
-
-            label Departamento
-            input.w3-input(type="text"  name="filiacao.departamento" required)
+        label Departamento:
+        input.w3-input(type="text"  name="filiacao.departamento" required)
 
 
-            input.w3-btn.w3-black(type="submit" value="Enviar")
+        input.w3-button.w3-round.w3-black.w3-margin(type="submit" value="Enviar")
+    
+    footer.w3-container.w3-padding-16.w3-black
+        .w3-center Recursos Académicos &copy; 2021

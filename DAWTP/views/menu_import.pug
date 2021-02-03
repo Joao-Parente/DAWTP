@@ -2,13 +2,18 @@ extends layoutUser
 
 block content
 
-
+  header.w3-container.w3-light-grey
+    h1.w3-left Menu Import
+  
   .w3-container.w3-margin
-    h1 Menu import
     ul
-      li  
-        a(href="/import/recursos") Recursos
-      li  
-        a(href="/import/tipos") Tipos  
-      li  
-        a(href="/import/utilizadores") Utilizadores
+      li.w3-margin-bottom
+        a.w3-button.w3-round.w3-black(href="/import/recursos") Recursos
+      li.w3-margin-bottom
+        a.w3-button.w3-round.w3-black(href="/import/tipos") Tipos  
+      li.w3-margin-bottom
+        a.w3-button.w3-round.w3-black(href="/import/utilizadores") Utilizadores
+
+
+  footer.w3-container.w3-padding-16.w3-black
+    .w3-center Recursos Académicos &copy; 2021

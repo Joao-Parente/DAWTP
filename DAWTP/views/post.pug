@@ -12,17 +12,19 @@ block scripts
    
 block addmetadata
 
-  .w3-dropdown-hover.w3-mobile
-    button.w3-button Operações 
-      i.fa.fa-caret-down
+    link(href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet")
 
-    .w3-dropdown-content.w3-bar-block.w3-dark-grey
-      a.w3-bar-item.w3-button.w3-mobile(href="/recursos/"+idrecurso) Voltar ao Recurso
-      a.w3-bar-item.w3-button.w3-mobile(href="/publicacoes/"+recurso.id) Posts do Recurso
+    .w3-dropdown-hover.w3-mobile
+        button.w3-button Operações 
+            span.material-icons(style="font-size:17px") keyboard_arrow_down
 
-      if(user.nivel>1 || infopost.nome==user._id)
-        a.w3-bar-item.w3-button.w3-mobile(href="/publicacoes/"+idrecurso+'/'+idpost+'/editar') Edit Post
-        a.w3-bar-item.w3-button.w3-mobile(href="/publicacoes/"+idrecurso+'/'+idpost+'/delete') Delete Post
+        .w3-dropdown-content.w3-bar-block.w3-dark-grey
+            a.w3-bar-item.w3-button.w3-mobile(href="/recursos/"+idrecurso) Voltar ao Recurso
+            a.w3-bar-item.w3-button.w3-mobile(href="/publicacoes/"+recurso.id) Posts do Recurso
+
+            if(user.nivel>1 || infopost.nome==user._id)
+                a.w3-bar-item.w3-button.w3-mobile(href="/publicacoes/"+idrecurso+'/'+idpost+'/editar') Editar Post
+                a.w3-bar-item.w3-button.w3-mobile.w3-hover-red(href="/publicacoes/"+idrecurso+'/'+idpost+'/delete') Eliminar Post
 
 
        
@@ -33,34 +35,35 @@ block content
 
 
     .w3-container.w3-light-grey
-        h1 Post sobre o recurso: #{recurso.titulo}
+        h1 Post sobre o Recurso: #{recurso.titulo}
 
-        .w3-container
-            dl
-                dt Data do Post
-                dd=infopost.data
+    .w3-card-4.w3-border.w3-margin
+        dl.w3-margin
+            dt
+                b Data do Post:
+            dd=infopost.data
 
-                dt  Publicador do Post 
-                dd=infopost.nome
+            dt  
+                b Publicador do Post:
+            dd=infopost.nome
 
-                dt  Conteudo do Post 
-                dd=infopost.conteudo
+            dt 
+                b Conteúdo:
+            dd=infopost.conteudo
 
               
     form.w3-container(id="myPost")
         fieldset.w3-container.w3-margin
-            legend new coment
+            legend
+                b Novo Comentário
             table
                 tr
-                    td Text:
                     td 
                         textarea( id="comentText" name="conteudo", cols="80", rows="3")
-            input.w3-btn.w3-light-grey.w3-round.w3-margin(type="button" value="Add comment" id="addComent")
+            input.w3-button.w3-round.w3-black.w3-margin(type="button" value="Adicionar Comentário" id="addComent")
     .w3-container.w3-border.w3-margin
         ul.w3-ul(id="comentList") 
 
-
-
-
-
+    footer.w3-container.w3-padding-16.w3-black
+        .w3-center Recursos Académicos &copy; 2021
            

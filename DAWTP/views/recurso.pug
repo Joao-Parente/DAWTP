@@ -11,16 +11,18 @@ block scripts
 
 block addmetadata
 
+  link(href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet")
+
   .w3-dropdown-hover.w3-mobile
     button.w3-button Operações 
-      i.fa.fa-caret-down
+      span.material-icons(style="font-size:17px") keyboard_arrow_down
 
     .w3-dropdown-content.w3-bar-block.w3-dark-grey
       a.w3-bar-item.w3-button.w3-mobile(href="/publicacoes/"+recurso.id) Posts do Recurso
-      a.w3-bar-item.w3-button.w3-mobile(onclick="document.getElementById('id01').style.display='block'") Novo Post
+      a.w3-bar-item.w3-button.w3-mobile.w3-hover-green(onclick="document.getElementById('id01').style.display='block'") Novo Post
       a.w3-bar-item.w3-button.w3-mobile(href="/recursos/download/"+recurso.id) Download
       if(user.nivel>1 || recurso.produtor==user._id)
-        a.w3-bar-item.w3-button.w3-mobile(href="/recursos/delete/"+recurso.id) Delete Recurso
+        a.w3-bar-item.w3-button.w3-mobile.w3-hover-red(href="/recursos/delete/"+recurso.id) Delete Recurso
         a.w3-bar-item.w3-button.w3-mobile(href="/recursos/editar/"+recurso.id) Edit Recurso
 
   .w3-modal( id="id01")
@@ -39,7 +41,7 @@ block addmetadata
           input.w3-button.w3-block.w3-black.w3-section.w3-padding(type="submit" value="Publicar")
 
       .w3-container.w3-border-top.w3-padding-16.w3-light-grey
-        button(onclick="document.getElementById('id01').style.display='none'" type="button") Cancel
+        button(onclick="document.getElementById('id01').style.display='none'" type="button") Cancelar
 
 
 
@@ -54,10 +56,10 @@ block content
     .w3-container 
       table.w3-table-all
         tr 
-          th Titulo
-          th Subtitulo
-          th DataCriação
-          th DataRegisto 
+          th Título
+          th Subtítulo
+          th Data de Criação
+          th Data de Registo 
           th Publicador
           th Likes 
           th Hashtags
@@ -68,7 +70,7 @@ block content
           td=recurso.dataCriacao
           td=recurso.dataRegisto
           td
-             a(href='/utilizadores/'+recurso.produtor) #{recurso.produtor} 
+            a(href='/utilizadores/'+recurso.produtor) #{recurso.produtor} 
           td=recurso.likes.length
           td=recurso.hashtags
 
@@ -76,79 +78,79 @@ block content
 
     if manifesto.pasta_rec.length > 0
 
-
-      .w3-container 
+      .w3-container.w3-margin
         footer.w3-container.w3-light-grey
           p Pastas
-        .w3-container  
-          table.w3-table-all
-            tr 
-              th Nome
+        
+        table.w3-table-all
+          tr 
+            th Nome
 
-            each p in manifesto.pasta_rec
-              tr
-                td
-                  a(href='/recursos/'+download+"/"+p.nome) #{p.nome} 
-                td
-                  a(href='/recursos/download/'+download+"/"+p.nome) Download
+          each p in manifesto.pasta_rec
+            tr
+              td
+                p #{p.nome}
+                  a.w3-button.w3-round.w3-black.w3-margin.w3-hover-grey(href='/recursos/'+download+"/"+p.nome)
+                    span.material-icons(style="font-size:18px") folder_open
+              td
+                a.w3-button.w3-round.w3-black.w3-margin.w3-hover-grey(href='/recursos/download/'+download+"/"+p.nome)
+                  span.material-icons(style="font-size:18px") get_app
 
 
     else 
-      .w3-container 
+      .w3-container.w3-margin
         footer.w3-container.w3-light-grey
           p Pastas
         .w3-container
           p Não há pastas....
 
     if manifesto.ficheiros.length > 0
-      .w3-container 
+      .w3-container.w3-margin
 
         footer.w3-container.w3-light-grey
 
           p Ficheiros
 
-        .w3-container 
-          table.w3-table-all
-            tr 
-              th Titulo
-              th Tipo
-              th Meta
+        table.w3-table-all
+          tr 
+            th Título
+            th Tipo
+            th Meta
 
+          each s in manifesto.ficheiros
+            tr.w3-hover-grey(onclick=`preview("${s.tipo}","${s.nome}","/${path_g}/${s.nome}","/recursos/download/${download}/${s.nome}");`)
 
-            each s in manifesto.ficheiros
-              tr(onclick=`preview("${s.tipo}","${s.nome}","/${path_g}/${s.nome}","/recursos/download/${download}/${s.nome}");`)
+              td=s.nome
+              td=s.tipo
+              td=s.subtitulo
+              if  s.meta.length > 0
 
-                td=s.nome
-                td=s.tipo
-                td=s.subtitulo
-                if  s.meta.length > 0
+                td  
+                  table.w3-table-all
+                    tr
+                      th Nome do Parâmetro
+                      th Valor do Parâmetro
 
-                  td  
-                    table.w3-table-all
+                    each meta in s.meta
                       tr
-                        th Nome Parametro
-                        th Valor Parametro
-
-                      each meta in s.meta
-                        tr
-                          td=meta.nome
-                          td=meta.valor
-                else
-                  td Este ficheiro não tem metadata associada...
-
-
-
+                        td=meta.nome
+                        td=meta.valor
+              else
+                td Este ficheiro não tem metadata associada...
 
     else
-      .w3-container 
+      .w3-container.w3-margin
         footer.w3-container.w3-light-grey
           p Ficheiros
         .w3-container
-          p Não há ficheiros....
+          p Não há ficheiros...
 
 
-    a(href='/recursos/like/'+download) 
-      img.w3-circle.w3-margin-top(src="/images/like.png" alt="Avatar" style="width:2%;border-style: solid;" )
+    a.w3-button.w3-round.w3-black.w3-margin(href='/recursos/like/'+download)
+      span.material-icons(style="font-size:20px") thumb_up_alt
 
+    a.w3-button.w3-black.w3-round.w3-margin.w3-right(href='javascript:history.back()') Voltar
 
+  footer.w3-container.w3-padding-16.w3-black
+        .w3-center Recursos Académicos &copy; 2021
 

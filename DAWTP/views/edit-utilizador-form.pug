@@ -1,50 +1,50 @@
 extends layoutUser
 
 block content
-    .w3-container.w3-margin.w3-border
-        .w3-container.w3-black
-            h3 Editar  utilizador:
-        form.w3-container(action='/utilizadores/editar/'+user.username method='POST')
+    .w3-container.w3-light-grey
+        h3 Editar Utilizador: #{user._id}
+    form.w3-container(action='/utilizadores/editar/'+user._id method='POST')
 
+        input(type="hidden" name="_id" value=user._id)
 
-            input(type="hidden" name="_id" value=user._id)
+        label Username: 
+        input.w3-input(type="text"  name="username" readonly value=user._id)
 
-            label Username: 
-            input.w3-input(type="text"  name="username" required readonly value=user.username)
+        label Password: 
+        input.w3-input(type="password"  name="password" required)
 
-            label Password: 
-            input.w3-input(type="password"  name="password" required)
+        label Nome:
+        input.w3-input(type="text"  name="nome" required value=user.nome)
 
+        label Email:
+        input.w3-input(type="text"  name="email" required value=user.email)
 
-            label Nome
-            input.w3-input(type="text"  name="nome" required value=user.nome)
+        label Nível (0 - Consumidor | 1 - Produtor | 2 - Admin): 
+        select(name="nivel" readonly)
+            option(value=0) Consumidor
+            option(value=1) Produtor
+            option(value=2) Admin
 
-            label Email
-            input.w3-input(type="text"  name="email" required value=user.email)
+        br.w3-margin
 
-            label Nível (0-Consumidor | 1-Produtor | 2- Admin)
-            select(name="nivel" readonly)
-                option(value=0) Consumidor
-                option(value=1) Produtor
-                option(value=2) Admin
+        label Estudante 
+        input.w3-check(type="checkbox" name="filiacao.estudante" value=user.filiacao.estudante)
 
-            br
+        br 
 
-            label Estudante
-            input(type="checkbox" name="filiacao.estudante" value=user.filiacao.estudante)
+        label Docente 
+        input.w3-check(type="checkbox" name="filiacao.docente"  value=user.filiacao.docente)
 
-            br 
+        br.w3-margin
 
-            label Docente
-            input(type="checkbox" name="filiacao.docente"  value=user.filiacao.docente)
+        label Curso:
+        input.w3-input(type="text"  name="filiacao.curso" required value=user.filiacao.curso)
 
-            br
+        label Departamento:
+        input.w3-input(type="text"  name="filiacao.departamento" required value=user.filiacao.departamento)
 
-            label Curso
-            input.w3-input(type="text"  name="filiacao.curso" required value=user.filiacao.curso)
+        input.w3-button.w3-round.w3-black.w3-margin(type="submit" value="Enviar")
 
-            label Departamento
-            input.w3-input(type="text"  name="filiacao.departamento" required value=user.filiacao.departamento)
+    footer.w3-container.w3-padding-16.w3-black
+        .w3-center Recursos Académicos &copy; 2021
 
-
-            input.w3-btn.w3-black(type="submit" value="Enviar")

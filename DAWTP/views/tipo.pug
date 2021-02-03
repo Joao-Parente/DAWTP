@@ -2,31 +2,33 @@ extends layoutUser
 
 block addmetadata
 
+  link(href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet")
+
   if(user.nivel>0)
     .w3-dropdown-hover.w3-mobile
       button.w3-button Operações 
-        i.fa.fa-caret-down
+        span.material-icons(style="font-size:17px") keyboard_arrow_down
 
       .w3-dropdown-content.w3-bar-block.w3-dark-grey
-        a.w3-bar-item.w3-button.w3-mobile(href="/tipos/editar/"+ tipo._id) Edit
-        a.w3-bar-item.w3-button.w3-mobile(href="/tipos/delete/"+ tipo._id) Delete
+        a.w3-bar-item.w3-button.w3-mobile(href="/tipos/editar/"+ tipo._id) Editar Tipo
+        a.w3-bar-item.w3-button.w3-mobile.w3-hover-red(href="/tipos/delete/"+ tipo._id) Eliminar Tipo
 
 
 block content
+  .w3-card-4
+    header.w3-container.w3-light-grey
+      h3 Tipo de Ficheiro: #{tipo._id}
 
-  .w3-stretch
-
-    header.w3-container.w3-margin.w3-border
-      .w3-container.w3-black
-          h3 Tipo de Ficheiro: #{tipo._id}
-
-      .w3-container 
+    .w3-container 
       table.w3-table-all
         tr
-          th Nome Parametro
-          th Valor Parametro
+          th Nome do Parâmetro
+          th Valor do Parâmetro
 
         each meta in tipo.parametros
           tr
             td=meta.nome_param
             td=meta.tipo_param
+  
+  footer.w3-container.w3-padding-16.w3-black
+        .w3-center Recursos Académicos &copy; 2021

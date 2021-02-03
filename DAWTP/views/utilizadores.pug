@@ -1,46 +1,49 @@
 extends layoutUser
 
 block content
-    .w3-card-4
-      header.w3-container.w3-light-grey
-        h3.w3-left Utilizadores Lista (DAW2020)
-      if list.length > 0
-        .w3-container 
-          table.w3-table-all
-            tr 
-              th Nome
-              th Username
-              th Email
-              th Filiacao
-              th Nivel
-              th DataRegisto
-              th DataUltimoAcesso
-              
+  .w3-card-4
+    header.w3-container.w3-light-grey
+      h3.w3-left Lista de Utilizadores
+    if list.length > 0
+      .w3-container
+        table.w3-table-all
+          tr 
+            th Nome
+            th Username
+            th Email
+            th Filiação
+            th Nível
+            th Data de Registo
+            th Data do Último Acesso
+            
 
-            each s in list
-              
-                tr
-                
-                  td=s.nome                                 
-                  td
-                    a(href="/utilizadores/"+s._id) #{s._id}
-                  td=s.email
+          each s in list
+            
+              tr.w3-hover-grey(onclick="document.location='/utilizadores/"+s._id+"';")
+                td=s.nome
 
-                  if(s.filiacao.estudante==true && s.filiacao.docente==true ) 
-                   td= "Estudante & Docente /"+ s.filiacao.curso+" / "+s.filiacao.departamento
+                td=s._id
 
-                  else if(s.filiacao.estudante==true) 
-                   td= "Estudante /"+ s.filiacao.curso+" / "+s.filiacao.departamento
-                  else if(s.filiacao.docente==true)
-                   td= "Docente /   "+ s.filiacao.curso+" / "+ s.filiacao.departamento
-                  else
-                   td= "Externo / "+ s.filiacao.curso+" / "+ s.filiacao.departamento
+                td=s.email
 
-                  td= s.nivel
-                  td=s.dataRegisto
-                  td=s.dataUltimoAcesso
+                if(s.filiacao.estudante==true && s.filiacao.docente==true ) 
+                  td= "Estudante & Docente /"+ s.filiacao.curso+" / "+s.filiacao.departamento
 
-      else
-        .w3-container
-          p Não há utilizadores..
+                else if(s.filiacao.estudante==true) 
+                  td= "Estudante /"+ s.filiacao.curso+" / "+s.filiacao.departamento
+                else if(s.filiacao.docente==true)
+                  td= "Docente /   "+ s.filiacao.curso+" / "+ s.filiacao.departamento
+                else
+                  td= "Externo / "+ s.filiacao.curso+" / "+ s.filiacao.departamento
+
+                td= s.nivel
+                td=s.dataRegisto
+                td=s.dataUltimoAcesso
+
+    else
+      .w3-container
+        p Não há utilizadores...
+
+    footer.w3-container.w3-padding-16.w3-black
+        .w3-center Recursos Académicos &copy; 2021
 
