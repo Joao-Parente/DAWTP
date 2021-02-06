@@ -28,14 +28,16 @@ block content
                     b Nome do Parâmetro:
 
             .w3-col.s12.w3-border
-                input.w3-input.w3-border.w3-light-grey(type="text" name="nome_param" required)
+                input.w3-input.w3-border(type="text" name="nome_param" required)
 
             .w3-col.s12
                 label.w3-text-black(for='tipo')
                     b Valor do Parâmetro:
 
             .w3-col.s12.w3-border
-                input.w3-input.w3-border.w3-light-grey(type="text" name="tipo_param" required)
+                select.w3-input.w3-border.w3-light-grey(name="tipo_param" required)
+                    option Number
+                    option String
 
         input(type="hidden" id="count" name="count" value="")   
 

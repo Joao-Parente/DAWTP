@@ -21,9 +21,11 @@ block content
         
             each t in tipo.parametros
                 label <b>Nome do Parâmetro:</b> 
-                input.w3-input(type="text" name="nome_param"  value=t.nome_param)
+                input.w3-input(type="text" name="nome_param"  value=t.nome_param required)
                 label <b>Valor do Parâmetro:</b>
-                input.w3-input(type="text" name="tipo_param"   value=t.tipo_param)
+                select.w3-input.w3-border(name="tipo_param"  selected=true  value=t.tipo_param required)
+                    option Number
+                    option String
         
         input(type="hidden" id="count" name="count" value="") 
 
