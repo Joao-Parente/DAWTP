@@ -18,13 +18,12 @@
 ## Screenshots
 
 
-<img width="432" src="https://github.com/Joao-Parente/DAWTP/blob/2nd-branch/imagens_README/index_por_login.png">
-<img width="432" src="https://github.com/Joao-Parente/DAWTP/blob/2nd-branch/imagens_README/index.png">
+<img width="432" src="https://github.com/Joao-Parente/DAWTP/blob/2nd-branch/imagens_README/homepage.png">
+<img width="432" src="https://github.com/Joao-Parente/DAWTP/blob/2nd-branch/imagens_README/homepage_login.png">
 <img width="432" src="https://github.com/Joao-Parente/DAWTP/blob/2nd-branch/imagens_README/recursos.png">
 <img width="432" src="https://github.com/Joao-Parente/DAWTP/blob/2nd-branch/imagens_README/tipos.png">
-<img width="432" src="https://github.com/Joao-Parente/DAWTP/blob/2nd-branch/imagens_README/users.png">
-<img width="432" src="https://github.com/Joao-Parente/DAWTP/blob/2nd-branch/imagens_README/import_resultado.png">
-<img width="432" src="https://github.com/Joao-Parente/DAWTP/blob/2nd-branch/imagens_README/import_result2.png">
+<img width="432" src="https://github.com/Joao-Parente/DAWTP/blob/2nd-branch/imagens_README/utilizadores.png">
+<img width="432" src="https://github.com/Joao-Parente/DAWTP/blob/2nd-branch/imagens_README/resultado_import.png">
 
 
 
@@ -68,6 +67,8 @@ Existem 3 níveis de acesso ao sistema cada um com as suas devidas permissôes C
 
 
 ## <a href="https://github.com/Joao-Parente/DAWTP/blob/2nd-branch/relatorioDAWTP.pdf">Relatório</a>
+
+## <a href="https://drive.google.com/file/d/1MR_usjrVrGEAcnpV7RGosUyqZIQaXnm6/view?usp=sharing">Exemplo de recursos para import (Dropbox de Miei 1 e 2 ano)</a>
 
 ## Download e Executar
 
