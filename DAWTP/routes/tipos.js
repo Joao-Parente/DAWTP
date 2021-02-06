@@ -17,12 +17,12 @@ router.get('/',Auth.verifyAuth, function(req, res) {
 });
 
 //Novo Tipo - Carregar Página
-router.get('/novo', Auth.verifyAuthUserorAdminCreate, function (req, res) {
+router.get('/novo', Auth.verifyAuthAdmin, function (req, res) {
   res.render('novo-tipo-form', { user: req.user })
 });
 
 //Add Novo tipo
-router.post('/novo', Auth.verifyAuthUserorAdminCreate, function (req, res) {
+router.post('/novo', Auth.verifyAuthAdmin, function (req, res) {
   console.log("req_body: " + JSON.stringify(req.body))
   
   var tipos = {
@@ -39,7 +39,6 @@ router.post('/novo', Auth.verifyAuthUserorAdminCreate, function (req, res) {
           "nome_param" : req.body.nome_param[x],
           "tipo_param" : req.body.tipo_param[x]
         })
-        //console.log("forEach: " + JSON.stringify(data.parametros[x].nome_param))
         x++;
       }
     })
@@ -58,7 +57,7 @@ router.post('/novo', Auth.verifyAuthUserorAdminCreate, function (req, res) {
 
 
 //Delete tipo
-router.get('/delete/:_id', Auth.verifyAuthUserorAdminCreate, function (req, res) {
+router.get('/delete/:_id', Auth.verifyAuthAdmin, function (req, res) {
 
   Tipo.lookUp(req.params._id)
 
@@ -85,7 +84,7 @@ router.get('/:_id',Auth.verifyAuth, function (req, res) {
 
 
 //Aceder a pagina de edição do tipo
-router.get('/editar/:_id', Auth.verifyAuthUserorAdminCreate, function (req, res) {
+router.get('/editar/:_id', Auth.verifyAuthAdmin, function (req, res) {
   Tipo.lookUp(req.params._id)
     .then(data => {
 
@@ -99,11 +98,10 @@ router.get('/editar/:_id', Auth.verifyAuthUserorAdminCreate, function (req, res)
 
 
 // Enviar o tipo atualizado
-router.post('/editar/:_id', Auth.verifyAuthUserorAdminCreate, function (req, res) {
+router.post('/editar/:_id', Auth.verifyAuthAdmin, function (req, res) {
   Tipo.lookUp(req.params._id)
     .then(data => {
       if (data != null) {
-        //console.log("edition: " + JSON.stringify(data))
         console.log("req_body: " + JSON.stringify(req.body))
         console.log("data_parametros: " + JSON.stringify(data))
         console.log("quantidade " + data.parametros.length)

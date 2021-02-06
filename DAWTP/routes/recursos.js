@@ -91,12 +91,10 @@ router.get('/estrutura-manifesto', Auth.verifyAuthUserorAdminCreate, function (r
 
 //like se tiver no inicio
 router.get('/like/:id', Auth.verifyAuth, function (req, res) {
-  log("hiii")
   Recurso.lookUp(req.params.id)
     .then(dados => {
 
-      log("req.")
-      log(req.user)
+
       if (dados.likes.includes(req.user._id)) {
         dados.likes.splice(dados.likes.indexOf(req.user._id), 1);
       }
@@ -115,12 +113,10 @@ router.get('/like/:id', Auth.verifyAuth, function (req, res) {
 
 //like se nao tiver no inico do recurso
 router.get('/like/:id/*', Auth.verifyAuth, function (req, res) {
-  log("hiii")
+
   Recurso.lookUp(req.params.id)
     .then(dados => {
 
-      log("req.")
-      log(req.user)
       if (dados.likes.includes(req.user._id)) {
         dados.likes.splice(dados.likes.indexOf(req.user._id), 1);
       }
@@ -142,7 +138,6 @@ router.get('/like/:id/*', Auth.verifyAuth, function (req, res) {
 //Consulta 1 recurso
 router.get('/:id', Auth.verifyAuth, function (req, res) {
 
-  log("obtemm inicio recurso")
 
   Recurso.lookUp(req.params.id)
     .then(dados => {
@@ -151,7 +146,6 @@ router.get('/:id', Auth.verifyAuth, function (req, res) {
 
         var result = JSON.parse(dados.manifesto);
         log("                           DOWNLOAD: " + req.params.id)
-        log("atao joao")
         log(result)
 
         res.render('recurso', { manifesto: result, recurso: dados, path_g: dados.path + '/data', download: req.params.id, user: req.user }) //manifesto.ficheiros: [] ,recursod ados
@@ -193,7 +187,7 @@ router.get('/download/:id/*', Auth.verifyAuth, function (req, res) {
         if (man_result != null && man_result != true) {
 
 
-          log("ISOT E UM DIRETORIO")
+          log("isto e um dir")
           var random_tempdir = Math.random() + '_' + Math.random() + '-' + Math.random();
           fs.mkdirSync(__dirname + '/../tempfile/' + random_tempdir);
           fs.mkdirSync(__dirname + '/../tempfile/' + random_tempdir + '/data');
@@ -209,17 +203,12 @@ router.get('/download/:id/*', Auth.verifyAuth, function (req, res) {
           bman.buildManifesto(__dirname + '/../tempfile/' + random_tempdir + '/data')
 
            Zip.zip('../tempfile/' + random_tempdir + '/', nome_zip)
-          //
-         // Zip.zipBigFiles('../tempfile/' + random_tempdir + '/data', nome_zip).then(() => {
 
             res.download(tempzip, function (err) {
               rm.deleteFolderRec(__dirname + '/../tempfile/' + random_tempdir)
               fs.unlinkSync(tempzip);
               if (err) log(err)
             });
-          //})
-            //.catch(err => log("Servidor tem de ter zip instalado"))
-
 
 
 
@@ -227,7 +216,6 @@ router.get('/download/:id/*', Auth.verifyAuth, function (req, res) {
         //ficheiro
         else if (man_result != null && man_result == true) {
 
-          log("TUDO BEMMMMMMMMMMM")
           var nome_zip = path_recurso[path_recurso.length - 1] + '.zip'
 
           //path para o tempfile
@@ -247,14 +235,12 @@ router.get('/download/:id/*', Auth.verifyAuth, function (req, res) {
 
 
            Zip.zip('../tempfile/' + random_tempdir, nome_zip)
-          //Zip.zipBigFiles('../tempfile/' + random_tempdir + '/data', nome_zip).then(() => {
             res.download(tempzip, function (err) {
               rm.deleteFolderRec(__dirname + '/../tempfile/' + random_tempdir)
               fs.unlinkSync(tempzip);
               if (err) log(err)
             });
-         // })
-          //  .catch(err => log("Servidor tem de ter zip instalado"))
+
 
         }
 
@@ -291,7 +277,6 @@ router.get('/download/:id', Auth.verifyAuth, function (req, res) {
         var nome_zip = dados.titulo + '.zip'
 
         Zip.zip(path_zip, nome_zip)
-       // Zip.zipBigFiles(path_zip, nome_zip).then(() => {
           
 
           //zipa tudo para /tempzip e faz download dai (zipar noo sitio tava a por o zip dentro X)  )
@@ -299,8 +284,6 @@ router.get('/download/:id', Auth.verifyAuth, function (req, res) {
             fs.unlinkSync(__dirname + '/../tempzip/' + nome_zip);
             if (err) log(err)
           });
-      //  })
-        //  .catch(err => log(err + "erro a zipar"))
 
       }
 
@@ -387,7 +370,6 @@ router.get('/:id/*', Auth.verifyAuth, function (req, res) {
         var man_result = travman.travessiaManifesto(tail_path, mani)
         if (man_result != null && man_result != true) {
 
-          //log("/recursos/download/" + path_recurso.join('/'))       
           log("                           path: " + path_recurso.join('/'))
           console.log("Manifesto" + JSON.stringify(mani))
           log("ataoz  ")
@@ -426,7 +408,6 @@ router.post('/novo', upload.single('myFile'), Auth.verifyAuthUserorAdminCreate, 
 
     if (req.file.mimetype == 'application/zip') {
 
-      //Zip.unzipBigFiles(req.file.path).then(() => {
         Zip.unzip(req.file.path) //this is sync
 
         var fl = true;
@@ -467,7 +448,6 @@ router.post('/novo', upload.single('myFile'), Auth.verifyAuthUserorAdminCreate, 
                 log("Inseri o objeto:" + dados._id + "bd obj" + dados.path)
 
                 fs.renameSync(oldPath, newPath)
-                //fs.unlinkSync(req.file.path);
                 res.redirect('/recursos/' + dados._id)
               })
               .catch(erro => res.render('error', { error: erro }))
@@ -482,8 +462,7 @@ router.post('/novo', upload.single('myFile'), Auth.verifyAuthUserorAdminCreate, 
 
 
         })
-     // })
-       // .catch(err => res.render('error', { error: err }));
+
     }
     else {
       res.render('RecursoFormatoInválido', { user: req.user })

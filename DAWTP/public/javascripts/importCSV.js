@@ -135,6 +135,3 @@ csvToComent = (csv) => {
     return postmeta;
 }
 
-//var csv1="2021-01-26T11:37-0.5873407756472404,teste1,,2021-01-26T11:37:00.000Z,2021-01-26T11:35:00.000Z,admin,publico,[],[tag1;tag2;tag3;tag1;tag2;tag3;tag1;tag2;tag3;tag1;tag2;tag3;tag1;tag2;tag3;tag1;tag2;tag3;tag1;tag2;tag3],[]2021-01-26T11:38-0.17358817452412234,teste1,,2021-01-26T11:38:00.000Z,2021-01-26T11:35:00.000Z,admin,publico,[],[],[[2021-01-26T11:38f0.39244083901247095#user_na_sessao# conteudo#2021-01-26T11:38:00.000Z|idestu#nomesest#ola ,,,,,,,,,,,,,,,,,,,,,, joaquim,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,###!!!|||||#2021-01-26T11:38:00.000Z]]"
-
-//log(this.csvToRecurso(csv1).posts[0].coments)

@@ -110,9 +110,3 @@ processaFicheiro = (current_path, ficheiro) => {
     return false
 }
 
-
-
-/*
-Tipo.list().then( dados =>
-console.log("K" + processaManifesto('/home/jpedro/Desktop/playground',dados)))
-.catch(err=> log(err))*/

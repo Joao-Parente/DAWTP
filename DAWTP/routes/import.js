@@ -152,7 +152,7 @@ router.post('/utilizadores', upload.single('myFile'), Auth.verifyAuthAdmin, func
       log(req.file)
       res.render('ImportFormatoInválidoUT', { user: req.user })
     }
-    
+
   }
   else res.render('UploadSemSucesso', { user: req.user })
 
@@ -169,92 +169,85 @@ router.post('/recursos', upload.single('myFile'), Auth.verifyAuthAdmin, function
     if (req.file.mimetype == 'application/zip') {
 
       var alog = []
-       Zip.unzip(req.file.path)
-      //Zip.unzipBigFiles(req.file.path).then(() => {
+      Zip.unzip(req.file.path)
 
-       // fs.unlinkSync(req.file.path);
-        let dirCont = fs.readdirSync(__dirname + '/../' + req.file.path + 'dir');
-        let files = dirCont.filter(function (elm) { return elm.match(/.*\.csv/); });
-        log(files)
+      let dirCont = fs.readdirSync(__dirname + '/../' + req.file.path + 'dir');
+      let files = dirCont.filter(function (elm) { return elm.match(/.*\.csv/); });
+      log(files)
 
-        Tipo.list().then(dados => {
+      Tipo.list().then(dados => {
 
 
 
 
-          var promisses = []
+        var promisses = []
 
-          let criar_promessas = new Promise((resolve) => {
-            var first_line = true
-
-
-            var lrs = new LineReaderSync(req.file.path + 'dir/' + files[0])
+        let criar_promessas = new Promise((resolve) => {
+          var first_line = true
 
 
-            var flag_ciclo = true;
-            while (flag_ciclo) {
-              var line = lrs.readline()
-              if (line == null) {
-                flag_ciclo = false
-                resolve()
-              }
+          var lrs = new LineReaderSync(req.file.path + 'dir/' + files[0])
+
+
+          var flag_ciclo = true;
+          while (flag_ciclo) {
+            var line = lrs.readline()
+            if (line == null) {
+              flag_ciclo = false
+              resolve()
+            }
+            else {
+              if (first_line) first_line = false;
               else {
-                if (first_line) first_line = false;
-                else {
-                  let pins = new Promise((resolve) => {
+                let pins = new Promise((resolve) => {
 
 
-                    var recurso = importCSV.csvToRecurso(line)
-                    var linha = line
+                  var recurso = importCSV.csvToRecurso(line)
+                  var linha = line
 
-                    fs.renameSync(__dirname + '/../' + req.file.path + 'dir/' + recurso._id + '.zip', __dirname + '/../' + req.file.path + 'dir/' + recurso._id)
-                    Zip.unzip(__dirname + '/../' + req.file.path + 'dir/' + recurso._id)
-                    //Zip.unzipBigFiles(__dirname + '/../' + req.file.path + 'dir/' + recurso._id).then(() => {
+                  fs.renameSync(__dirname + '/../' + req.file.path + 'dir/' + recurso._id + '.zip', __dirname + '/../' + req.file.path + 'dir/' + recurso._id)
+                  Zip.unzip(__dirname + '/../' + req.file.path + 'dir/' + recurso._id)
 
-                     // fs.unlinkSync(__dirname + '/../' + req.file.path + 'dir/' + recurso._id);
-                      var fl = true;
+                  var fl = true;
 
 
-                      fl = checkman.processaManifesto(__dirname + '/../' + req.file.path + 'dir/' + recurso._id + 'dir', dados)
-                      if (fl) {
+                  fl = checkman.processaManifesto(__dirname + '/../' + req.file.path + 'dir/' + recurso._id + 'dir', dados)
+                  if (fl) {
 
-                        var obj_json = __dirname + '/../' + req.file.path + 'dir/' + recurso._id + 'dir/manifesto.json'
-                        recurso.manifesto = JSON.stringify(require(obj_json))
-
-
-                        var dest = newPath.createPath(recurso);
+                    var obj_json = __dirname + '/../' + req.file.path + 'dir/' + recurso._id + 'dir/manifesto.json'
+                    recurso.manifesto = JSON.stringify(require(obj_json))
 
 
-                        Recurso.insert(recurso, dest, req.user)
-                          .then(dados => {
-                            let oldPath = __dirname + '/../' + req.file.path + 'dir/' + recurso._id + 'dir'
+                    var dest = newPath.createPath(recurso);
 
-                            let newPath = __dirname + '/../public/' + dados.path;
-                            let dir = __dirname + '/../public/' + dest;
-                            if (fs.existsSync(dir) == false) fs.mkdirSync(dir)
-                            fs.renameSync(oldPath, newPath)
-                            alog = addlog(linha, 201, "Importado com sucesso", alog, '/recursos/' + recurso._id)
-                            resolve()
-                          })
-                          .catch(err => { log(err); alog = addlog(linha, 409, "Não conseguiu importar, inserção não foi possível", alog, null); resolve() })
 
-                      }
-                      else { alog = addlog(linha, 409, "Não conseguiu importar, manifesto não é válido", alog, null); resolve(); }
-                   // })
-                     // .catch(err => { log(err); alog = addlog(linha, 409, "Não conseguiu importar, manifesto não é válido", alog, null); resolve(); })
-                  })
-                  promisses.push(pins)
+                    Recurso.insert(recurso, dest, req.user)
+                      .then(dados => {
+                        let oldPath = __dirname + '/../' + req.file.path + 'dir/' + recurso._id + 'dir'
 
-                }
+                        let newPath = __dirname + '/../public/' + dados.path;
+                        let dir = __dirname + '/../public/' + dest;
+                        if (fs.existsSync(dir) == false) fs.mkdirSync(dir)
+                        fs.renameSync(oldPath, newPath)
+                        alog = addlog(linha, 201, "Importado com sucesso", alog, '/recursos/' + recurso._id)
+                        resolve()
+                      })
+                      .catch(err => { log(err); alog = addlog(linha, 409, "Não conseguiu importar, inserção não foi possível", alog, null); resolve() })
+
+                  }
+                  else { alog = addlog(linha, 409, "Não conseguiu importar, manifesto não é válido", alog, null); resolve(); }
+                })
+                promisses.push(pins)
+
               }
             }
-          }); criar_promessas.then(() => { Promise.all(promisses).then(() => { log("Esperei por tudo"); rm.deleteFolderRec(__dirname + '/../' + req.file.path + 'dir/'); res.render('resultado_import', { lista: alog, user: req.user }) }) })
-            .catch(err => { log(err); rm.deleteFolderRec(__dirname + '/../' + req.file.path + 'dir/'); res.render('error', { erro: err }) }) // a criar promessas
+          }
+        }); criar_promessas.then(() => { Promise.all(promisses).then(() => { log("Esperei por tudo"); rm.deleteFolderRec(__dirname + '/../' + req.file.path + 'dir/'); res.render('resultado_import', { lista: alog, user: req.user }) }) })
+          .catch(err => { log(err); rm.deleteFolderRec(__dirname + '/../' + req.file.path + 'dir/'); res.render('error', { erro: err }) }) // a criar promessas
 
-        })
-          .catch(err => { log(err); rm.deleteFolderRec(__dirname + '/../' + req.file.path + 'dir/'); res.render('error', { erro: err }) }) // a obter tipos
+      })
+        .catch(err => { log(err); rm.deleteFolderRec(__dirname + '/../' + req.file.path + 'dir/'); res.render('error', { erro: err }) }) // a obter tipos
 
-     // })
     } else {
       log(req.file)
       res.render('ImportFormatoInválidoR', { user: req.user })

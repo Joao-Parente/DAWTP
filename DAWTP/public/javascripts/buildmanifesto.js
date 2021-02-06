@@ -12,7 +12,7 @@ buildManifesto = (path) => {
     if (err) {
         throw err;
     }})
-    console.log(path)
+   // console.log(path)
 }
 module.exports.buildManifesto=buildManifesto
 

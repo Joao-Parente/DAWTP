@@ -6,8 +6,6 @@ module.exports.travessiaManifesto = (path, manifesto) => {
 
 
     var strarray = path.split("/")
-    console.log("recurs")
-    console.log(strarray)
 
     for (var i = 0; i < manifesto.pasta_rec.length; i++) {
 
@@ -36,5 +34,5 @@ module.exports.travessiaManifesto = (path, manifesto) => {
 
     }
 
-    return null// igual ao de baixo
+    return null
 }

@@ -97,17 +97,3 @@ comentToCSV = (coment) => {
     return linha;
 }
 
-/*
-Recursos.list().then(dados=> recursoToCSV(dados))
-.catch(err => log(err))
-
-Recursos.list().then(dados=> 
-    
-    dados.forEach(element => {
-        log(recursoToCSV(element))
-    }))
-.catch(err => log(err))*//*
-Recursos.lookUp("2021-01-26T10:24-0.5658912486487504")
-    .then(dados => log(recursoToCSV(dados)))
-    .catch(err => log(err))
-*/

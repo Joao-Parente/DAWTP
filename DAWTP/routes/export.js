@@ -72,8 +72,6 @@ router.get('/recursos', Auth.verifyAuthAdmin, function (req, res) {
 
             resolve()
 
-            //}).catch(err => { log(err + "erro de zip"); resolve() })
-            // }).catch(err =>{ log(err + "erro de zip") ;    resolve()})
 
             }catch(err){ log(err);}
           })
@@ -96,12 +94,11 @@ router.get('/recursos', Auth.verifyAuthAdmin, function (req, res) {
           //elimina o zip geral
           fs.unlinkSync(__dirname + '/../tempzip/' + nome_zipFinal);
 
-          if (err) log("EROOOOOOOOOOOOOOOOOOO" + err)
+          if (err) log("Erro" + err)
         });
 
       })
         .catch(err => res.render('error', { error: err }))
-        // }))
       ).catch(err => res.render('error', { error: err }))
 
 
